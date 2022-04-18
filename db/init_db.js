@@ -53,6 +53,7 @@ async function populateInitialData() {
     const products = await productFetch()
     products.map(async (product)=>{
       return Products.createProductEntry(product)
+      
     })
     
     // create useful starting data by leveraging your
