@@ -2,7 +2,9 @@ const {
   client,
   // declare your model imports here
   // for example, User
-} = require('./');
+  Products,
+} = require("./");
+const fetchAmiibos = require("./seedAmiibos");
 
 async function buildTables() {
   try {
@@ -28,9 +30,10 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       name VARCHAR(255) NOT NULL,
       variation VARCHAR(255),
+      game VARCHAR(255),
+      image VARCHAR(255),
       description VARCHAR(255),
-      price MONEY NOT NULL,
-      image VARCHAR(255)
+      price MONEY NOT NULL
     );
 
     CREATE TABLE categories(
@@ -64,7 +67,7 @@ async function buildTables() {
       "userId" INTEGER REFERENCES users(id),
       "productId" INTEGER REFERENCES products(id)
     );
-    `)
+    `);
     // drop tables in correct order
 
     // build tables in correct order
@@ -73,35 +76,29 @@ async function buildTables() {
   }
 }
 
-// fetch product information from product api
-async function productFetch(){
-  try {
-    const response = await fetch("some api.com")
-    const data = response.json()
-    // optimize objects with correct key/value information
-    return data //array of objects
-  } catch (error) {
-    throw error
-  }
-}
-
 async function populateInitialData() {
+  console.log("Seeding products...");
   try {
-    const products = await productFetch()
-    products.map(async (product)=>{
-      return Products.createProductEntry(product)
-      
-    })
-    
+    const amiibos = await fetchAmiibos();
+    const products = await Promise.all(
+      amiibos.map((amiibo) => {
+        const product = Products.createProduct(amiibo);
+        return product;
+      })
+    );
+    if (products.length > 0) {
+      console.log("Seeded products!");
+    }
+
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
   } catch (error) {
-    throw error;
+    console.error("Problem seeding products...", error);
   }
 }
 
 buildTables()
-  // .then(populateInitialData)
+  .then(populateInitialData)
   .catch(console.error)
   .finally(() => client.end());
