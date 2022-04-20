@@ -36,3 +36,13 @@ export async function getAPIHealth() {
     return { healthy: false };
   }
 }
+
+export async function getMe() {
+  try {
+    const response = await fetch("api/users/me");
+    const data = response.json();
+    return data
+  } catch (error) {
+    
+  }
+}
