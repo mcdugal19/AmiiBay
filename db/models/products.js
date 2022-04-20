@@ -25,4 +25,32 @@ async function createProduct({
   }
 }
 
-module.exports = { createProduct };
+async function getAllProducts() {
+  try {
+    const { rows } = await client.query(`
+      SELECT * FROM products;
+    `);
+    return rows;
+  } catch (error) {
+    console.error("Problem getting products...", error);
+  }
+}
+
+async function getProductById(id) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+      SELECT * FROM products
+      WHERE id=$1;
+    `,
+      [id]
+    );
+    return product;
+  } catch (error) {
+    console.error("Problem getting product by id...", error);
+  }
+}
+
+module.exports = { createProduct, getAllProducts, getProductById };
