@@ -53,4 +53,76 @@ async function getProductById(id) {
   }
 }
 
-module.exports = { createProduct, getAllProducts, getProductById };
+async function getProductsByGame(game) {
+  try {
+    const { rows } = await client.query(
+      `
+      SELECT * FROM products
+      WHERE game=$1;
+    `,
+      [game]
+    );
+
+    return rows;
+  } catch (error) {
+    console.error("Problem getting product by game...", error);
+  }
+}
+
+async function updateProduct(fields = {}) {
+  const { id } = fields;
+  delete fields.id;
+
+  const setString = Object.keys(fields)
+    .map((key, index) => `"${key}"=$${index + 2}`)
+    .join(", ");
+
+  if (setString.length === 0) {
+    return;
+  }
+
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+        UPDATE products
+        SET ${setString}
+        WHERE id=$1
+        RETURNING *;
+      `,
+      [id, ...Object.values(fields)]
+    );
+    return product;
+  } catch (error) {
+    console.error("Problem updating product...", error);
+  }
+}
+
+async function deleteProduct(id) {
+  try {
+    const {
+      rows: [product],
+    } = await client.query(
+      `
+      DELETE products
+      WHERE id=$1
+      RETURNING *;
+    `,
+      [id]
+    );
+    product.message = "Successfully deleted product!";
+    return product;
+  } catch (error) {
+    console.error("Problem deleting product...", error);
+  }
+}
+
+module.exports = {
+  createProduct,
+  getAllProducts,
+  getProductById,
+  getProductsByGame,
+  updateProduct,
+  deleteProduct,
+};
