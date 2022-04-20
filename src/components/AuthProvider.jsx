@@ -1,4 +1,4 @@
-import AuthContext from "../../AuthContext";
+import AuthContext from "../AuthContext";
 import { useState, useEffect } from "react";
 import { getMe } from "../axios-services";
 
