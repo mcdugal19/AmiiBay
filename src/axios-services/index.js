@@ -21,8 +21,8 @@ export async function getAPIHealth() {
   try {
     const { data } = await axios.get("/api/health");
     return data;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
     return { healthy: false };
   }
 }
@@ -31,45 +31,47 @@ export async function getMe() {
   try {
     const response = await fetch("api/users/me");
     const data = response.json();
-    return data
+    return data;
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function loginUser( username, password ) {
+export async function loginUser(username, password) {
   try {
     const response = await fetch("api/users/login", {
       method: "POST",
-      headers: { "Content-Type" : "application/json"},
-      body: JSON.stringify({
-        username,
-        password
-      }),
-    });
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw err;
-  }
-}
-
-export async function registerUser( username, password, email ) {
-  try {
-    const response = await fetch("api/users/register", {
-      method: "POST",
-      headers: { "Content-Type" : "application/json"},
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         username,
         password,
-        email
       }),
     });
 
     const data = await response.json();
+    console.log(data, "data in loginUser");
     return data;
   } catch (error) {
-    throw err;
+    throw error;
+  }
+}
+
+export async function registerUser(username, password, email) {
+  try {
+    const response = await fetch("api/users/register", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username,
+        password,
+        email,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data, "data in registeruser");
+    return data;
+  } catch (error) {
+    throw error;
   }
 }

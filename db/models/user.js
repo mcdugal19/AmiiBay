@@ -66,7 +66,6 @@ async function getUserByUsername(username) {
     `,
       [username]
     );
-    delete user.password;
     return user;
   } catch (error) {
     console.error("Problem getting User by Username", error);
