@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { fetchAllProducts } from "../../axios-services";
+import SingleProductCard from "./SingleProductCard";
 
-const AllProducts = (props) => {
+const AllProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -18,26 +19,13 @@ const AllProducts = (props) => {
   }, []);
 
   return (
-    <div className="all-products-page">
-      {products.map((product, idx) => {
-        return (
-          <span key={`all-amiibos[${idx}]`} className="single-product">
-            <span>
-              <h3>{product.name}</h3>
-              {product.variation ? (
-                <h4>{product.variation}</h4>
-              ) : (
-                <h4>-----</h4>
-              )}
-              <p>{product.game}</p>
-            </span>
-            <span>
-              <img src={product.image} alt={`${product.name} amiibo image`} />
-              <h5>{product.price}</h5>
-            </span>
-          </span>
-        );
-      })}
+    <div className="container">
+      <div className="all-products-page">
+      {/* <Search routines={routines} setRoutines={setRoutines} /> */}
+        {products.map((product, idx) => {
+          return <SingleProductCard key={idx} product={product} />;
+        })}
+      </div>
     </div>
   );
 };

@@ -6,17 +6,23 @@ import { Routes, Route } from "react-router-dom";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
+
+
+import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register, Logout } from "./";
+
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
 
   return (
+
     <div className="app-container">
       <h1>Hello, World!</h1>
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
+        <Route path="/singleProduct" element={<SingleProductCard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
