@@ -6,6 +6,7 @@ const Login = () => {
   const { setUser, setIsLoggedIn, isLoggedIn } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+ 
 
   return (
     <div className="login-page">
@@ -44,6 +45,7 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
+          
           <button type="submit">Log in</button>
         </form>
       </div>

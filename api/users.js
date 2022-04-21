@@ -8,9 +8,9 @@ const { authRequired } = require("./utils");
 
 usersRouter.post("/register", async (req, res, next) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, email } = req.body;
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
-    const user = await User.createUser({ username, password: hashedPassword });
+    const user = await User.createUser({ username, password: hashedPassword, email });
 
     delete user.password;
 
