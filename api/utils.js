@@ -8,8 +8,6 @@ const authRequired = async (req, res, next) => {
     if (id) {
       req.user = await getUserById(id);
       next();
-    } else {
-      next(error);
     }
   } catch (error) {
     res.status(401).send({
@@ -18,7 +16,22 @@ const authRequired = async (req, res, next) => {
     });
     return;
   }
-  next();
 };
 
-module.exports = { authRequired };
+const adminRequired = async (req, res, next) => {
+  const token = req.signedCookies.token;
+  try {
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    if (user.isAdmin) {
+      req.user = await getUserById(user.id);
+      next();
+    }
+  } catch (error) {
+    res.status(401).send({
+      message: "Requires admin account",
+    });
+    return;
+  }
+};
+
+module.exports = { authRequired, adminRequired };
