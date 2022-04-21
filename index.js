@@ -36,6 +36,16 @@ const { client } = require("./db");
 // connect to the server
 const PORT = process.env.PORT || 4000;
 
+server.use((error, req, res, next) => {
+  if (res.statusCode < 400) res.status(500);
+  res.send({
+    error: error.message,
+    name: error.name,
+    message: error.message,
+    table: error.table,
+  });
+});
+
 // define a server handle to close open tcp connection after unit tests have run
 const handle = server.listen(PORT, async () => {
   console.log(`Server is running on ${PORT}!`);
