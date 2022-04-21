@@ -1,8 +1,10 @@
+const { TestScheduler } = require("jest");
 const {
   client,
   // declare your model imports here
   // for example, User
   Products,
+  User,
 } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
@@ -23,7 +25,8 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL
+      email VARCHAR(255) NOT NULL,
+      "isAdmin" BOOLEAN DEFAULT false
     );
 
     CREATE TABLE products(
@@ -77,6 +80,7 @@ async function buildTables() {
 }
 
 async function populateInitialData() {
+  console.log("Seeding database...");
   console.log("Seeding products...");
   try {
     const amiibos = await fetchAmiibos();
@@ -90,11 +94,24 @@ async function populateInitialData() {
       console.log("Seeded products!");
     }
 
+    console.log("Seeding users...");
+
+    const usersToCreate = [
+      { username: "derk", password: "test", email: "asdf@gmail.com" },
+      { username: "Joel", password: "test", email: "asdf@gmail.com" },
+      { username: "Lance", password: "test", email: "asdf@gmail.com" },
+    ];
+
+    const users = await Promise.all(usersToCreate.map(User.createUser));
+    console.log("Seeded users!");
+    const admin = await User.updateUser({ id: 1, isAdmin: true });
+    console.log(admin);
+    console.log("Seeded database!");
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:
     // const user1 = await User.createUser({ ...user info goes here... })
   } catch (error) {
-    console.error("Problem seeding products...", error);
+    console.error("Problem seeding database...", error);
   }
 }
 

@@ -1,6 +1,7 @@
 // grab our db client connection to use with our adapters
 const client = require("../client");
-
+const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
 async function getAllUsers() {
   try {
     const { rows } = await client.query(`
@@ -14,6 +15,7 @@ async function getAllUsers() {
 
 async function createUser({ username, password, email }) {
   try {
+    const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const {
       rows: [user],
     } = await client.query(
@@ -23,7 +25,7 @@ async function createUser({ username, password, email }) {
     ON CONFLICT (username) DO NOTHING
     RETURNING *;
     `,
-      [username, password, email]
+      [username, hashedPassword, email]
     );
     delete user.password;
     return user;
@@ -62,13 +64,40 @@ async function getUserByUsername(username) {
     } = await client.query(
       `
     SELECT * FROM users
-    WHERE username = $1
+    WHERE username = $1;
     `,
       [username]
     );
     return user;
   } catch (error) {
     console.error("Problem getting User by Username", error);
+  }
+}
+
+async function getUser({ username, password }) {
+  try {
+    const user = await getUserByUsername(username);
+    const hashedPassword = user.password;
+    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+    if (passwordsMatch) {
+      const {
+        rows: [user],
+      } = await client.query(
+        `
+                SELECT *
+                FROM users
+                WHERE username = $1
+                AND password = $2;
+            `,
+        [username, hashedPassword]
+      );
+      delete user.password;
+      return user;
+    } else {
+      throw new Error("Passwords did not match...");
+    }
+  } catch (error) {
+    console.error("Problem getting user...", error);
   }
 }
 
@@ -88,6 +117,7 @@ async function deleteUser(id) {
 
 async function updateUser(fields = {}) {
   const { id } = fields;
+  delete fields.id;
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
@@ -95,7 +125,7 @@ async function updateUser(fields = {}) {
     return;
   }
   try {
-    if (setString > 0) {
+    if (setString.length > 0) {
       const {
         rows: [user],
       } = await client.query(
@@ -121,4 +151,5 @@ module.exports = {
   getUserById,
   getUserByUsername,
   updateUser,
+  getUser,
 };

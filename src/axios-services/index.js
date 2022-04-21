@@ -1,5 +1,5 @@
 import axios from "axios";
-
+const api_url = "http://localhost:3000";
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
@@ -29,7 +29,7 @@ export async function getAPIHealth() {
 
 export async function getMe() {
   try {
-    const response = await fetch("api/users/me");
+    const response = await fetch(`${api_url}/api/users/me`);
     const data = response.json();
     return data;
   } catch (error) {
@@ -39,7 +39,7 @@ export async function getMe() {
 
 export async function loginUser(username, password) {
   try {
-    const response = await fetch("api/users/login", {
+    const response = await fetch(`${api_url}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -58,7 +58,7 @@ export async function loginUser(username, password) {
 
 export async function registerUser(username, password, email) {
   try {
-    const response = await fetch("api/users/register", {
+    const response = await fetch(`${api_url}/api/users/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -71,6 +71,14 @@ export async function registerUser(username, password, email) {
     const data = await response.json();
     console.log(data, "data in registeruser");
     return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function logoutUser() {
+  try {
+    await fetch(`${api_url}/api/users/logout`);
   } catch (error) {
     throw error;
   }
