@@ -1,0 +1,37 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+   body {
+    background-color: lightblue;
+  }
+
+  /* Products Container Body */
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: auto;
+    width: 100%;
+    padding: 0;
+  } 
+
+  /* Single Product Card */
+  .single-product {
+    background-color: #f2f2f2;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    border:solid black 2px;
+  }
+
+  .photo {
+      height: 100px;
+      width: 100px;
+  }
