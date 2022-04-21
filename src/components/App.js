@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
+import { Login, Register } from "./"
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -30,6 +31,8 @@ const App = () => {
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
     </div>
   );
