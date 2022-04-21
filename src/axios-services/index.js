@@ -83,3 +83,11 @@ export async function logoutUser() {
     throw error;
   }
 }
+
+// export async function processPayment() {
+//   try {
+//     await fetch(`${api_url}`)
+//   } catch (error) {
+//     throw error;
+//   }
+// }
