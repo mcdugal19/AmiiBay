@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchAllProducts } from "../../axios-services";
 import SingleProductCard from "./SingleProductCard";
 
-const AllProducts = (props) => {
+const AllProducts = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {

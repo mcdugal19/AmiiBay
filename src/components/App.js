@@ -7,6 +7,7 @@ import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
 import { Login, Register } from "./"
+import SingleProductCard from "./products/SingleProductCard";
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
@@ -32,6 +33,7 @@ const App = () => {
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
+        <Route path="/singleProduct" element={<SingleProductCard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
