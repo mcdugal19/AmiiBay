@@ -127,3 +127,23 @@ export async function logoutUser() {
     throw error;
   }
 }
+
+export async function getAllUsers() {
+  try {
+    const response = await fetch(`${api_url}/api/users`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function giveAdminToUserId(id) {
+  try {
+    const response = await fetch(`${api_url}/api/users/admin/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

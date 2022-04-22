@@ -88,4 +88,15 @@ usersRouter.get("/me", authRequired, async (req, res, next) => {
     next(error);
   }
 });
+
+usersRouter.get("/", adminRequired, async (req, res, next) => {
+  try {
+    const users = await User.getAllUsers();
+    console.log(users);
+    res.send(users);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = usersRouter;
