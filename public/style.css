@@ -8,7 +8,7 @@
   }
 
    body {
-    background-color: lightblue;
+    background-color: #DECBB7;
   }
 
   /* Products Container Body */
@@ -37,4 +37,23 @@
       height: 100px;
       width: 100px;
   }
-  
+
+  /* Checkout Page */
+  .Checkout-button {
+    background-color: #f2f2f2;
+    border-radius: 10%;
+    align-items: center;
+    font-size: large;
+    padding: 2%;
+  }
+  .Checkout-button #text {
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+  }
+  input {
+    border-radius: 5%;
+    margin: 8px;
+    padding: 10px 10px 10px 20px;
+  }
+

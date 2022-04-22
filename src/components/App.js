@@ -9,8 +9,8 @@ import { AllProducts } from "./products";
 import { AddAdmin } from "./admin";
 
 import SingleProductCard from "./products/SingleProductCard";
-import { Login, Register, Logout } from "./";
-
+import { Login, Register } from "./";
+import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
 
 
@@ -21,14 +21,14 @@ const App = () => {
   return (
     <div className="app-container">
       <h1>Hello, World!</h1>
+      <NavBar />
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/singleProduct" element={<SingleProductCard />} />
-        {/* <Route path="/checkout" element={<Checkout />} /> */}
+        <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/logout" element={<Logout />} />
         <Route path="/admin" element={<AddAdmin />} />
       </Routes>
     </div>
