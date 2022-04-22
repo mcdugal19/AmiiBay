@@ -11,6 +11,10 @@ import { AddAdmin } from "./admin";
 import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register, Logout } from "./";
 
+import { Checkout } from "./checkout";
+
+
+
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
 
@@ -21,6 +25,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/singleProduct" element={<SingleProductCard />} />
+        {/* <Route path="/checkout" element={<Checkout />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />

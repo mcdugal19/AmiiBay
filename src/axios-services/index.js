@@ -128,6 +128,15 @@ export async function logoutUser() {
   }
 }
 
+
+// export async function processPayment() {
+//   try {
+//     await fetch(`${api_url}`)
+//   } catch (error) {
+//     throw error;
+//   }
+// }
+
 export async function getAllUsers() {
   try {
     const response = await fetch(`${api_url}/api/users`);
@@ -147,3 +156,4 @@ export async function giveAdminToUserId(id) {
     throw error;
   }
 }
+
