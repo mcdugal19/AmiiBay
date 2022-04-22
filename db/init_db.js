@@ -97,9 +97,17 @@ async function populateInitialData() {
     console.log("Seeding users...");
 
     const usersToCreate = [
-      { username: "derk", password: "test", email: "asdf@gmail.com" },
-      { username: "Joel", password: "test", email: "asdf@gmail.com" },
-      { username: "Lance", password: "test", email: "asdf@gmail.com" },
+      { username: "derk", password: "test", email: "asd2f@gmail.com" },
+      { username: "Joel", password: "test", email: "asd321f@gmail.com" },
+      { username: "Ederne", password: "test", email: "as1asddf@gmail.com" },
+      { username: "Zinoviy", password: "test", email: "asdfef@gmail.com" },
+      { username: "Theodosios", password: "test", email: "aasdfsdf@gmail.com" },
+      { username: "Hardwin", password: "test", email: "aedfssdf@gmail.com" },
+      { username: "Alard", password: "test", email: "asefsdfdf@gmail.com" },
+      { username: "Sinem", password: "test", email: "asdsdff@gmail.com" },
+      { username: "Zhivko", password: "test", email: "aersdf@gmail.com" },
+      { username: "Mari", password: "test", email: "arerwsdf@gmail.com" },
+      { username: "Ivanka", password: "test", email: "asdasdfsf@gmail.com" },
     ];
 
     const users = await Promise.all(usersToCreate.map(User.createUser));
