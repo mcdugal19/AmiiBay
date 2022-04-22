@@ -6,26 +6,30 @@ import { Routes, Route } from "react-router-dom";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
-
+import { AddAdmin } from "./admin";
 
 import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register, Logout } from "./";
+
+import { Checkout } from "./checkout";
+
 
 
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
 
   return (
-
     <div className="app-container">
       <h1>Hello, World!</h1>
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/singleProduct" element={<SingleProductCard />} />
+        {/* <Route path="/checkout" element={<Checkout />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/admin" element={<AddAdmin />} />
       </Routes>
     </div>
   );
