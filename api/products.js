@@ -1,7 +1,7 @@
 const express = require("express");
 const productsRouter = express.Router();
 const { Products } = require("../db");
-const { authRequired } = require("./utils");
+const { authRequired, adminRequired } = require("./utils");
 
 productsRouter.get("/", async (req, res, next) => {
   try {
@@ -12,7 +12,7 @@ productsRouter.get("/", async (req, res, next) => {
   }
 });
 
-productsRouter.post("/", authRequired, async (req, res, next) => {
+productsRouter.post("/", adminRequired, async (req, res, next) => {
   const { name, variation, game, image, description, price } = req.body;
   if (!name || !price) {
     next({
@@ -29,7 +29,8 @@ productsRouter.post("/", authRequired, async (req, res, next) => {
         description,
         price,
       });
-      res.send(product);
+
+      res.send({ message: "Successfully added product!", product });
     } catch (error) {
       next(error);
     }
@@ -53,7 +54,7 @@ productsRouter.get("/:game", async (req, res, next) => {
   }
 });
 
-productsRouter.patch("/:productId", authRequired, async (req, res, next) => {
+productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
   const { name, variation, game, image, description, price } = req.body;
 
@@ -80,22 +81,23 @@ productsRouter.patch("/:productId", authRequired, async (req, res, next) => {
   }
 
   try {
-    const updatedProduct = await Products.updateProduct(updateObj);
-    if (updatedProduct) {
-      updatedProduct.message = "Successfully updated product!";
-      res.send(updatedProduct);
-    }
+    const product = await Products.updateProduct(updateObj);
+
+    res.send({ message: "Successfully updated product!", product });
   } catch (error) {
     next(error);
   }
 });
 
-productsRouter.delete("/:productId", authRequired, async (req, res, next) => {
+productsRouter.delete("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
   try {
-    const deletedProduct = await Products.deleteProduct(productId);
-    deletedProduct.message = "Product successfully deleted from the database.";
-    res.send(deletedProduct);
+    const product = await Products.deleteProduct(productId);
+
+    res.send({
+      message: "Product successfully deleted from the database.",
+      product,
+    });
   } catch (error) {
     next(error);
   }

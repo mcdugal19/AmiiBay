@@ -17,6 +17,50 @@ export async function fetchAllProducts() {
   }
 }
 
+export async function addNewProduct(productObj) {
+  try {
+    const response = await fetch(`${api_url}/products`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productObj }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteProduct(productId) {
+  try {
+    const response = await fetch(`${api_url}/products/${productId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateProduct(productId, updateObj) {
+  try {
+    const response = await fetch(`${api_url}/products/${productId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateObj),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function getAPIHealth() {
   try {
     const { data } = await axios.get("/api/health");
@@ -84,6 +128,7 @@ export async function logoutUser() {
   }
 }
 
+
 // export async function processPayment() {
 //   try {
 //     await fetch(`${api_url}`)
@@ -91,3 +136,24 @@ export async function logoutUser() {
 //     throw error;
 //   }
 // }
+
+export async function getAllUsers() {
+  try {
+    const response = await fetch(`${api_url}/api/users`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function giveAdminToUserId(id) {
+  try {
+    const response = await fetch(`${api_url}/api/users/admin/${id}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
