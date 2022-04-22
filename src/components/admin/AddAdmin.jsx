@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { getAllUsers, giveAdminToUserId } from "../../axios-services";
+
 const AddAdmin = () => {
   const [userId, setUserId] = useState("");
   const [userList, setUserList] = useState([]);
@@ -14,39 +15,30 @@ const AddAdmin = () => {
     initializeUsers();
   }, []);
 
-  async function handleSubmit(id) {
-    await giveAdminToUserId(id);
-  }
-
   return (
-    <fieldset>
-      <label>Give Admin to:</label>
-      <select
-        name="users"
-        id="select-users"
-        value={userId}
-        onChange={(event) => {
-          setUserId(event.target.value);
-        }}
-      >
-        <option value="null"></option>
-        {userList.map((user, index) => {
+    <div className="user-table">
+      <table>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+          <th>is Admin?</th>
+          <th>Make Admin</th>
+          <th>Delete User</th>
+        </tr>
+        {userList.map((user, idx) => {
+          console.log(user.isAdmin);
           return (
-            <option key={index} value={user.id}>
-              {user.username}
-            </option>
+            <tr key={idx}>
+              <td>{user.username}</td>
+              <td>{user.email}</td>
+              <td>{`${user.isAdmin}`}</td>
+              <td>{"placeholder"}</td>
+              <td>{"placeholder"}</td>
+            </tr>
           );
         })}
-      </select>
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          handleSubmit(userId);
-        }}
-      >
-        <button type=" Submit">Give Admin</button>
-      </form>
-    </fieldset>
+      </table>
+    </div>
   );
 };
 
