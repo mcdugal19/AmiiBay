@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { registerUser } from "../axios-services";
 import useAuth from "../hooks/useAuth";
+
 const Register = () => {
   const { setUser, setIsLoggedIn, isLoggedIn } = useAuth();
   const [username, setUsername] = useState("");

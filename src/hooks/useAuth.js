@@ -4,8 +4,16 @@ import AuthContext from "../AuthContext";
 // const context = useContext(AuthContext)
 
 const useAuth = () => {
-  const { user, setUser, isLoggedIn, setIsLoggedIn, products, setProducts } =
-    useContext(AuthContext);
+  const {
+    user,
+    setUser,
+    isLoggedIn,
+    setIsLoggedIn,
+    products,
+    setProducts,
+    cart,
+    setCart,
+  } = useContext(AuthContext);
 
   return {
     user,
@@ -14,6 +22,8 @@ const useAuth = () => {
     setIsLoggedIn,
     products,
     setProducts,
+    cart,
+    setCart,
   };
 };
 

@@ -1,18 +1,21 @@
 import AuthContext from "../AuthContext";
 import { useState, useEffect } from "react";
 import { getMe, fetchAllProducts } from "../axios-services";
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     async function getUser() {
       try {
         const response = await getMe();
-        if (response) {
+        if (response.id) {
           setUser(response);
           setIsLoggedIn(true);
+          setCart(response.cart);
         }
       } catch (error) {
         throw error;
@@ -20,6 +23,9 @@ const AuthProvider = ({ children }) => {
     }
     getUser();
   }, []);
+
+  console.log("user outside useEffect:", user);
+  console.log("cart outside useEffect:", cart);
 
   useEffect(() => {
     async function getProducts() {
@@ -42,6 +48,8 @@ const AuthProvider = ({ children }) => {
         setIsLoggedIn,
         products,
         setProducts,
+        cart,
+        setCart,
       }}
     >
       {children}

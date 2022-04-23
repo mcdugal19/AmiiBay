@@ -19,7 +19,7 @@ export async function fetchAllProducts() {
 
 export async function addNewProduct(productObj) {
   try {
-    const response = await fetch(`${api_url}/products`, {
+    const response = await fetch(`${api_url}/api/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,7 +35,7 @@ export async function addNewProduct(productObj) {
 
 export async function deleteProduct(productId) {
   try {
-    const response = await fetch(`${api_url}/products/${productId}`, {
+    const response = await fetch(`${api_url}/api/products/${productId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -47,7 +47,7 @@ export async function deleteProduct(productId) {
 
 export async function updateProduct(productId, updateObj) {
   try {
-    const response = await fetch(`${api_url}/products/${productId}`, {
+    const response = await fetch(`${api_url}/api/products/${productId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

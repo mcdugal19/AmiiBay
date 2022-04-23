@@ -5,6 +5,7 @@ const {
   // for example, User
   Products,
   User,
+  Cart
 } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
@@ -17,6 +18,7 @@ async function buildTables() {
     DROP TABLE IF EXISTS guest_orders;
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS products_categories;
+    DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS products;
     DROP TABLE IF EXISTS categories;
@@ -39,18 +41,6 @@ async function buildTables() {
       price MONEY NOT NULL
     );
 
-    CREATE TABLE categories(
-      id SERIAL PRIMARY KEY,
-      name VARCHAR(255) NOT NULL
-    );
-
-    CREATE TABLE products_categories(
-      id SERIAL PRIMARY KEY,
-      "productId" INTEGER REFERENCES products(id),
-      "categoryId" INTEGER REFERENCES categories(id),
-      CONSTRAINT product_category UNIQUE ("productId", "categoryId")
-    );
-
     CREATE TABLE reviews(
       id SERIAL PRIMARY KEY,
       "productId" INTEGER REFERENCES products(id),
@@ -60,15 +50,17 @@ async function buildTables() {
       rating INTEGER DEFAULT null
     );
 
-    CREATE TABLE guest_orders(
-      id SERIAL PRIMARY KEY,
-      "productId" INTEGER REFERENCES products(id)
-    );
-
     CREATE TABLE users_orders(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
       "productId" INTEGER REFERENCES products(id)
+    );
+
+    CREATE TABLE cart(
+      id SERIAL PRIMARY KEY,
+      "userId" INTEGER REFERENCES users(id),
+      "productId" INTEGER REFERENCES products(id),
+      quantity INTEGER
     );
     `);
     // drop tables in correct order
@@ -113,7 +105,7 @@ async function populateInitialData() {
     const users = await Promise.all(usersToCreate.map(User.createUser));
     console.log("Seeded users!");
     const admin = await User.updateUser({ id: 1, isAdmin: true });
-    console.log(admin);
+    console.log("Admin: ", admin);
     console.log("Seeded database!");
     // create useful starting data by leveraging your
     // Model.method() adapters to seed your db, for example:

@@ -28,6 +28,7 @@ async function createUser({ username, password, email }) {
       [username, hashedPassword, email]
     );
     delete user.password;
+    user.cart = [];
     return user;
   } catch (error) {
     console.error("Problem creating user", error);
@@ -51,6 +52,7 @@ async function getUserById(id) {
     }
 
     delete user.password;
+    user.cart = [];
     return user;
   } catch (error) {
     console.error("Problem getting user by id", error);
@@ -92,6 +94,7 @@ async function getUser({ username, password }) {
         [username, hashedPassword]
       );
       delete user.password;
+      user.cart = [];
       return user;
     } else {
       throw new Error("Passwords did not match...");
