@@ -1,44 +1,61 @@
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { updateItemQuantity } from "../../axios-services";
 
-const UpdateQuantity = () => {
-  const [clicked, setClicked] = useState(false);
-  const [updateQuantity, setUpdateQuantity] = useState(1);
+const UpdateQuantity = ({ item }) => {
+  const { isLoggedIn, cart, setCart } = useAuth();
+  const [updateQuantity, setUpdateQuantity] = useState(item.quantity);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    try {
-      setClicked(!clicked);
-    } catch (error) {
-      console.error(error);
+    if (item.quantity === updateQuantity) {
+      return;
+    }
+    if (isLoggedIn) {
+      try {
+        const response = await updateItemQuantity(item.id, updateQuantity);
+        if (response.message === "Successfully updated quantity!") {
+          const filteredCart = cart.map((product) => {
+            if (product.id === item.id) {
+              product.quantity = updateQuantity;
+              return product;
+            } else {
+              return product;
+            }
+          });
+          setCart(filteredCart);
+        } else {
+          alert(response.message);
+        }
+      } catch (error) {
+        throw error;
+      }
+    } else {
+      const filteredGuestCart = cart.map((product) => {
+        if (product.id === item.id) {
+          product.quantity = updateQuantity;
+          return product;
+        } else {
+          return product;
+        }
+      });
+      setCart(filteredGuestCart);
     }
   }
 
   return (
-    <>
-      {clicked ? (
-        <form onSubmit={handleSubmit}>
-          <input
-            type="number"
-            min="1"
-            step="1"
-            value={updateQuantity}
-            onChange={(e) => {
-              setUpdateQuantity(e.target.value);
-            }}
-          />
-          <button type="submit">Update</button>
-        </form>
-      ) : (
-        <button
-          onClick={() => {
-            setClicked(!clicked);
-          }}
-        >
-          Update Quantity?
-        </button>
-      )}
-    </>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="number"
+        min="1"
+        step="1"
+        value={updateQuantity}
+        onChange={(e) => {
+          setUpdateQuantity(e.target.value);
+        }}
+      />
+      <button type="submit">Update</button>
+    </form>
   );
 };
 

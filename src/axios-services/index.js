@@ -128,7 +128,6 @@ export async function logoutUser() {
   }
 }
 
-
 // export async function processPayment() {
 //   try {
 //     await fetch(`${api_url}`)
@@ -157,3 +156,72 @@ export async function giveAdminToUserId(id) {
   }
 }
 
+// Cart fetches
+
+export async function addItemToCart({ productId, quantity }) {
+  try {
+    const response = await fetch(`${api_url}/api/cart`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, quantity }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function removeItemFromCart(productId) {
+  try {
+    const response = await fetch(`${api_url}/api/cart/${productId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateItemQuantity(productId, quantity) {
+  try {
+    const response = await fetch(`${api_url}/api/cart/${productId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ quantity: quantity }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function clearAllItemsInCart() {
+  try {
+    const response = await fetch(`${api_url}/api/cart`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function adminClearUserCart(userId) {
+  try {
+    const response = await fetch(`${api_url}/api/cart/admin/${userId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
