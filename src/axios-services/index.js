@@ -38,7 +38,7 @@ export async function addNewProduct(productObj) {
 
 export async function deleteProduct(productId) {
   try {
-    const response = await fetch(`${api_url}/products/${productId}`, {
+    const response = await fetch(`${api_url}/api/products/${productId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -50,7 +50,7 @@ export async function deleteProduct(productId) {
 
 export async function updateProduct(productId, updateObj) {
   try {
-    const response = await fetch(`${api_url}/products/${productId}`, {
+    const response = await fetch(`${api_url}/api/products/${productId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -167,9 +167,7 @@ export async function deleteUser(id) {
         "Content-Type": "application/json",
       },
     });
-    console.log(response, "response");
     const data = await response.json();
-    console.log(data, "data");
     return data;
   } catch (error) {
     throw error;

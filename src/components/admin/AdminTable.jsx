@@ -10,7 +10,6 @@ const AdminTable = () => {
 
   async function initializeUsers() {
     let users = await getAllUsers();
-    console.log(users, "user");
     setUserList(users);
   }
 

@@ -101,18 +101,21 @@ async function updateProduct(fields = {}) {
 
 async function deleteProduct(id) {
   try {
-    const {
-      rows: [product],
-    } = await client.query(
+    console.log("IN THE DB");
+    console.log(typeof id);
+    await client.query(
       `
-      DELETE products
+      DELETE FROM products
       WHERE id=$1
       RETURNING *;
     `,
       [id]
     );
-    product.message = "Successfully deleted product!";
-    return product;
+    const deleted = {
+      id: parseInt(id),
+      message: "Successfully deleted product!",
+    };
+    return deleted;
   } catch (error) {
     console.error("Problem deleting product...", error);
   }

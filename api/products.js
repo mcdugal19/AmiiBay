@@ -94,6 +94,7 @@ productsRouter.delete("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
   try {
     const product = await Products.deleteProduct(productId);
+    console.log(product, "PRODUCT IN API");
 
     res.send({
       message: "Product successfully deleted from the database.",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AdminTable,
   AddProduct,
@@ -7,12 +7,13 @@ import {
   ProductTable,
 } from "./index";
 const Admin = () => {
+  const [productId, setProductId] = useState(0);
   return (
     <div>
       <AddProduct />
-      <ProductTable />
+      <ProductTable setProductId={setProductId} />
       {/* <DeleteProduct /> */}
-      {/* <UpdateProduct /> */}
+      <UpdateProduct productId={productId} setProductId={setProductId} />
       <AdminTable />
     </div>
   );

@@ -22,7 +22,6 @@ const AddProduct = () => {
         description,
         price,
       });
-      console.log(response, "response");
       if (response.message === "Successfully added product!") {
         setMessage(response.message);
         const updatedList = [response.product, ...products];
@@ -32,7 +31,6 @@ const AddProduct = () => {
         setGame("");
         setImage("");
         setDescription("");
-        setPrice("");
       } else {
         setMessage(response.message);
       }

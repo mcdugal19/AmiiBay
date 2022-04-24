@@ -1,7 +1,13 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
-const ProductTable = () => {
+import { DeleteProduct } from "./index";
+const ProductTable = ({ setProductId }) => {
   const { products, setProducts } = useAuth();
+
+  function handleUpdateProduct(id) {
+    setProductId(id);
+  }
+
   return (
     <div className="product-table">
       <table>
@@ -31,8 +37,19 @@ const ProductTable = () => {
               </td>
               <td>{product.description}</td>
               <td>{product.price}</td>
-              <td>{"placeholder"}</td>
-              <td>{"placeholder"}</td>
+              <td>
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    handleUpdateProduct(product.id);
+                  }}
+                >
+                  <button type="submit">Update Product</button>
+                </form>
+              </td>
+              <td>
+                <DeleteProduct productId={product.id} />
+              </td>
             </tr>
           );
         })}
