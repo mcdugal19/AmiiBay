@@ -45,7 +45,7 @@ async function changeProductQuantity({ userId, productId, quantity }) {
       `
             UPDATE cart
             SET "quantity"=$1
-            WHERE "userId=$2
+            WHERE "userId"=$2
             AND "productId"=$3
             RETURNING *;
         `,
@@ -57,4 +57,41 @@ async function changeProductQuantity({ userId, productId, quantity }) {
   }
 }
 
-module.exports = { addToCart, removeFromCart };
+async function getCartByUserId(userId) {
+  try {
+    const { rows } = await client.query(
+      `
+            SELECT * FROM cart
+            WHERE "userId"=$1;
+        `,
+      [userId]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Problem getting cart by userId...", error);
+  }
+}
+
+async function clearUserCart(userId) {
+  try {
+    const { rows } = await client.query(
+      `
+            DELETE FROM cart
+            WHERE "userId"=$1
+            RETURNING *;
+        `,
+      [userId]
+    );
+    return rows;
+  } catch (error) {
+    console.error("Problem clearing user's cart...", error);
+  }
+}
+
+module.exports = {
+  addToCart,
+  removeFromCart,
+  changeProductQuantity,
+  getCartByUserId,
+  clearUserCart,
+};

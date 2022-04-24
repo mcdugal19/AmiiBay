@@ -37,23 +37,24 @@ async function createUser({ username, password, email }) {
 
 async function getUserById(id) {
   try {
-    const {
-      rows: [user],
-    } = await client.query(
-      `
-    SELECT * FROM users
-    WHERE id = $1
-    `,
-      [id]
-    );
+    return getUserWithCart(id);
+    // const {
+    //   rows: [user],
+    // } = await client.query(
+    //   `
+    // SELECT * FROM users
+    // WHERE id = $1
+    // `,
+    //   [id]
+    // );
 
-    if (!user) {
-      return null;
-    }
+    // if (!user) {
+    //   return null;
+    // }
 
-    delete user.password;
-    user.cart = [];
-    return user;
+    // delete user.password;
+    // user.cart = [];
+    // return user;
   } catch (error) {
     console.error("Problem getting user by id", error);
   }
@@ -93,9 +94,11 @@ async function getUser({ username, password }) {
             `,
         [username, hashedPassword]
       );
-      delete user.password;
-      user.cart = [];
-      return user;
+
+      return getUserWithCart(user.id);
+      // delete user.password;
+      // user.cart = [];
+      // return user;
     } else {
       throw new Error("Passwords did not match...");
     }
@@ -147,6 +150,79 @@ async function updateUser(fields = {}) {
   }
 }
 
+function mapOverUserRows(rows) {
+  let user = {};
+
+  for (let row of rows) {
+    if (!user.id) {
+      user = {
+        id: row.id,
+        username: row.username,
+        email: row.email,
+        isAdmin: row.isAdmin,
+        cart: [],
+      };
+      if (row.productId) {
+        user.cart.push({
+          id: row.productId,
+          name: row.name,
+          variation: row.variation,
+          game: row.game,
+          image: row.image,
+          description: row.description,
+          price: row.price,
+          quantity: row.quantity,
+        });
+      }
+    } else {
+      user.cart.push({
+        id: row.productId,
+        name: row.name,
+        variation: row.variation,
+        game: row.game,
+        image: row.image,
+        description: row.description,
+        price: row.price,
+        quantity: row.quantity,
+      });
+    }
+  }
+
+  return user;
+}
+
+async function getUserWithCart(id) {
+  try {
+    const { rows } = await client.query(
+      `
+      SELECT users.id,
+        users.username,
+        users.email,
+        users."isAdmin",
+        products.id AS "productId",
+        products.name,
+        products.variation,
+        products.game,
+        products.image,
+        products.description,
+        products.price,
+        cart.quantity
+      FROM users
+      JOIN cart
+      ON users.id=cart."userId"
+      JOIN products
+      ON cart."productId"=products.id
+      WHERE users.id=$1;
+    `,
+      [id]
+    );
+
+    return mapOverUserRows(rows);
+  } catch (error) {
+    console.error("Problem getting user with cart...", error);
+  }
+}
+
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
@@ -155,4 +231,5 @@ module.exports = {
   getUserByUsername,
   updateUser,
   getUser,
+  getUserWithCart,
 };

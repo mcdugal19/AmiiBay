@@ -21,5 +21,7 @@ const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
 const checkoutRouter = require("./checkout");
 apiRouter.use("/checkout", checkoutRouter);
+const cartRouter = require("./cart");
+apiRouter.use("/cart", cartRouter);
 
 module.exports = apiRouter;
