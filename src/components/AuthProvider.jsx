@@ -24,9 +24,6 @@ const AuthProvider = ({ children }) => {
     getUser();
   }, []);
 
-  console.log("user outside useEffect:", user);
-  console.log("cart outside useEffect:", cart);
-
   useEffect(() => {
     async function getProducts() {
       try {

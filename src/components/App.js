@@ -7,6 +7,7 @@ import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
 import { AddAdmin } from "./admin";
+import { Cart } from "./cart";
 
 import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register } from "./";
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/admin" element={<AddAdmin />} />
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </div>
   );

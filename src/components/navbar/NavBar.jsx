@@ -19,8 +19,14 @@ const NavBar = () => {
       ) : (
         <Logout />
       )}
-      <Link to={"/checkout"}>
-        <img id="cart-icon" src={cart} width={"25px"} height={"25px"} alt="cart icon" />
+      <Link to={"/cart"}>
+        <img
+          id="cart-icon"
+          src={cart}
+          width={"25px"}
+          height={"25px"}
+          alt="cart icon"
+        />
       </Link>
     </nav>
   );

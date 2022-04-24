@@ -82,7 +82,8 @@ async function clearUserCart(userId) {
         `,
       [userId]
     );
-    return rows;
+
+    return rows && rows.length > 0 ? true : false;
   } catch (error) {
     console.error("Problem clearing user's cart...", error);
   }
