@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { getAllUsers, giveAdminToUserId } from "../../axios-services";
+import {
+  getAllUsers,
+  giveAdminToUserId,
+  deleteUser,
+} from "../../axios-services";
 
-const AddAdmin = () => {
-  const [userId, setUserId] = useState("");
+const AdminTable = () => {
   const [userList, setUserList] = useState([]);
 
   async function initializeUsers() {
@@ -17,12 +20,18 @@ const AddAdmin = () => {
 
   async function handleSubmit(id) {
     await giveAdminToUserId(id);
+    initializeUsers();
+  }
+
+  async function handleDelete(id) {
+    await deleteUser(id);
+    initializeUsers();
   }
 
   return (
     <div className="user-table">
       <table>
-        <tr>
+        <tr className="table-headers">
           <th>Username</th>
           <th>Email</th>
           <th>is Admin?</th>
@@ -31,7 +40,7 @@ const AddAdmin = () => {
         </tr>
         {userList.map((user, idx) => {
           return (
-            <tr key={idx}>
+            <tr className="product-table-content" key={idx}>
               <td>{user.username}</td>
               <td>{user.email}</td>
               <td>{`${user.isAdmin}`}</td>
@@ -45,7 +54,16 @@ const AddAdmin = () => {
                   <button type="submit">Add Admin</button>
                 </form>
               </td>
-              <td>{"placeholder"}</td>
+              <td>
+                <form
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    handleDelete(user.id);
+                  }}
+                >
+                  <button type="submit">Delete User</button>
+                </form>
+              </td>
             </tr>
           );
         })}
@@ -54,4 +72,4 @@ const AddAdmin = () => {
   );
 };
 
-export default AddAdmin;
+export default AdminTable;

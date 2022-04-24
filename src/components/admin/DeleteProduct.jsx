@@ -1,7 +1,8 @@
 import React from "react";
 import { deleteProduct } from "../../axios-services";
-
-const DeleteProduct = ({ productId, products, setProducts }) => {
+import useAuth from "../../hooks/useAuth";
+const DeleteProduct = () => {
+  const { products, setProducts } = useAuth();
   // click handler
   const handleClick = async (e) => {
     e.preventDefault();

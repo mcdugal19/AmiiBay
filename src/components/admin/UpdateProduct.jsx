@@ -91,7 +91,7 @@ const UpdateProduct = ({ productId, products, setProducts }) => {
             setPrice(e.target.value);
           }}
         />
-        <button type="submit">Add Product</button>
+        <button type="submit">Update Product</button>
       </form>
       {message.length > 0 ? <small>{message}</small> : null}
     </div>

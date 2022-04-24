@@ -13,7 +13,8 @@ productsRouter.get("/", async (req, res, next) => {
 });
 
 productsRouter.post("/", adminRequired, async (req, res, next) => {
-  const { name, variation, game, image, description, price } = req.body;
+  const { productObj } = req.body;
+  const { name, variation, game, image, description, price } = productObj;
   if (!name || !price) {
     next({
       name: "RequiredFields",
