@@ -9,6 +9,35 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 server.use(cors());
 
+// enable stripe
+// const stripe = require("stripe")('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
+//const calculateOrderAmount = (cart) => {
+  // Replace this constant with a calculation of the order's amount
+  // Calculate the order total on the server to prevent
+  // people from directly manipulating the amount on the client
+  //const {  }
+ 
+  //return 1400;
+//};
+
+// app.post("/create-payment-intent", authRequired, async (req, res) => {
+//   const { cart } = req.user;
+
+//   // Create a PaymentIntent with the order amount and currency
+//   const paymentIntent = await stripe.paymentIntents.create({
+//     amount: calculateOrderAmount(items),
+//     currency: "eur",
+//     automatic_payment_methods: {
+//       enabled: true,
+//     },
+//   });
+
+//   res.send({
+//     clientSecret: paymentIntent.client_secret,
+//   });
+// });
+
 // create logs for everything
 const morgan = require("morgan");
 server.use(morgan("dev"));
@@ -32,6 +61,7 @@ server.use((req, res, next) => {
 
 // bring in the DB connection
 const { client } = require("./db");
+// const { default: useAuth } = require("./src/hooks/useAuth");
 
 // connect to the server
 const PORT = process.env.PORT || 4000;

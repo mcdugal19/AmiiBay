@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { CartItem, ClearCart } from "./";
 
 const Cart = () => {
   const { cart, user, isLoggedIn } = useAuth();
-  const [clicked, setClicked] = useState(false);
   const [total, setTotal] = useState(0);
 
-  function handleClick() {
-    setClicked(!clicked);
-  }
 
   function getTotal() {
     const prices = cart.map((item) => {
@@ -40,8 +37,10 @@ const Cart = () => {
             <h2>Guest's Cart</h2>
           )}
           <br />
-          <button onClick={handleClick}>Ready to Checkout?</button>
-          {clicked ? <small>I was clicked!</small> : null}
+          {/* <button onClick={handleClick}>Ready to Checkout?</button>
+          {clicked ? <small>I was clicked!</small> : null} */}
+          <Link to={"/checkout"}>Ready to Checkout?</Link>
+          <br></br>
           <ClearCart />
           <div className="cart-container">
             <table>
