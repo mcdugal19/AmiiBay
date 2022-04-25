@@ -5,12 +5,9 @@ import { Routes, Route } from "react-router-dom";
 // where each adapter fetches specific info from our express server's /api route
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
-import { AllProducts } from "./products";
+import { AllProducts, SingleProduct } from "./products";
 import { Cart } from "./cart";
 import { Admin } from "./admin";
-
-
-import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
@@ -25,7 +22,7 @@ const App = () => {
       <p>API Status: {APIHealth}</p>
       <Routes>
         <Route path="/" element={<AllProducts />} />
-        <Route path="/singleProduct" element={<SingleProductCard />} />
+        <Route path="/product/:productId" element={<SingleProduct />} />
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
