@@ -8,7 +8,7 @@ const NavBar = () => {
   const { user, isLoggedIn } = useAuth();
 
   return (
-    <nav>
+    <nav className="navbar">
       <Link to={"/"}>Home</Link>
       {user.isAdmin ? <Link to={"/admin"}>Admin</Link> : null}
       {!isLoggedIn ? (
@@ -19,7 +19,7 @@ const NavBar = () => {
       ) : (
         <Logout />
       )}
-      <Link to={"/cart"}>
+      <Link to={"/cart"}>Cart
         <img
           id="cart-icon"
           src={cart}

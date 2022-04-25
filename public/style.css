@@ -4,12 +4,82 @@
     padding: 0;
     box-sizing: border-box;
     border-radius: 1rem;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'MuseoModerno', cursive;
+    color:#ea6153
   }
 
    body {
-    background-color: #DECBB7;
+    background-color: #f2f2f2;
   }
+
+/* HEADER */
+
+header {
+  padding-top: 5px;
+  font-size: xx-large;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: #03258c;
+  position: relative;
+  padding: 1rem;
+}
+
+
+.is-logged-in {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.user-icon{
+  height: 5rem;
+  width: 5rem;
+  border-radius: 25%;
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: #E6001E;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 1.5rem;
+  align-self: center;
+  width: 98vw;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin: 0.5rem 0;
+  ;
+}
+
+.navbar ul {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+  background-color: #E6001E;
+  list-style: none;
+
+}
+
+.navbar a {
+  color:#f2f2f2
+}
+
+.navbar a:hover{
+  color:#1f3b73
+}
+
+h2 {
+  color: #03258c;
+}
+
 
   /* Products Container Body */
   .container {
@@ -26,7 +96,7 @@
   #search {
     margin: 0.5rem;
     padding: 0.5rem;
-    background-color: #f2f2f2;
+    background-color: #E6001E;
     display: flex;
     color: #03258c;
     align-items: center;
@@ -45,10 +115,10 @@
 
   .button {
     color: #f2f2f2;
-    background-color: #C2352D;
+    background-color: #009BEB;
     border: 2px black;
-    padding: 0.2rem;
-    margin: 0.2rem;
+    padding: 0.5rem;
+    margin: 0.5rem;
   }
 
   /* Single Product Card */
