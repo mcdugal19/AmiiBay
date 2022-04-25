@@ -1,5 +1,6 @@
 import axios from "axios";
-const API_URL = process.env.API_URL || "http://localhost:3000/api";
+import { config } from "./Constants";
+const API_URL = config.url;
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
