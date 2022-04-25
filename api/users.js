@@ -83,6 +83,7 @@ usersRouter.get("/admin/:userId", adminRequired, async (req, res, next) => {
 
 usersRouter.get("/me", authRequired, async (req, res, next) => {
   try {
+    console.log("testing");
     res.send(req.user);
   } catch (error) {
     next(error);

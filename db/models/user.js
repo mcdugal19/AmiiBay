@@ -37,7 +37,7 @@ async function createUser({ username, password, email }) {
 
 async function getUserById(id) {
   try {
-    return getUserWithCart(id);
+    return await getUserWithCart(id);
     // const {
     //   rows: [user],
     // } = await client.query(
@@ -94,8 +94,8 @@ async function getUser({ username, password }) {
             `,
         [username, hashedPassword]
       );
-
-      return getUserWithCart(user.id);
+      console.log(getUserWithCart(user.id, "getUser function db"));
+      return await getUserWithCart(user.id);
       // delete user.password;
       // user.cart = [];
       // return user;
@@ -208,15 +208,14 @@ async function getUserWithCart(id) {
         products.price,
         cart.quantity
       FROM users
-      JOIN cart
+      LEFT JOIN cart
       ON users.id=cart."userId"
-      JOIN products
+      LEFT JOIN products
       ON cart."productId"=products.id
       WHERE users.id=$1;
     `,
       [id]
     );
-
     return mapOverUserRows(rows);
   } catch (error) {
     console.error("Problem getting user with cart...", error);

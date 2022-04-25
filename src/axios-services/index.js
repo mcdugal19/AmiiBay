@@ -77,7 +77,8 @@ export async function getAPIHealth() {
 export async function getMe() {
   try {
     const response = await fetch(`${api_url}/api/users/me`);
-    const data = response.json();
+    console.log(response, "res in getMe");
+    const data = await response.json();
     return data;
   } catch (error) {
     console.error(error);
@@ -237,10 +238,9 @@ export async function deleteUser(id) {
         "Content-Type": "application/json",
       },
     });
-    const data = await response.json()
+    const data = await response.json();
     return data;
   } catch (error) {
     throw error;
   }
 }
-
