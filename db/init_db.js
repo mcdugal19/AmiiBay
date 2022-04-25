@@ -91,7 +91,7 @@ async function populateInitialData() {
     const usersToCreate = [
       { username: "derk", password: "test", email: "asd2f@gmail.com" },
       { username: "Joel", password: "test", email: "asd321f@gmail.com" },
-      { username: "Ederne", password: "test", email: "as1asddf@gmail.com" },
+      { username: "Lance", password: "test", email: "as1asddf@gmail.com" },
       { username: "Zinoviy", password: "test", email: "asdfef@gmail.com" },
       { username: "Theodosios", password: "test", email: "aasdfsdf@gmail.com" },
       { username: "Hardwin", password: "test", email: "aedfssdf@gmail.com" },
@@ -105,8 +105,20 @@ async function populateInitialData() {
     const users = await Promise.all(usersToCreate.map(User.createUser));
     console.log("Seeded users!");
 
-    const admin = await User.updateUser({ id: 1, isAdmin: true });
-    console.log("Updated user 1 to admin: ", admin);
+    const adminAccount = await User.getUserByUsername("derk");
+    const adminAccount2 = await User.getUserByUsername("Joel");
+    const adminAccount3 = await User.getUserByUsername("Lance");
+
+    const admin = await User.updateUser({ id: adminAccount.id, isAdmin: true });
+    const admin2 = await User.updateUser({
+      id: adminAccount2.id,
+      isAdmin: true,
+    });
+    const admin3 = await User.updateUser({
+      id: adminAccount3.id,
+      isAdmin: true,
+    });
+    console.log("Updated users to admin: ", admin, admin2, admin3);
 
     const cartEntriesToCreate = [
       { userId: 2, productId: 1, quantity: 1 },
