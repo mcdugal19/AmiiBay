@@ -9,7 +9,34 @@ const { authRequired, adminRequired } = require("./utils");
 usersRouter.post("/register", async (req, res, next) => {
   try {
     const { username, password, email } = req.body;
-    // const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+    const _user = await User.getUserByUsername(username);
+    const _userEmail = await User.getUserByEmail(email);
+    console.log(email.includes("@", "IN USER API"));
+    if (!email.includes("@")) {
+      throw {
+        name: "ValidEmailError",
+        message: "Not a valid email",
+      };
+    }
+    if (_user) {
+      throw {
+        name: "UserExistsError",
+        message: "Username is taken, try again",
+      };
+    }
+    if (password.length < 8) {
+      throw {
+        name: "PasswordTooShort",
+        message: "Password is too short, try again",
+      };
+    }
+    if (_userEmail) {
+      throw {
+        name: "EmailExistsError",
+        message: "Email already in use",
+      };
+    }
+
     const user = await User.createUser({
       username,
       password,
@@ -83,7 +110,6 @@ usersRouter.get("/admin/:userId", adminRequired, async (req, res, next) => {
 
 usersRouter.get("/me", authRequired, async (req, res, next) => {
   try {
-    console.log("testing");
     res.send(req.user);
   } catch (error) {
     next(error);
@@ -93,7 +119,6 @@ usersRouter.get("/me", authRequired, async (req, res, next) => {
 usersRouter.get("/", adminRequired, async (req, res, next) => {
   try {
     const users = await User.getAllUsers();
-    console.log(users);
     res.send(users);
   } catch (error) {
     next(error);

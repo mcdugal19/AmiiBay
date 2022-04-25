@@ -18,7 +18,7 @@ const Cart = () => {
     );
 
     // Because JS is bad at decimals.
-    setTotal(Math.round((newTotal + Number.EPSILON) * 100) / 100);
+    setTotal((Math.round((newTotal + Number.EPSILON) * 100) / 100).toFixed(2));
   }
 
   useEffect(() => {

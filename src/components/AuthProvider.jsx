@@ -12,7 +12,6 @@ const AuthProvider = ({ children }) => {
     async function getUser() {
       try {
         const response = await getMe();
-        console.log(response, "response in authprovider");
         if (response.id) {
           setUser(response);
           setIsLoggedIn(true);

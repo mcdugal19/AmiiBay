@@ -94,6 +94,7 @@ async function getUser({ username, password }) {
             `,
         [username, hashedPassword]
       );
+
       return await getUserWithCart(user.id);
       // delete user.password;
       // user.cart = [];
@@ -221,6 +222,23 @@ async function getUserWithCart(id) {
   }
 }
 
+async function getUserByEmail(email) {
+  try {
+    const {
+      rows: [user],
+    } = await client.query(
+      `
+    SELECT * FROM users
+    WHERE email = $1
+    `,
+      [email]
+    );
+    return user;
+  } catch (error) {
+    console.error("Problem with getting user by email...", error);
+  }
+}
+
 module.exports = {
   // add your database adapter fns here
   getAllUsers,
@@ -231,4 +249,5 @@ module.exports = {
   getUser,
   getUserWithCart,
   deleteUser,
+  getUserByEmail,
 };

@@ -27,7 +27,7 @@ async function buildTables() {
       id SERIAL PRIMARY KEY,
       username VARCHAR(255) UNIQUE NOT NULL,
       password VARCHAR(255) NOT NULL,
-      email VARCHAR(255) NOT NULL,
+      email VARCHAR(255) UNIQUE NOT NULL,
       "isAdmin" BOOLEAN DEFAULT false
     );
 
@@ -109,15 +109,15 @@ async function populateInitialData() {
     console.log("Updated user 1 to admin: ", admin);
 
     const cartEntriesToCreate = [
-      { userId: 2, productId: 1 },
-      { userId: 2, productId: 2 },
-      { userId: 2, productId: 3 },
+      { userId: 2, productId: 1, quantity: 1 },
+      { userId: 2, productId: 2, quantity: 1 },
+      { userId: 2, productId: 3, quantity: 1 },
       { userId: 4, productId: 5, quantity: 10 },
       { userId: 4, productId: 6, quantity: 3 },
       { userId: 4, productId: 100, quantity: 9 },
-      { userId: 5, productId: 52 },
-      { userId: 5, productId: 64 },
-      { userId: 5, productId: 69 },
+      { userId: 5, productId: 52, quantity: 1 },
+      { userId: 5, productId: 64, quantity: 1 },
+      { userId: 5, productId: 69, quantity: 1 },
     ];
 
     const cartEntries = await Promise.all(
