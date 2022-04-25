@@ -1,5 +1,5 @@
 import axios from "axios";
-const api_url = "http://localhost:3000";
+const API_URL = process.env.API_URL || "http://localhost:3000/api";
 // this file holds your frontend network request adapters
 // think about each function as a service that provides data
 // to your React UI through AJAX calls
@@ -19,17 +19,14 @@ export async function fetchAllProducts() {
 
 export async function addNewProduct(productObj) {
   try {
-    console.log(productObj, "THIS IS IN AXIOS");
-    const response = await fetch(`${api_url}/api/products`, {
+    const response = await fetch(`${API_URL}/products`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productObj }),
     });
-    console.log(response, "the response");
     const data = await response.json();
-    console.log(data, "data");
     return data;
   } catch (error) {
     throw error;
@@ -38,7 +35,7 @@ export async function addNewProduct(productObj) {
 
 export async function deleteProduct(productId) {
   try {
-    const response = await fetch(`${api_url}/api/products/${productId}`, {
+    const response = await fetch(`${API_URL}/products/${productId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -50,7 +47,7 @@ export async function deleteProduct(productId) {
 
 export async function updateProduct(productId, updateObj) {
   try {
-    const response = await fetch(`${api_url}/api/products/${productId}`, {
+    const response = await fetch(`${API_URL}/products/${productId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -76,8 +73,7 @@ export async function getAPIHealth() {
 
 export async function getMe() {
   try {
-    const response = await fetch(`${api_url}/api/users/me`);
-    console.log(response, "res in getMe");
+    const response = await fetch(`${API_URL}/users/me`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -87,7 +83,7 @@ export async function getMe() {
 
 export async function loginUser(username, password) {
   try {
-    const response = await fetch(`${api_url}/api/users/login`, {
+    const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -97,7 +93,6 @@ export async function loginUser(username, password) {
     });
 
     const data = await response.json();
-    console.log(data, "data in loginUser");
     return data;
   } catch (error) {
     throw error;
@@ -106,7 +101,7 @@ export async function loginUser(username, password) {
 
 export async function registerUser(username, password, email) {
   try {
-    const response = await fetch(`${api_url}/api/users/register`, {
+    const response = await fetch(`${API_URL}/users/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -117,7 +112,6 @@ export async function registerUser(username, password, email) {
     });
 
     const data = await response.json();
-    console.log(data, "data in registeruser");
     return data;
   } catch (error) {
     throw error;
@@ -126,7 +120,7 @@ export async function registerUser(username, password, email) {
 
 export async function logoutUser() {
   try {
-    await fetch(`${api_url}/api/users/logout`);
+    await fetch(`${API_URL}/users/logout`);
   } catch (error) {
     throw error;
   }
@@ -142,7 +136,7 @@ export async function logoutUser() {
 
 export async function getAllUsers() {
   try {
-    const response = await fetch(`${api_url}/api/users`);
+    const response = await fetch(`${API_URL}/users`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -152,7 +146,7 @@ export async function getAllUsers() {
 
 export async function giveAdminToUserId(id) {
   try {
-    const response = await fetch(`${api_url}/api/users/admin/${id}`);
+    const response = await fetch(`${API_URL}/users/admin/${id}`);
     const data = await response.json();
     return data;
   } catch (error) {
@@ -164,7 +158,7 @@ export async function giveAdminToUserId(id) {
 
 export async function addItemToCart({ productId, quantity }) {
   try {
-    const response = await fetch(`${api_url}/api/cart`, {
+    const response = await fetch(`${API_URL}/cart`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -180,7 +174,7 @@ export async function addItemToCart({ productId, quantity }) {
 
 export async function removeItemFromCart(productId) {
   try {
-    const response = await fetch(`${api_url}/api/cart/${productId}`, {
+    const response = await fetch(`${API_URL}/cart/${productId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -192,7 +186,7 @@ export async function removeItemFromCart(productId) {
 
 export async function updateItemQuantity(productId, quantity) {
   try {
-    const response = await fetch(`${api_url}/api/cart/${productId}`, {
+    const response = await fetch(`${API_URL}/cart/${productId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -208,7 +202,7 @@ export async function updateItemQuantity(productId, quantity) {
 
 export async function clearAllItemsInCart() {
   try {
-    const response = await fetch(`${api_url}/api/cart`, {
+    const response = await fetch(`${API_URL}/cart`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -220,7 +214,7 @@ export async function clearAllItemsInCart() {
 
 export async function adminClearUserCart(userId) {
   try {
-    const response = await fetch(`${api_url}/api/cart/admin/${userId}`, {
+    const response = await fetch(`${API_URL}/cart/admin/${userId}`, {
       method: "DELETE",
     });
     const data = await response.json();
@@ -232,7 +226,7 @@ export async function adminClearUserCart(userId) {
 
 export async function deleteUser(id) {
   try {
-    const response = await fetch(`${api_url}/api/users/admin/delete/${id}`, {
+    const response = await fetch(`${API_URL}/users/admin/delete/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

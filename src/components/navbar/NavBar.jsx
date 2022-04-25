@@ -6,6 +6,7 @@ import cart from "../../images/cart.png";
 
 const NavBar = () => {
   const { user, isLoggedIn } = useAuth();
+
   return (
     <nav>
       <Link to={"/"}>Home</Link>

@@ -101,8 +101,7 @@ async function updateProduct(fields = {}) {
 
 async function deleteProduct(id) {
   try {
-    console.log("IN THE DB");
-    console.log(typeof id);
+
     await client.query(
       `
       DELETE FROM products

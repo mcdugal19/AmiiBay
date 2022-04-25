@@ -12,7 +12,6 @@ const DeleteProduct = ({ productId }) => {
 
       if (confirm(text)) {
         const response = await deleteProduct(productId);
-        console.log(response, "RESPONSE");
 
         // verify success before removing from frontend products array, alert admin of results
         if (
@@ -21,7 +20,6 @@ const DeleteProduct = ({ productId }) => {
           const filteredProducts = await products.filter((product) => {
             return product.id !== response.product.id;
           });
-          console.log(filteredProducts, "filtered");
           setProducts(filteredProducts);
           alert(response.message);
         } else {

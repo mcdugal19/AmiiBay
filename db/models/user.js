@@ -94,6 +94,7 @@ async function getUser({ username, password }) {
             `,
         [username, hashedPassword]
       );
+      
       return await getUserWithCart(user.id);
       // delete user.password;
       // user.cart = [];
