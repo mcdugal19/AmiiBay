@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { updateProduct } from "../../axios-services";
+import useAuth from "../../hooks/useAuth";
 
-const UpdateProduct = ({ productId, products, setProducts }) => {
+const UpdateProduct = ({ productId, setProductId }) => {
+  const { products, setProducts } = useAuth();
   const [name, setName] = useState("");
   const [variation, setVariation] = useState("");
   const [game, setGame] = useState("");
@@ -41,6 +43,14 @@ const UpdateProduct = ({ productId, products, setProducts }) => {
   return (
     <div className="update-product">
       <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Product Id"
+          value={productId}
+          onChange={(e) => {
+            setProductId(e.target.value);
+          }}
+        />
         <input
           type="text"
           placeholder="Name"
@@ -91,7 +101,7 @@ const UpdateProduct = ({ productId, products, setProducts }) => {
             setPrice(e.target.value);
           }}
         />
-        <button type="submit">Add Product</button>
+        <button type="submit">Update Product</button>
       </form>
       {message.length > 0 ? <small>{message}</small> : null}
     </div>

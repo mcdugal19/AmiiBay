@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { addNewProduct } from "../../axios-services";
-
-const AddProduct = ({ products, setProducts }) => {
+import useAuth from "../../hooks/useAuth";
+const AddProduct = () => {
+  const { products, setProducts } = useAuth();
   const [name, setName] = useState("");
   const [variation, setVariation] = useState("");
   const [game, setGame] = useState("");
@@ -25,6 +26,11 @@ const AddProduct = ({ products, setProducts }) => {
         setMessage(response.message);
         const updatedList = [response.product, ...products];
         setProducts(updatedList);
+        setName("");
+        setVariation("");
+        setGame("");
+        setImage("");
+        setDescription("");
       } else {
         setMessage(response.message);
       }

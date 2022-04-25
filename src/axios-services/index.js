@@ -19,6 +19,7 @@ export async function fetchAllProducts() {
 
 export async function addNewProduct(productObj) {
   try {
+    console.log(productObj, "THIS IS IN AXIOS");
     const response = await fetch(`${api_url}/api/products`, {
       method: "POST",
       headers: {
@@ -26,7 +27,9 @@ export async function addNewProduct(productObj) {
       },
       body: JSON.stringify({ productObj }),
     });
+    console.log(response, "the response");
     const data = await response.json();
+    console.log(data, "data");
     return data;
   } catch (error) {
     throw error;
@@ -225,3 +228,19 @@ export async function adminClearUserCart(userId) {
     throw error;
   }
 }
+
+export async function deleteUser(id) {
+  try {
+    const response = await fetch(`${api_url}/api/users/admin/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json()
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+

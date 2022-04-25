@@ -232,4 +232,5 @@ module.exports = {
   updateUser,
   getUser,
   getUserWithCart,
+  deleteUser,
 };

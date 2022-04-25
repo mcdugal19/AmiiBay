@@ -23,6 +23,34 @@
     padding: 0;
   } 
 
+  #search {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f2f2f2;
+    display: flex;
+    color: #03258c;
+    align-items: center;
+  }
+  
+  #search label {
+    color: #08469E;
+    margin: 0.5rem;
+    font-weight: bold;
+  }
+  
+  #search input {
+    padding: 0.5rem;
+    width: 70%;
+  }
+
+  .button {
+    color: #f2f2f2;
+    background-color: #C2352D;
+    border: 2px black;
+    padding: 0.2rem;
+    margin: 0.2rem;
+  }
+
   /* Single Product Card */
   .single-product {
     background-color: #f2f2f2;
@@ -57,3 +85,30 @@
     padding: 10px 10px 10px 20px;
   }
 
+.user-table{
+  max-width:39%;
+  max-height: 20rem;
+  overflow-y:scroll;
+}
+
+.product-table {
+  max-width: 99%;
+  max-height: 30rem;
+  overflow-y: scroll;
+}
+.table-headers{
+  font-weight: 900;
+  color: #ffffff;
+  background: #ea6153;
+}
+
+.product-table-content:nth-of-type(2n+1) {
+background-color: #e9e9e9
+}
+.product-table-content:nth-of-type(2n) {
+  background-color: #f6f6f6
+}
+
+td{
+  padding: 15px;
+}
