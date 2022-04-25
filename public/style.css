@@ -23,6 +23,34 @@
     padding: 0;
   } 
 
+  #search {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    background-color: #f2f2f2;
+    display: flex;
+    color: #03258c;
+    align-items: center;
+  }
+  
+  #search label {
+    color: #08469E;
+    margin: 0.5rem;
+    font-weight: bold;
+  }
+  
+  #search input {
+    padding: 0.5rem;
+    width: 70%;
+  }
+
+  .button {
+    color: #f2f2f2;
+    background-color: #C2352D;
+    border: 2px black;
+    padding: 0.2rem;
+    margin: 0.2rem;
+  }
+
   /* Single Product Card */
   .single-product {
     background-color: #f2f2f2;

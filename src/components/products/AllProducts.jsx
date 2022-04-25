@@ -1,14 +1,15 @@
 import React from "react";
 import SingleProductCard from "./SingleProductCard";
+import SearchProducts from "./SearchProducts";
 import useAuth from "../../hooks/useAuth";
 
 const AllProducts = () => {
-  const { products } = useAuth();
+  const { products, setProducts } = useAuth();
 
   return (
     <div className="container">
       <div className="all-products-page">
-        {/* <Search routines={routines} setRoutines={setRoutines} /> */}
+        <SearchProducts products={products} setProducts={setProducts} />
         {products.map((product, idx) => {
           return <SingleProductCard key={idx} product={product} />;
         })}
