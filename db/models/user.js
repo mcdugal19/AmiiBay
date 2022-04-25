@@ -94,7 +94,6 @@ async function getUser({ username, password }) {
             `,
         [username, hashedPassword]
       );
-      console.log(getUserWithCart(user.id, "getUser function db"));
       return await getUserWithCart(user.id);
       // delete user.password;
       // user.cart = [];
