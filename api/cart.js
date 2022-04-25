@@ -5,12 +5,6 @@ const { authRequired, adminRequired } = require("./utils");
 
 cartRouter.post("/", authRequired, async (req, res, next) => {
   const { productId, quantity } = req.body;
-  console.log(
-    "userId, productId, and quantity:",
-    req.user.id,
-    productId,
-    quantity
-  );
 
   try {
     const cartEntry = await Cart.addToCart({

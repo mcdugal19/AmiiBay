@@ -83,7 +83,6 @@ usersRouter.get("/admin/:userId", adminRequired, async (req, res, next) => {
 
 usersRouter.get("/me", authRequired, async (req, res, next) => {
   try {
-    console.log("testing");
     res.send(req.user);
   } catch (error) {
     next(error);
@@ -93,7 +92,6 @@ usersRouter.get("/me", authRequired, async (req, res, next) => {
 usersRouter.get("/", adminRequired, async (req, res, next) => {
   try {
     const users = await User.getAllUsers();
-    console.log(users);
     res.send(users);
   } catch (error) {
     next(error);

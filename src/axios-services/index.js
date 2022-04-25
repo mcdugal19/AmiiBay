@@ -19,7 +19,6 @@ export async function fetchAllProducts() {
 
 export async function addNewProduct(productObj) {
   try {
-    console.log(productObj, "THIS IS IN AXIOS");
     const response = await fetch(`${api_url}/api/products`, {
       method: "POST",
       headers: {
@@ -27,9 +26,7 @@ export async function addNewProduct(productObj) {
       },
       body: JSON.stringify({ productObj }),
     });
-    console.log(response, "the response");
     const data = await response.json();
-    console.log(data, "data");
     return data;
   } catch (error) {
     throw error;
@@ -77,7 +74,6 @@ export async function getAPIHealth() {
 export async function getMe() {
   try {
     const response = await fetch(`${api_url}/api/users/me`);
-    console.log(response, "res in getMe");
     const data = await response.json();
     return data;
   } catch (error) {
@@ -97,7 +93,6 @@ export async function loginUser(username, password) {
     });
 
     const data = await response.json();
-    console.log(data, "data in loginUser");
     return data;
   } catch (error) {
     throw error;
@@ -117,7 +112,6 @@ export async function registerUser(username, password, email) {
     });
 
     const data = await response.json();
-    console.log(data, "data in registeruser");
     return data;
   } catch (error) {
     throw error;
