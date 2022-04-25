@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { loginUser } from "../axios-services";
-import  useAuth  from "../hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { setUser, setIsLoggedIn, isLoggedIn } = useAuth();
+  const { setUser, setIsLoggedIn, isLoggedIn, setCart } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
- 
 
   return (
     <div className="login-page">
@@ -19,6 +18,7 @@ const Login = () => {
             try {
               const response = await loginUser(username, password);
               setUser(response);
+              setCart(response.cart);
               setIsLoggedIn(true);
             } catch (error) {
               console.error(
@@ -45,7 +45,7 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
-          
+
           <button type="submit">Log in</button>
         </form>
       </div>

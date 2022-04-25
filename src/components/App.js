@@ -6,7 +6,9 @@ import { Routes, Route } from "react-router-dom";
 import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
 import { AllProducts } from "./products";
+import { Cart } from "./cart";
 import { Admin } from "./admin";
+
 
 import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register } from "./";
@@ -27,6 +29,7 @@ const App = () => {
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>

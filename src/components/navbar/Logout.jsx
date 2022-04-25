@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 const Logout = () => {
-  const { setIsLoggedIn } = useAuth();
+  const { setIsLoggedIn, setUser, setCart } = useAuth();
   async function clickHandler(e) {
     e.preventDefault();
     await logoutUser();
     setIsLoggedIn(false);
+    setUser({});
+    setCart([]);
   }
   return (
     <Link onClick={clickHandler} to={"/"}>
