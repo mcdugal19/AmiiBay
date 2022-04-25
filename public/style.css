@@ -1,3 +1,9 @@
+
+:root {
+  --primary:  #009BEB;
+  --secondary: #ea6153;
+}
+
 * {
     border: 0;
     margin: 0;
@@ -11,6 +17,27 @@
    body {
     background-color: #f2f2f2;
   }
+
+.button-container {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container:hover {
+  background-color: var(--primary);
+}
+
+.button {
+  background-color: var(--primary);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.2rem;
+}
 
 /* HEADER */
 
@@ -113,13 +140,7 @@ h2 {
     width: 70%;
   }
 
-  .button {
-    color: #f2f2f2;
-    background-color: #009BEB;
-    border: 2px black;
-    padding: 0.5rem;
-    margin: 0.5rem;
-  }
+
 
   /* Single Product Card */
   .single-product {
