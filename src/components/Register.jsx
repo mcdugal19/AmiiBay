@@ -9,7 +9,10 @@ const Register = () => {
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [email, setEmail] = useState("");
-
+  const [passwordLengthError, setPasswordLengthError] = useState(false);
+  const [userExistError, setUserExistError] = useState(false);
+  const [emailExistsError, setEmailExistsError] = useState(false);
+  const [validEmaillError, setValidEmailError] = useState(false);
   return (
     <div className="register-page">
       <h2>Welcome to Amiibos!</h2>
@@ -21,9 +24,45 @@ const Register = () => {
             try {
               if (password === confirmationPassword) {
                 const response = await registerUser(username, password, email);
-                setUser(response);
-                setIsLoggedIn(true);
+                if (response.name === "PasswordTooShort") {
+                  setIsLoggedIn(false);
+                  setPasswordLengthError(true);
+                  setUserExistError(false);
+                  setEmailExistsError(false);
+                  setValidEmailError(false);
+                }
+                if (response.name === "UserExistsError") {
+                  setUserExistError(true);
+                  setIsLoggedIn(false);
+                  setPasswordLengthError(false);
+                  setEmailExistsError(false);
+                  setValidEmailError(false);
+                }
+                if (response.name === "EmailExistsError") {
+                  setEmailExistsError(true);
+                  setIsLoggedIn(false);
+                  setPasswordLengthError(false);
+                  setUserExistError(false);
+                  setValidEmailError(false);
+                }
+                if (response.name === "ValidEmailError") {
+                  setValidEmailError(true);
+                  setIsLoggedIn(false);
+                  setPasswordLengthError(false);
+                  setUserExistError(false);
+                  setEmailExistsError(false);
+                }
+                if (response.user.id) {
+                  console.log("here");
+                  setUser(response);
+                  setIsLoggedIn(true);
+                  setPasswordLengthError(false);
+                  setUserExistError(false);
+                  setEmailExistsError(false);
+                  setValidEmailError(false);
+                }
               } else {
+                setIsLoggedIn(false);
                 setPasswordError(true);
               }
             } catch (error) {
@@ -86,6 +125,38 @@ const Register = () => {
         }}
       >
         <h3>REGISTRATION COMPLETE!</h3>
+      </div>
+      <div
+        className="login-confirmation"
+        style={{
+          display: emailExistsError ? "block" : "none",
+        }}
+      >
+        <h3>EMAIL ALREADY IN USE!</h3>
+      </div>
+      <div
+        className="login-confirmation"
+        style={{
+          display: userExistError ? "block" : "none",
+        }}
+      >
+        <h3>USERNAME ALREADY IN USE!</h3>
+      </div>
+      <div
+        className="login-confirmation"
+        style={{
+          display: passwordLengthError ? "block" : "none",
+        }}
+      >
+        <h3>PASSWORD TOO SHORT!</h3>
+      </div>
+      <div
+        className="login-confirmation"
+        style={{
+          display: validEmaillError ? "block" : "none",
+        }}
+      >
+        <h3>EMAIL IS NOT VALID!</h3>
       </div>
     </div>
   );
