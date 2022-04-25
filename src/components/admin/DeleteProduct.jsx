@@ -1,7 +1,8 @@
 import React from "react";
 import { deleteProduct } from "../../axios-services";
-
-const DeleteProduct = ({ productId, products, setProducts }) => {
+import useAuth from "../../hooks/useAuth";
+const DeleteProduct = ({ productId }) => {
+  const { products, setProducts } = useAuth();
   // click handler
   const handleClick = async (e) => {
     e.preventDefault();
@@ -11,6 +12,7 @@ const DeleteProduct = ({ productId, products, setProducts }) => {
 
       if (confirm(text)) {
         const response = await deleteProduct(productId);
+        console.log(response, "RESPONSE");
 
         // verify success before removing from frontend products array, alert admin of results
         if (
@@ -19,6 +21,7 @@ const DeleteProduct = ({ productId, products, setProducts }) => {
           const filteredProducts = await products.filter((product) => {
             return product.id !== response.product.id;
           });
+          console.log(filteredProducts, "filtered");
           setProducts(filteredProducts);
           alert(response.message);
         } else {

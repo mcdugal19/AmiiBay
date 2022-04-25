@@ -99,4 +99,18 @@ usersRouter.get("/", adminRequired, async (req, res, next) => {
   }
 });
 
+usersRouter.delete(
+  "/admin/delete/:userId",
+  adminRequired,
+  async (req, res, next) => {
+    try {
+      const { userId } = req.params;
+      await User.deleteUser(userId);
+      res.send({ message: "Successfully deleted user" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 module.exports = usersRouter;
