@@ -8,18 +8,44 @@ const NavBar = () => {
   const { user, isLoggedIn } = useAuth();
 
   return (
-    <nav>
+    <nav className="navbar">
+      <div className="button-container">
+      <div className="button">
       <Link to={"/"}>Home</Link>
-      {user.isAdmin ? <Link to={"/admin"}>Admin</Link> : null}
+      </div>
+      </div>
+     
+      
+      {user.isAdmin ? 
+      <div className="button-container">
+        <div className="button">
+        <Link to={"/admin"}>Admin</Link>
+        </div>
+      </div>
+       : null}
       {!isLoggedIn ? (
         <>
-          <Link to={"/login"}>Login</Link>
-          <Link to={"/register"}>Register</Link>
+        <div className="button-container">
+        <div className="button">
+        <Link to={"/login"}>Login</Link>
+        </div>
+        </div>
+        <div className="button-container">
+        <div className="button">
+        <Link to={"/register"}>Register</Link>
+        </div>
+        </div>   
         </>
       ) : (
+        <div className="button-container">
+        <div className="button">
         <Logout />
+        </div>
+        </div> 
       )}
-      <Link to={"/cart"}>
+      <div className="button-container">
+      <div className="button">
+      <Link to={"/cart"}>Cart
         <img
           id="cart-icon"
           src={cart}
@@ -28,6 +54,9 @@ const NavBar = () => {
           alt="cart icon"
         />
       </Link>
+      </div>
+      </div>
+      
     </nav>
   );
 };

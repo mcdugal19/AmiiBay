@@ -1,10 +1,42 @@
-import React, { useState, useEffect } from "react";
-import SingleProductCard from "./SingleProductCard";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { AddToCart } from "../cart";
 
-const SingleProduct = ({ product, idx }) => {
+const SingleProduct = () => {
+  const { products } = useAuth();
+  let { productId } = useParams();
+  const [quantity, setQuantity] = useState(1);
+
+  const [product] = products.filter((item) => {
+    return item.id == productId;
+  });
 
   return (
-    <>Hello World: Need to link to SingleProduct:Id</>
+    <div className="single-product-page">
+      <div className="single-product-container">
+        <span>
+          <h2>{product.name}</h2>
+          {product.variation ? <h3>{product.variation}</h3> : <h3>-----</h3>}
+          <h4>{product.game}</h4>
+          <p>{product.description}</p>
+          <h5>{product.price}</h5>
+        </span>
+        <img src={product.image} alt={`${product.name} amiibo image`} />
+      </div>
+      <span className="single-product-add-button">
+        <input
+          type="number"
+          min={"1"}
+          step={"1"}
+          value={quantity}
+          onChange={(e) => {
+            setQuantity(e.target.value);
+          }}
+        />
+        <AddToCart product={product} quantity={quantity} />
+      </span>
+    </div>
   );
 };
 

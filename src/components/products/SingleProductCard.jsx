@@ -1,27 +1,32 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { AddToCart } from "../cart";
 
-const SingleProductCard = ({ product, idx }) => {
+const SingleProductCard = ({ product }) => {
   return (
-    <span key={`all-amiibos[${idx}]`} className="single-product">
+    <span className="single-product">
       <span className="single-product-details">
-        <span>
-          <h3>{product.name}</h3>
-          {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
-          <p>{product.game}</p>
-        </span>
-        <span>
+      <span>
+        <h3>{product.name}</h3>
+        {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
+        <p>{product.game}</p>
+      </span>
+      <span>
+        <Link to={`/product/${product.id}`}>
           <img
-            className="card--image"
             src={product.image}
-            width={"100px"}
-            height={"100px"}
             alt={`${product.name} amiibo image`}
           />
-          <h5>{product.price}</h5>
+        </Link>
+        <h5>{product.price}</h5>
         </span>
       </span>
-      <AddToCart product={product} quantity={1} />
+      <span>
+        <Link to={`/product/${product.id}`}>
+          <button>More Info</button>
+        </Link>
+        <AddToCart product={product} quantity={1} />
+      </span>
     </span>
   );
 };

@@ -72,9 +72,10 @@ const AddToCart = ({ product, quantity }) => {
 
   return (
     <button className="button--add-to-cart" onClick={handleClick}>
-      Add to Cart
+      ADD TO CART
     </button>
   );
+
 };
 
 export default AddToCart;
