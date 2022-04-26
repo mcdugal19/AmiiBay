@@ -7,16 +7,16 @@ const AllProducts = () => {
   const { products, setProducts } = useAuth();
 
   return (
-    <div className="container">
-      <div className="all-products-page">
-        <SearchProducts products={products} setProducts={setProducts} />
-        {products.map((product, idx) => {
-          return (
-            <SingleProductCard key={`all-amiibos[${idx}]`} product={product} />
-          );
-        })}
+    <>
+      <SearchProducts products={products} setProducts={setProducts} />
+      <div className="container">
+        <div className="all-products-page">
+          {products.map((product, idx) => {
+            return <SingleProductCard key={idx} product={product} />;
+          })}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import { AddToCart } from "../cart";
 const SingleProductCard = ({ product }) => {
   return (
     <span className="single-product">
+      <span className="single-product-details">
       <span>
         <h3>{product.name}</h3>
         {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
@@ -14,12 +15,11 @@ const SingleProductCard = ({ product }) => {
         <Link to={`/product/${product.id}`}>
           <img
             src={product.image}
-            width={"100px"}
-            height={"100px"}
             alt={`${product.name} amiibo image`}
           />
         </Link>
         <h5>{product.price}</h5>
+        </span>
       </span>
       <span>
         <Link to={`/product/${product.id}`}>
