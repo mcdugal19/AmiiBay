@@ -6,9 +6,7 @@ const SingleProductCard = ({ product }) => {
   return (
     <span className="single-product">
       <span>
-        <Link to={`/product/${product.id}`}>
-          <h3>{product.name}</h3>
-        </Link>
+        <h3>{product.name}</h3>
         {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
         <p>{product.game}</p>
       </span>
@@ -23,7 +21,12 @@ const SingleProductCard = ({ product }) => {
         </Link>
         <h5>{product.price}</h5>
       </span>
-      <AddToCart product={product} quantity={1} />
+      <span>
+        <Link to={`/product/${product.id}`}>
+          <button>More Info</button>
+        </Link>
+        <AddToCart product={product} quantity={1} />
+      </span>
     </span>
   );
 };
