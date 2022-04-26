@@ -197,6 +197,15 @@ h2 {
     margin-bottom: 10px;
     align-items: center;
   }
+  .order-button {
+    background-color: #f4e10b;
+    color:#03258c;
+    margin-bottom: 2rem;
+    padding: 0.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
   input {
     border-radius: 5%;
     margin: 8px;

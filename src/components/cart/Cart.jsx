@@ -31,12 +31,14 @@ const Cart = () => {
         <h2>Cart is empty!</h2>
       ) : (
         <>
+          <div className="name-price">
           {isLoggedIn ? (
             <h2>{`${user.username}'s Cart`}</h2>
           ) : (
             <h2>Guest's Cart</h2>
           )}
           <h3>Total Price: {`$${total}`}</h3>
+          </div>
           <br />
           <Link to={"/checkout"} className="checkout-button">Ready to Checkout?</Link>
           <br></br>
