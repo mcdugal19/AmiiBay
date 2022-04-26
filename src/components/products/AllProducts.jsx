@@ -11,7 +11,9 @@ const AllProducts = () => {
       <div className="all-products-page">
         <SearchProducts products={products} setProducts={setProducts} />
         {products.map((product, idx) => {
-          return <SingleProductCard key={idx} product={product} />;
+          return (
+            <SingleProductCard key={`all-amiibos[${idx}]`} product={product} />
+          );
         })}
       </div>
     </div>
