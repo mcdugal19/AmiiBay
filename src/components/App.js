@@ -1,37 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // getAPIHealth is defined in our axios-services directory index.js
 // you can think of that directory as a collection of api adapters
 // where each adapter fetches specific info from our express server's /api route
-import { getAPIHealth } from "../axios-services";
 import "../style/App.css";
+import useAuth from "../hooks/useAuth";
 import { AllProducts, SingleProduct } from "./products";
 import { Cart } from "./cart";
 import { Admin } from "./admin";
-import useAuth from "../hooks/useAuth";
-
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
 import catMario from './images/Cat Mario Icon.png'
+
 const App = () => {
-  const [APIHealth, setAPIHealth] = useState("");
   const { user, isLoggedIn } = useAuth();
-  const [username, setUsername ] = useState("");
+
   return (
     <div className="app-container">
+      <ToastContainer />
       <header>
-      <h1 className="Title" >Amiibos</h1>
-      {isLoggedIn ? (
+        <h1 className="Title">Amiibos</h1>
+        {isLoggedIn ? (
           <div className="is-logged-in">
+            {user.username}
             <img className="user-icon" src={catMario} alt="user icon" />
-            {username}
           </div>
         ) : null}
       </header>
-      
+
       <NavBar />
-      {/* <p>API Status: {APIHealth}</p> */}
+
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/product/:productId" element={<SingleProduct />} />

@@ -1,11 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { Logout } from "./";
 import cartIcon from "../../images/cartIcon.png";
 
 const NavBar = () => {
-  const { user, isLoggedIn } = useAuth();
+  const { user, isLoggedIn, cart } = useAuth();
+  const [cartQuantity, setCartQuantity] = useState(0);
+
+  function getCartTotal() {
+    const itemNums = cart.map((item) => {
+      return item.quantity;
+    });
+    const cartTotal = itemNums.reduce(
+      (partialTotal, current) => partialTotal + current,
+      0
+    );
+
+    setCartQuantity(cartTotal);
+  }
+
+  useEffect(() => {
+    getCartTotal();
+  }, [cart]);
 
   return (
     <nav className="navbar">
@@ -45,7 +62,7 @@ const NavBar = () => {
       <div className="button-container">
         <div className="button">
           <Link to={"/cart"}>
-            Cart
+            Cart{" "}
             <img
               id="cart-icon"
               src={cartIcon}
@@ -53,6 +70,7 @@ const NavBar = () => {
               height={"25px"}
               alt="cart icon"
             />
+            ({cartQuantity})
           </Link>
         </div>
       </div>

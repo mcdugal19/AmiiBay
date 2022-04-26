@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { addItemToCart, updateItemQuantity } from "../../axios-services";
 import cartIcon from "../../images/cartIcon.png";
@@ -18,9 +19,10 @@ const AddToCart = ({ product, quantity }) => {
           });
           if (response.message === "Successfully added item to cart!") {
             setCart([...cart, response.cartItem]);
-            alert(response.message);
+            toast(response.message);
           } else {
             console.error(response);
+            toast.error(response.message);
           }
         } catch (error) {
           console.error(error);
@@ -29,7 +31,7 @@ const AddToCart = ({ product, quantity }) => {
         let item = product;
         item.quantity = quantity;
         setCart([...cart, item]);
-        alert("Successfully added item to cart!");
+        toast("Successfully added item to cart!");
       }
     } else {
       if (isLoggedIn) {
@@ -48,9 +50,9 @@ const AddToCart = ({ product, quantity }) => {
               }
             });
             setCart(filteredCart);
-            alert("Increased quantity of item already in cart");
+            toast("Increased quantity of item already in cart");
           } else {
-            alert(response.message);
+            toast.error(response.message);
           }
         } catch (error) {
           throw error;
@@ -65,7 +67,7 @@ const AddToCart = ({ product, quantity }) => {
           }
         });
         setCart(filteredGuestCart);
-        alert("Increased quantity of item already in cart");
+        toast("Increased quantity of item already in cart");
       }
     }
   }
