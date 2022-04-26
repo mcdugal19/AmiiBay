@@ -31,21 +31,23 @@ const Cart = () => {
         <h2>Cart is empty!</h2>
       ) : (
         <>
+          <div className="name-price">
           {isLoggedIn ? (
             <h2>{`${user.username}'s Cart`}</h2>
           ) : (
             <h2>Guest's Cart</h2>
           )}
+          <h3>Total Price: {`$${total}`}</h3>
+          </div>
           <br />
-          {/* <button onClick={handleClick}>Ready to Checkout?</button>
-          {clicked ? <small>I was clicked!</small> : null} */}
-          <Link to={"/checkout"}>Ready to Checkout?</Link>
+          <Link to={"/checkout"} className="checkout-button">Ready to Checkout?</Link>
+          <br></br>
           <br></br>
           <ClearCart />
           <div className="cart-container">
             <table>
               <tbody>
-                <tr>
+                <tr className="cart-headers">
                   <th>Product</th>
                   <th>Quantity</th>
                   <th>Update Quantity?</th>
@@ -58,6 +60,10 @@ const Cart = () => {
             </table>
             <h4>Total Price: {`$${total}`}</h4>
           </div>
+          <br />
+          <Link to={"/checkout"} className="checkout-button">Ready to Checkout?</Link>
+          <br></br>
+          <br></br>
         </>
       )}
     </div>

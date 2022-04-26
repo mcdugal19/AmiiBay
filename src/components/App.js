@@ -13,7 +13,7 @@ import useAuth from "../hooks/useAuth";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
-import catMario from './images/Cat Mario.jpg'
+import catMario from './images/Cat Mario Icon.png'
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
   const { user, isLoggedIn } = useAuth();

@@ -50,7 +50,7 @@ const Checkout = () => {
         
         
         <br></br>
-        <button className="Checkout-button" type="submit" >
+        <button className="order-button" type="submit" >
           Place Your Order
         </button>
         <br></br>
@@ -61,7 +61,7 @@ const Checkout = () => {
       <div className="cart-container">
           <table>
             <tbody>
-              <tr>
+              <tr className="cart-headers">
                 <th>Product</th>
                 <th>Quantity</th>
                 <th>Update Quantity?</th>
