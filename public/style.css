@@ -166,7 +166,7 @@ h2 {
     width: 20rem;
     max-width: 100%;
     max-height: 70%;
-    height: 18rem;
+    height: 28rem;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
   rgba(0, 0, 0, 0.23) 0px 3px 6px;
   }
@@ -225,16 +225,16 @@ td{
 
 .button--add-to-cart{
  
-  width: 5rem;
-  height: 5rem;
+  width: 4.3rem;
+  height: 4.3rem;
   left: 11rem;
   bottom: 1rem;
   background-color: #009BEB;
 }
 
 .button--more-info{
-    width: 5rem;
-    height: 5rem;
+    width: 4.3rem;
+    height: 4.3rem;
     left: 11rem;
     bottom: 1rem;
     background-color: #009BEB;
@@ -243,8 +243,8 @@ td{
 }
 
 .card--image{
-  width: 115px;
-  height: 143.05px;
+  width: 150px;
+  height: 200px;
   left: 10rem;
   bottom: 3rem;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
@@ -260,5 +260,12 @@ td{
 .single-product-buttons{
   display: flex;
   justify-content: space-around;
+  padding-top: 1rem;
+}
+
+.product-card-labels{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   padding-top: 1rem;
 }
