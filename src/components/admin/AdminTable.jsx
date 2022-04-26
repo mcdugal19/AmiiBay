@@ -28,8 +28,9 @@ const AdminTable = () => {
   }
 
   return (
-    <div className="user-table">
-      <table>
+    <div className="user-table-container">
+      <table className="user-table">
+        <thead>
         <tr className="table-headers">
           <th>Username</th>
           <th>Email</th>
@@ -37,6 +38,8 @@ const AdminTable = () => {
           <th>Make Admin</th>
           <th>Delete User</th>
         </tr>
+        </thead>
+        <tbody>
         {userList.map((user, idx) => {
           return (
             <tr className="product-table-content" key={idx}>
@@ -66,6 +69,7 @@ const AdminTable = () => {
             </tr>
           );
         })}
+        </tbody>
       </table>
     </div>
   );

@@ -74,7 +74,15 @@ const AddToCart = ({ product, quantity }) => {
 
   return (
     <button className="button--add-to-cart" onClick={handleClick}>
-      ADD TO CART
+      {
+        <img
+          id="cart-icon"
+          src={cartIcon}
+          width={"50px"}
+          height={"50px"}
+          alt="cart icon"
+        />
+      }
     </button>
   );
 };

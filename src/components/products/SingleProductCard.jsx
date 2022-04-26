@@ -6,24 +6,25 @@ const SingleProductCard = ({ product }) => {
   return (
     <span className="single-product">
       <span className="single-product-details">
-      <span>
+        <span>
+          <Link to={`/product/${product.id}`}>
+            <img
+              className="card--image"
+              src={product.image}
+              alt={`${product.name} amiibo image`}
+            />
+          </Link>
+        </span>
+      </span>
+      <span className="product-card-labels">
         <h3>{product.name}</h3>
         {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
         <p>{product.game}</p>
-      </span>
-      <span>
-        <Link to={`/product/${product.id}`}>
-          <img
-            src={product.image}
-            alt={`${product.name} amiibo image`}
-          />
-        </Link>
         <h5>{product.price}</h5>
-        </span>
       </span>
-      <span>
+      <span className="single-product-buttons">
         <Link to={`/product/${product.id}`}>
-          <button>More Info</button>
+          <button className="button--more-info">More Info</button>
         </Link>
         <AddToCart product={product} quantity={1} />
       </span>

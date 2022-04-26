@@ -13,7 +13,7 @@ import { Admin } from "./admin";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
-import catMario from "./images/Cat Mario.jpg";
+import catMario from './images/Cat Mario Icon.png'
 
 const App = () => {
   const { user, isLoggedIn } = useAuth();
