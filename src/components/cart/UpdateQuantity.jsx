@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 import { updateItemQuantity } from "../../axios-services";
 
@@ -24,8 +25,9 @@ const UpdateQuantity = ({ item }) => {
             }
           });
           setCart(filteredCart);
+          toast(response.message);
         } else {
-          alert(response.message);
+          toast(response.message);
         }
       } catch (error) {
         throw error;
@@ -40,6 +42,7 @@ const UpdateQuantity = ({ item }) => {
         }
       });
       setCart(filteredGuestCart);
+      toast("Successfully updated quantity!");
     }
   }
 
