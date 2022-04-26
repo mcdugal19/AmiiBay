@@ -1,7 +1,7 @@
 import React from "react";
 import useAuth from "../../hooks/useAuth";
 import { addItemToCart, updateItemQuantity } from "../../axios-services";
-import cart from "../../images/cart.png";
+import cartIcon from "../../images/cartIcon.png";
 const AddToCart = ({ product, quantity }) => {
   const { isLoggedIn, cart, setCart } = useAuth();
 
@@ -72,10 +72,17 @@ const AddToCart = ({ product, quantity }) => {
 
   return (
     <button className="button--add-to-cart" onClick={handleClick}>
-      ADD TO CART
+      {
+        <img
+          id="cart-icon"
+          src={cartIcon}
+          width={"50px"}
+          height={"50px"}
+          alt="cart icon"
+        />
+      }
     </button>
   );
-
 };
 
 export default AddToCart;
