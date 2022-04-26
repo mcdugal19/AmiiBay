@@ -2,14 +2,23 @@ import React, { useState } from "react";
 import { updateProduct } from "../../axios-services";
 import useAuth from "../../hooks/useAuth";
 
-const UpdateProduct = ({ productId, setProductId }) => {
+const UpdateProduct = ({
+  productId,
+  setProductId,
+  updateProductName,
+  setUpdateProductName,
+  updateProductVariation,
+  setUpdateProductVariation,
+  updateProductGame,
+  setUpdateProductGame,
+  updateProductImage,
+  setUpdateProductImage,
+  updateProductPrice,
+  setUpdateProductPrice,
+  updateProductDescription,
+  setUpdateProductDescription,
+}) => {
   const { products, setProducts } = useAuth();
-  const [name, setName] = useState("");
-  const [variation, setVariation] = useState("");
-  const [game, setGame] = useState("");
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
@@ -54,51 +63,51 @@ const UpdateProduct = ({ productId, setProductId }) => {
         <input
           type="text"
           placeholder="Name"
-          value={name}
+          value={updateProductName}
           onChange={(e) => {
-            setName(e.target.value);
+            setUpdateProductName(e.target.value);
           }}
         />
         <input
           type="text"
           placeholder="Variation"
-          value={variation}
+          value={updateProductVariation}
           onChange={(e) => {
-            setVariation(e.target.value);
+            setUpdateProductVariation(e.target.value);
           }}
         />
         <input
           type="text"
           placeholder="Game"
-          value={game}
+          value={updateProductGame}
           onChange={(e) => {
-            setGame(e.target.value);
+            setUpdateProductGame(e.target.value);
           }}
         />
         <input
           type="text"
           placeholder="Image URL"
-          value={image}
+          value={updateProductImage}
           onChange={(e) => {
-            setImage(e.target.value);
+            setUpdateProductImage(e.target.value);
           }}
         />
         <input
           type="text"
           placeholder="Description"
-          value={description}
+          value={updateProductDescription}
           onChange={(e) => {
-            setDescription(e.target.value);
+            setUpdateProductDescription(e.target.value);
           }}
         />
         <input
           type="number"
           min="0.01"
           step="any"
-          placeholder="Price"
-          value={price}
+          placeholder={updateProductPrice}
+          value={updateProductPrice}
           onChange={(e) => {
-            setPrice(e.target.value);
+            setUpdateProductPrice(e.target.value);
           }}
         />
         <button type="submit">Update Product</button>

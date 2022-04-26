@@ -7,14 +7,13 @@ import {
   ProductTable,
 } from "./index";
 const Admin = () => {
-  const [productId, setProductId] = useState(0);
   return (
     <>
     <div className="tables">
       <AddProduct />
-      <ProductTable setProductId={setProductId} />
+      <ProductTable />
       {/* <DeleteProduct /> */}
-      <UpdateProduct productId={productId} setProductId={setProductId} />
+      {/* <UpdateProduct productId={productId} setProductId={setProductId} /> */}
       <AdminTable />
     </div>
     </>
