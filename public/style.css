@@ -130,7 +130,7 @@ h2 {
     flex-basis: auto;
     width: 100%; 
     padding: 0;
-    
+    justify-content: center;
   } 
 
   #search {
@@ -166,7 +166,9 @@ h2 {
     width: 20rem;
     max-width: 100%;
     max-height: 70%;
-
+    height: 18rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+  rgba(0, 0, 0, 0.23) 0px 3px 6px;
   }
 
   .photo {
@@ -222,12 +224,22 @@ td{
 }
 
 .button--add-to-cart{
-  position: relative;
-  width: 7rem;
-  height: 7rem;
+ 
+  width: 5rem;
+  height: 5rem;
   left: 11rem;
   bottom: 1rem;
-  
+  background-color: #009BEB;
+}
+
+.button--more-info{
+    width: 5rem;
+    height: 5rem;
+    left: 11rem;
+    bottom: 1rem;
+    background-color: #009BEB;
+    color: #ffffff;
+    font-size: large;
 }
 
 .card--image{
@@ -243,4 +255,10 @@ td{
   display:flex;
   flex-direction: row;
   justify-content: space-around;
+}
+
+.single-product-buttons{
+  display: flex;
+  justify-content: space-around;
+  padding-top: 1rem;
 }
