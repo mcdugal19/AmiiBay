@@ -269,3 +269,12 @@ td{
   flex-direction: column;
   padding-top: 1rem;
 }
+
+.modal {
+  position: absolute;
+  left:30rem;
+  bottom: 14rem;
+  background-color: grey;
+  width: 60rem;
+  height: 15rem;
+}

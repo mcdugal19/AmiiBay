@@ -1,11 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { DeleteProduct } from "./index";
-const ProductTable = ({ setProductId }) => {
+import { Modal, Button } from "react-bootstrap";
+import { UpdateProduct } from "./index";
+const ProductTable = () => {
   const { products, setProducts } = useAuth();
+  const [showModal, setShowModal] = useState(false);
+  const [productId, setProductId] = useState(0);
+  const [updateProductName, setUpdateProductName] = useState("");
+  const [updateProductVariation, setUpdateProductVariation] = useState("");
+  const [updateProductGame, setUpdateProductGame] = useState("");
+  const [updateProductImage, setUpdateProductImage] = useState("");
+  const [updateProductDescription, setUpdateProductDescription] = useState("");
+  const [updateProductPrice, setUpdateProductPrice] = useState(0);
 
-  function handleUpdateProduct(id) {
-    setProductId(id);
+  function handleClose() {
+    setShowModal(false);
+  }
+
+  function handleShow() {
+    setShowModal(true);
   }
 
   return (
@@ -41,10 +55,23 @@ const ProductTable = ({ setProductId }) => {
                 <form
                   onSubmit={(event) => {
                     event.preventDefault();
-                    handleUpdateProduct(product.id);
+                    // handleUpdateProduct(product.id);
                   }}
                 >
-                  <button type="submit">Update Product</button>
+                  <button
+                    onClick={() => {
+                      handleShow();
+                      setProductId(product.id);
+                      setUpdateProductName(product.name);
+                      setUpdateProductDescription(product.description);
+                      setUpdateProductGame(product.game);
+                      setUpdateProductImage(product.image);
+                      setUpdateProductPrice(+product.price.slice(1));
+                      setUpdateProductVariation(product.variation);
+                    }}
+                  >
+                    Update Product
+                  </button>
                 </form>
               </td>
               <td>
@@ -53,6 +80,33 @@ const ProductTable = ({ setProductId }) => {
             </tr>
           );
         })}
+        <Modal show={showModal} onHide={handleClose} className="modal">
+          <Modal.Header closeButton>
+            <Modal.Title>Update Product</Modal.Title>
+          </Modal.Header>
+
+          <UpdateProduct
+            productId={productId}
+            setProductId={setProductId}
+            updateProductName={updateProductName}
+            setUpdateProductName={setUpdateProductName}
+            updateProductDescription={updateProductDescription}
+            setUpdateProductDescription={setUpdateProductDescription}
+            updateProductGame={updateProductGame}
+            setUpdateProductGame={setUpdateProductGame}
+            updateProductImage={updateProductImage}
+            setUpdateProductImage={setUpdateProductImage}
+            updateProductPrice={updateProductPrice}
+            setUpdateProductPrice={setUpdateProductPrice}
+            updateProductVariation={updateProductVariation}
+            setUpdateProductVariation={setUpdateProductVariation}
+          />
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </table>
     </div>
   );
