@@ -8,21 +8,31 @@ import "../style/App.css";
 import { AllProducts } from "./products";
 import { Cart } from "./cart";
 import { Admin } from "./admin";
-
+import useAuth from "../hooks/useAuth";
 
 import SingleProductCard from "./products/SingleProductCard";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
-
+import catMario from './images/Cat Mario.jpg'
 const App = () => {
   const [APIHealth, setAPIHealth] = useState("");
-
+  const { user, isLoggedIn } = useAuth();
+  const [username, setUsername ] = useState("");
   return (
     <div className="app-container">
-      <h1>Hello, World!</h1>
+      <header>
+      <h1 className="Title" >Amiibos</h1>
+      {isLoggedIn ? (
+          <div className="is-logged-in">
+            <img className="user-icon" src={catMario} alt="user icon" />
+            {username}
+          </div>
+        ) : null}
+      </header>
+      
       <NavBar />
-      <p>API Status: {APIHealth}</p>
+      {/* <p>API Status: {APIHealth}</p> */}
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/singleProduct" element={<SingleProductCard />} />

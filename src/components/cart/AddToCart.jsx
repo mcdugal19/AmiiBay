@@ -70,7 +70,7 @@ const AddToCart = ({ product, quantity }) => {
     }
   }
 
-  return <button onClick={handleClick}>Add to Cart</button>;
+  return <button className="button" onClick={handleClick}>ADD TO CART</button>;
 };
 
 export default AddToCart;
