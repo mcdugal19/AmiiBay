@@ -1,8 +1,6 @@
 const express = require("express");
 const usersRouter = express.Router();
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const SALT_ROUNDS = 10;
 const { User } = require("../db/models");
 const { authRequired, adminRequired } = require("./utils");
 
@@ -11,29 +9,29 @@ usersRouter.post("/register", async (req, res, next) => {
     const { username, password, email } = req.body;
     const _user = await User.getUserByUsername(username);
     const _userEmail = await User.getUserByEmail(email);
-    console.log(email.includes("@", "IN USER API"));
+
     if (!email.includes("@")) {
       throw {
         name: "ValidEmailError",
-        message: "Not a valid email",
+        message: "Not a valid email address, try again :/",
       };
     }
     if (_user) {
       throw {
         name: "UserExistsError",
-        message: "Username is taken, try again",
+        message: "Username is taken, try again :/",
       };
     }
     if (password.length < 8) {
       throw {
         name: "PasswordTooShort",
-        message: "Password is too short, try again",
+        message: "Password is too short, try again :/",
       };
     }
     if (_userEmail) {
       throw {
         name: "EmailExistsError",
-        message: "Email already in use",
+        message: "Email already in use, try again :/",
       };
     }
 
@@ -52,7 +50,7 @@ usersRouter.post("/register", async (req, res, next) => {
       httpOnly: true,
       signed: true,
     });
-    res.send({ user });
+    res.send({ user, message: `Welcome to Amiibos, ${user.username}!` });
   } catch (error) {
     next(error);
   }
@@ -69,10 +67,11 @@ usersRouter.post("/login", async (req, res, next) => {
         httpOnly: true,
         signed: true,
       });
-      res.send(user);
+      res.send({ message: `Welcome back, ${user.username}!`, user });
     } else {
       next({
-        name: "Invalid username or password",
+        name: "UsernamePasswordError",
+        message: "Invalid username or password",
       });
     }
   } catch (error) {
@@ -90,7 +89,7 @@ usersRouter.get("/logout", async (req, res, next) => {
 
     res.send({
       loggedIn: false,
-      message: "Successfully Logged Out",
+      message: "Come back soon!",
     });
   } catch (error) {
     next(error);
@@ -138,5 +137,54 @@ usersRouter.delete(
     }
   }
 );
+
+usersRouter.patch("/me", authRequired, async (req, res, next) => {
+  try {
+    const { id, username, password, email } = req.body;
+    const _user = await User.getUserByUsername(username);
+    const _userEmail = await User.getUserByEmail(email);
+    const updateUser = { id: id };
+    if (username) {
+      if (_user) {
+        throw {
+          name: "UserExistsError",
+          message: "Username is taken, try again",
+        };
+      } else {
+        updateUser.username = username;
+      }
+    }
+    if (password) {
+      if (password.length < 8) {
+        throw {
+          name: "PasswordLengthError",
+          message: "Password is too short!",
+        };
+      } else {
+        updateUser.password = password;
+      }
+    }
+    if (email) {
+      if (!email.includes("@")) {
+        throw {
+          name: "ValidEmailError",
+          message: "Not a valid email",
+        };
+      } else if (_userEmail) {
+        throw {
+          name: "EmailExistsError",
+          message: "Email already in use",
+        };
+      } else {
+        updateUser.email = email;
+      }
+    }
+    const updatedUser = await User.updateUser(updateUser);
+    delete updatedUser.password;
+    res.send({ updatedUser, message: "Successfully updated user" });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = usersRouter;

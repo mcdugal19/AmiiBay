@@ -121,7 +121,9 @@ export async function registerUser(username, password, email) {
 
 export async function logoutUser() {
   try {
-    await fetch(`${API_URL}/users/logout`);
+    const response = await fetch(`${API_URL}/users/logout`);
+    const data = await response.json();
+    return data;
   } catch (error) {
     throw error;
   }
@@ -234,6 +236,23 @@ export async function deleteUser(id) {
       },
     });
     const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUser(updateUser) {
+  try {
+    const response = await fetch(`${API_URL}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateUser),
+    });
+    const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     throw error;

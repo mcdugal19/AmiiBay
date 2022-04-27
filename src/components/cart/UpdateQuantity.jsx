@@ -18,7 +18,7 @@ const UpdateQuantity = ({ item }) => {
         if (response.message === "Successfully updated quantity!") {
           const filteredCart = cart.map((product) => {
             if (product.id === item.id) {
-              product.quantity = updateQuantity;
+              product.quantity = +updateQuantity;
               return product;
             } else {
               return product;
@@ -35,7 +35,7 @@ const UpdateQuantity = ({ item }) => {
     } else {
       const filteredGuestCart = cart.map((product) => {
         if (product.id === item.id) {
-          product.quantity = updateQuantity;
+          product.quantity = +updateQuantity;
           return product;
         } else {
           return product;

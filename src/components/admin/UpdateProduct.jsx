@@ -17,6 +17,7 @@ const UpdateProduct = ({
   setUpdateProductPrice,
   updateProductDescription,
   setUpdateProductDescription,
+  setShowModal,
 }) => {
   const { products, setProducts } = useAuth();
   const [message, setMessage] = useState("");
@@ -25,13 +26,12 @@ const UpdateProduct = ({
     e.preventDefault();
     //build update object
     const updateObj = {};
-    name.length > 0 ? (updateObj.name = name) : null;
-    variation.length > 0 ? (updateObj.variation = variation) : null;
-    game.length > 0 ? (updateObj.game = game) : null;
-    image.length > 0 ? (updateObj.image = image) : null;
-    description.length > 0 ? (updateObj.description = description) : null;
-    price > 0 ? (updateObj.price = price) : null;
-
+    updateObj.name = updateProductName;
+    updateObj.variation = updateProductVariation;
+    updateObj.game = updateProductGame;
+    updateObj.image = updateProductImage;
+    updateObj.description = updateProductDescription;
+    updateObj.price = updateProductPrice;
     try {
       const response = await updateProduct(productId, updateObj);
       if (response.message === "Successfully updated product!") {
@@ -40,7 +40,9 @@ const UpdateProduct = ({
           return product.id !== response.product.id;
         });
         const updatedList = [response.product, ...filteredProducts];
+        console.log(updatedList);
         setProducts(updatedList);
+        setShowModal(false);
       } else {
         setMessage(response.message);
       }

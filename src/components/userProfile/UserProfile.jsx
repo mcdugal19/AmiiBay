@@ -1,42 +1,45 @@
 import React, { useState } from "react";
-import { registerUser } from "../axios-services";
-import { useNavigate } from "react-router-dom";
+import useAuth from "../../hooks/useAuth";
+import { updateUser } from "../../axios-services";
 import { toast } from "react-toastify";
-import useAuth from "../hooks/useAuth";
-
-const Register = () => {
-  const { setUser, setIsLoggedIn } = useAuth();
+const UserProfile = () => {
+  const { user } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmationPassword, setConfirmationPassword] = useState("");
   const [email, setEmail] = useState("");
-  let navigate = useNavigate();
-
   return (
-    <div className="register-page">
-      <h2>Welcome to Amiibos!</h2>
-      {/* The form below is the form that verifies login credentials */}
+    <div className="user-profile-page">
+      <h2>Welcome {user.username}!</h2>
+      <h3>Update Account Information</h3>
       <div className="form-container">
         <form
           onSubmit={async (e) => {
             e.preventDefault();
             try {
-              if (password === confirmationPassword && password.length > 0) {
-                const response = await registerUser(username, password, email);
-                if (response.user) {
-                  setIsLoggedIn(true);
-                  setUser(response.user);
-                  toast(response.message);
-                  setTimeout(() => navigate("/"), 1000);
-                } else {
+              if (password === confirmationPassword) {
+                const userObj = { id: user.id };
+                username.length > 0 ? (userObj.username = username) : null;
+                password.length > 0 ? (userObj.username = username) : null;
+                email.length > 0 ? (userObj.email = email) : null;
+                password.length > 0 ? (userObj.password = password) : null;
+                const response = await updateUser(userObj);
+                if (response.error) {
                   toast.error(response.message);
                 }
+                if (response.updatedUser.id) {
+                  toast(response.message);
+                  setUsername("");
+                  setPassword("");
+                  setConfirmationPassword("");
+                  setEmail("");
+                }
               } else {
-                toast.error("Must have passwords that match, try again :/");
+                toast.error("Passwords do not match!");
               }
             } catch (error) {
               console.error(
-                "There was a problem with your registration information.",
+                "There was a problem with updating your user information.",
                 error
               );
             }
@@ -70,16 +73,16 @@ const Register = () => {
           <input
             type="text"
             value={email}
-            placeholder="Email Required"
+            placeholder="Email"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
           />
-          <button type="submit">Sign Up</button>
+          <button type="submit">Update Account</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default UserProfile;

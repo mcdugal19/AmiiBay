@@ -28,7 +28,8 @@ async function createProduct({
 async function getAllProducts() {
   try {
     const { rows } = await client.query(`
-      SELECT * FROM products;
+      SELECT * FROM products
+      ORDER BY id;
     `);
     return rows;
   } catch (error) {
@@ -101,7 +102,6 @@ async function updateProduct(fields = {}) {
 
 async function deleteProduct(id) {
   try {
-
     await client.query(
       `
       DELETE FROM products

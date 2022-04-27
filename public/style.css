@@ -380,14 +380,26 @@ td {
   display: flex;
   justify-content: space-between;
 }
+
+/* Modal */
 .modal {
   position: absolute;
   left:30rem;
   bottom: 14rem;
   background-color: grey;
   width: 60rem;
-  height: 15rem;
+  height: 16rem;
+  max-width: 100%;
 }
+
+.modal-title{
+  font-size: 25px
+}
+
+.modal-close-button{
+  margin-left: 10px;
+}
+
 
 
 /* PAGINATION */
@@ -446,4 +458,6 @@ td {
   box-shadow: none;
   color: #999;
 }
+
+
 

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { loginUser } from "../axios-services";
 import useAuth from "../hooks/useAuth";
 
@@ -6,6 +8,7 @@ const Login = () => {
   const { setUser, setIsLoggedIn, isLoggedIn, setCart } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  let navigate = useNavigate();
 
   return (
     <div className="login-page">
@@ -17,9 +20,15 @@ const Login = () => {
             e.preventDefault();
             try {
               const response = await loginUser(username, password);
-              setUser(response);
-              setCart(response.cart);
-              setIsLoggedIn(true);
+              if (response.user) {
+                toast(response.message);
+                setUser(response.user);
+                setCart(response.user.cart);
+                setIsLoggedIn(true);
+                setTimeout(() => navigate("/"), 1000);
+              } else {
+                toast.error(response.message);
+              }
             } catch (error) {
               console.error(
                 "There was a problem with your login information.",
@@ -48,15 +57,6 @@ const Login = () => {
 
           <button type="submit">Log in</button>
         </form>
-      </div>
-      {/* the below section only displays after a successful user login */}
-      <div
-        className="login-confirmation"
-        style={{
-          display: isLoggedIn ? "block" : "none",
-        }}
-      >
-        <h3>LOGIN SUCCESS!</h3>
       </div>
     </div>
   );
