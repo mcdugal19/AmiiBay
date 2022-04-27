@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 // getAPIHealth is defined in our axios-services directory index.js
@@ -13,7 +13,8 @@ import { Admin } from "./admin";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
 import { Checkout } from "./checkout";
-import catMario from './images/Cat Mario Icon.png'
+import catMario from "./images/Cat Mario Icon.png";
+import { UserProfile } from "./userProfile";
 
 const App = () => {
   const { user, isLoggedIn } = useAuth();
@@ -25,7 +26,7 @@ const App = () => {
         <h1 className="Title">Amiibos</h1>
         {isLoggedIn ? (
           <div className="is-logged-in">
-            {user.username}
+            <Link to={"/me"}>{user.username}</Link>
             <img className="user-icon" src={catMario} alt="user icon" />
           </div>
         ) : null}
@@ -41,6 +42,7 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/me" element={<UserProfile />} />
       </Routes>
     </div>
   );
