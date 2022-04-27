@@ -1,5 +1,4 @@
 import axios from "axios";
-import { response } from "express";
 import { config } from "./Constants";
 const API_URL = config.url;
 // this file holds your frontend network request adapters
@@ -26,6 +25,21 @@ export async function fetchAllProductsByGame(game) {
     return data;
   } catch (error) {
     console.error(error);
+  }
+}
+
+export async function fetchAllGames() {
+  try {
+    const response = await fetch(`${API_URL}/products`);
+    const products = await response.json();
+    const gamesArray = await products.map((product) => {
+      return product.game;
+    })
+    const games = [...new Set(gamesArray)]
+    console.log(games, "games")
+    return games;
+  } catch (error) {
+    throw error;
   }
 }
 

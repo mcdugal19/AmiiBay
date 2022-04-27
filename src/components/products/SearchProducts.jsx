@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
   fetchAllProducts,
   fetchAllProductsByGame,
+  fetchAllGames,
 } from "../../axios-services/index";
 
 // this component displays a search bar above the products section and filters the products based on keywords
@@ -12,6 +13,8 @@ const SearchProducts = ({ products, setProducts }) => {
   const [clickedClear, setClickedClear] = useState(false);
   const [gameList, setGameList] = useState([]);
   const [game, setGame] = useState("any");
+
+
   function productMatches(product, searchTerm) {
     //update according to the API
     if (
@@ -46,6 +49,17 @@ const SearchProducts = ({ products, setProducts }) => {
     getProductsByGame();
   }, [clickedClear]);
 
+  useEffect(() => {
+    try {
+      Promise.all([fetchAllGames()]).then(([games]) => {
+        setGameList(games)
+      })
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }, []);
+
   return (
     <form
       id="search"
@@ -64,10 +78,10 @@ const SearchProducts = ({ products, setProducts }) => {
           setSearchTerm(e.target.value);
         }}
       />
-      <fieldset>
         <label htmlFor="select-game">
-          Game <span className="game-count">({gameList.length})</span>
+          Game 
         </label>
+        <span className="game-count">({gameList.length})</span>
         <select
           name="game"
           id="select-game"
@@ -86,7 +100,6 @@ const SearchProducts = ({ products, setProducts }) => {
             );
           })}
         </select>
-      </fieldset>
       <button className="button" type="submit">
         SEARCH
       </button>
