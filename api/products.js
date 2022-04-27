@@ -61,25 +61,12 @@ productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
 
   // build update object
   const updateObj = { id: productId };
-
-  if (name) {
-    updateObj.name = name;
-  }
-  if (variation) {
-    updateObj.variation = variation;
-  }
-  if (game) {
-    updateObj.game = game;
-  }
-  if (image) {
-    updateObj.image = image;
-  }
-  if (description) {
-    updateObj.description = description;
-  }
-  if (price) {
-    updateObj.price = price;
-  }
+  updateObj.name = name;
+  updateObj.variation = variation;
+  updateObj.game = game;
+  updateObj.image = image;
+  updateObj.description = description;
+  updateObj.price = price;
 
   try {
     const product = await Products.updateProduct(updateObj);
