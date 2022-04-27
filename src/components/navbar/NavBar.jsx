@@ -12,6 +12,7 @@ const NavBar = () => {
     const itemNums = cart.map((item) => {
       return item.quantity;
     });
+
     const cartTotal = itemNums.reduce(
       (partialTotal, current) => partialTotal + current,
       0
