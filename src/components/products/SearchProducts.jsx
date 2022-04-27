@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllProducts } from "../../axios-services/index";
+import {
+  fetchAllProducts,
+  fetchAllProductsByGame,
+} from "../../axios-services/index";
 
 // this component displays a search bar above the products section and filters the products based on keywords
 
@@ -7,7 +10,8 @@ const SearchProducts = ({ products, setProducts }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clickedSearch, setClickedSearch] = useState(false);
   const [clickedClear, setClickedClear] = useState(false);
-
+  const [gameList, setGameList] = useState([]);
+  const [game, setGame] = useState("any");
   function productMatches(product, searchTerm) {
     //update according to the API
     if (
@@ -34,6 +38,14 @@ const SearchProducts = ({ products, setProducts }) => {
     getProducts();
   }, [clickedClear]);
 
+  useEffect(() => {
+    const getProductsByGame = async () => {
+      const productsArrayByGame = await fetchAllProductsByGame();
+      setProducts(productsArrayByGame);
+    };
+    getProductsByGame();
+  }, [clickedClear]);
+
   return (
     <form
       id="search"
@@ -52,8 +64,34 @@ const SearchProducts = ({ products, setProducts }) => {
           setSearchTerm(e.target.value);
         }}
       />
-      <button className="button" type="submit">SEARCH</button>
-      <button className="button"
+      <fieldset>
+        <label htmlFor="select-game">
+          Game <span className="game-count">({gameList.length})</span>
+        </label>
+        <select
+          name="game"
+          id="select-game"
+          value={game}
+          onChange={(event) => {
+            setGame(event.target.value);
+          }}
+        >
+          <option value="any">Any</option>
+          {/* map over the gameList, return an <option /> */}
+          {gameList.map((game, index) => {
+            return (
+              <option key={index} value={game}>
+                {game}
+              </option>
+            );
+          })}
+        </select>
+      </fieldset>
+      <button className="button" type="submit">
+        SEARCH
+      </button>
+      <button
+        className="button"
         onClick={() => {
           setClickedClear(!clickedClear);
         }}
