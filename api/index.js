@@ -14,8 +14,6 @@ apiRouter.use("/users", usersRouter);
 //   });
 // });
 
-
-
 // place your routers here
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
@@ -23,5 +21,7 @@ const checkoutRouter = require("./checkout");
 apiRouter.use("/checkout", checkoutRouter);
 const cartRouter = require("./cart");
 apiRouter.use("/cart", cartRouter);
+const ordersRouter = require("./orders");
+apiRouter.use("/orders", ordersRouter);
 
 module.exports = apiRouter;

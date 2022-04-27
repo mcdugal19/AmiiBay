@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
           setUser(response);
           setIsLoggedIn(true);
           setCart(response.cart);
+          setOrders(response.orders);
         }
       } catch (error) {
         throw error;
@@ -48,6 +49,8 @@ const AuthProvider = ({ children }) => {
         setProducts,
         cart,
         setCart,
+        orders,
+        setOrders,
       }}
     >
       {children}

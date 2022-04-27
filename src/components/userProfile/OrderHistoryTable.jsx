@@ -2,7 +2,29 @@ import React from "react";
 import useAuth from "../../hooks/useAuth";
 
 const OrderHistoryTable = () => {
-  const { user } = useAuth();
+  const { user, orders } = useAuth();
+  function tableContents() {
+    return orders.map((product, idx) => {
+      return (
+        <tr className="product-table-content" key={idx}>
+          <td>{product.name}</td>
+          <td>{product.variation}</td>
+          <td>{product.game}</td>
+          <td>
+            <img
+              src={product.image}
+              width={"130px"}
+              height={"130px"}
+              alt={`${product.name} amiibo image`}
+            />
+          </td>
+          <td>{product.description}</td>
+          <td>{product.price}</td>
+          <td>{product.quantity}</td>
+        </tr>
+      );
+    });
+  }
 
   return (
     <div className="product-table">
@@ -18,28 +40,7 @@ const OrderHistoryTable = () => {
             <th>Quantity</th>
           </tr>
         </thead>
-        <tbody>
-          {user.orders.map((product, idx) => {
-            return (
-              <tr className="product-table-content" key={idx}>
-                <td>{product.name}</td>
-                <td>{product.variation}</td>
-                <td>{product.game}</td>
-                <td>
-                  <img
-                    src={product.image}
-                    width={"130px"}
-                    height={"130px"}
-                    alt={`${product.name} amiibo image`}
-                  />
-                </td>
-                <td>{product.description}</td>
-                <td>{product.price}</td>
-                <td>{product.quantity}</td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{orders != undefined ? tableContents() : null}</tbody>
       </table>
     </div>
   );

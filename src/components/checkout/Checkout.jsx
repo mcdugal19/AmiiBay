@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CartItem } from "../cart";
 import useAuth from "../../hooks/useAuth";
-import { clearAllItemsInCart } from "../../axios-services";
+import { clearAllItemsInCart, addItemToOrders } from "../../axios-services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   let navigate = useNavigate();
-  const { cart, isLoggedIn, user, setCart } = useAuth();
+  const { cart, isLoggedIn, user, setCart, setOrders, orders } = useAuth();
   const [total, setTotal] = useState(0);
   const [clicked, setClicked] = useState(false);
 
@@ -28,11 +28,37 @@ const Checkout = () => {
     setTotal(Math.round((newTotal + Number.EPSILON) * 100) / 100);
   }
 
+  async function concatOrders(response) {
+    console.log(orders, "oldOI");
+    console.log(response[0], "response");
+
+    let newOrders = orders.concat(response);
+    console.log(newOrders.length, "newO");
+    setOrders(newOrders);
+  }
+  const responseArr = [];
+
   async function submitHandler() {
     if (isLoggedIn) {
       try {
+        cart.map(async (product) => {
+          let response = await addItemToOrders({
+            productId: product.id,
+            quantity: product.quantity,
+          });
+          console.log(responseArr, "test1");
+          responseArr.push(response.cartItem);
+          console.log(responseArr, "test2");
+        });
+
+        // let newArr = orders.concat(responseArr);
+
+        // const newArr = orders.concat(test);
+        // console.log(newArr, "testing");
+        // setOrders(newArr);
+
         const response = await clearAllItemsInCart();
-        console.log(response);
+        // console.log(response);
         if (
           response.message === `Successfully cleared ${user.username}'s cart!`
         ) {
@@ -60,9 +86,10 @@ const Checkout = () => {
     <span className="container">
       <br></br>
       <form
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
-          submitHandler();
+          await submitHandler();
+          await concatOrders(responseArr);
         }}
       >
         <br></br>
