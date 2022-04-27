@@ -14,11 +14,13 @@ productsRouter.get("/", async (req, res, next) => {
 
 productsRouter.post("/", adminRequired, async (req, res, next) => {
   const { productObj } = req.body;
-  const { name, variation, game, image, description, price } = productObj;
-  if (!name || !price) {
+  const { name, variation, game, image, description, price, inventory } =
+    productObj;
+  if (!name || !price || !inventory) {
     next({
       name: "RequiredFields",
-      message: "Products must at least have a name and price.",
+      message:
+        "Products must at least have a name, price, and inventory amount.",
     });
   } else {
     try {
@@ -29,6 +31,7 @@ productsRouter.post("/", adminRequired, async (req, res, next) => {
         image,
         description,
         price,
+        inventory,
       });
 
       res.send({ message: "Successfully added product!", product });
@@ -57,7 +60,8 @@ productsRouter.get("/:game", async (req, res, next) => {
 
 productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
-  const { name, variation, game, image, description, price } = req.body;
+  const { name, variation, game, image, description, price, inventory } =
+    req.body;
 
   // build update object
   const updateObj = { id: productId };
@@ -67,6 +71,7 @@ productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
   updateObj.image = image;
   updateObj.description = description;
   updateObj.price = price;
+  updateObj.inventory = inventory;
 
   try {
     const product = await Products.updateProduct(updateObj);

@@ -20,7 +20,9 @@ const SingleProductCard = ({ product }) => {
         <h3>{product.name}</h3>
         {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
         <p>{product.game}</p>
-        <h5>{product.price}</h5>
+        <h5>
+          {product.inventory > 0 ? product.price : "Temporarily out of stock"}
+        </h5>
       </span>
       <span className="single-product-buttons">
         <Link to={`/product/${product.id}`}>

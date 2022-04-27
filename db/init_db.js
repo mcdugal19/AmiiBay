@@ -38,7 +38,8 @@ async function buildTables() {
       game VARCHAR(255),
       image VARCHAR(255),
       description VARCHAR(255),
-      price MONEY NOT NULL
+      price MONEY NOT NULL,
+      inventory INTEGER NOT NULL
     );
 
     CREATE TABLE reviews(

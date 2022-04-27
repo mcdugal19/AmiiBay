@@ -25,6 +25,11 @@ const SingleProduct = () => {
         <img src={product.image} alt={`${product.name} amiibo image`} />
       </div>
       <span className="single-product-add-button">
+        <h6>
+          {product.inventory > 0
+            ? `${product.inventory} currently in stock!`
+            : "Temporarily out of stock!"}
+        </h6>
         <input
           type="number"
           min={"1"}

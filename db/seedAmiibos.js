@@ -38,6 +38,7 @@ async function fetchAmiibos() {
           : (newObj.description = `This ${amiiboObj.character} amiibo was produced as part of the ${amiiboObj.amiiboSeries} collection.`);
 
         amiiboObj.release.na ? (newObj.price = 19.99) : (newObj.price = 39.99);
+        newObj.inventory = 10;
 
         return newObj;
       })

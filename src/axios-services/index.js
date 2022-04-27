@@ -11,8 +11,9 @@ const API_URL = config.url;
 // PRODUCTS
 export async function fetchAllProducts() {
   try {
-    const { data: products } = await axios.get("/api/products");
-    return products;
+    const response = await fetch(`${API_URL}/products`);
+    const data = await response.json();
+    return data;
   } catch (error) {
     console.error(error);
   }
@@ -59,16 +60,6 @@ export async function updateProduct(productId, updateObj) {
     return data;
   } catch (error) {
     throw error;
-  }
-}
-
-export async function getAPIHealth() {
-  try {
-    const { data } = await axios.get("/api/health");
-    return data;
-  } catch (error) {
-    console.error(error);
-    return { healthy: false };
   }
 }
 
