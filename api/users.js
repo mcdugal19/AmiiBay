@@ -138,4 +138,53 @@ usersRouter.delete(
   }
 );
 
+usersRouter.patch("/me", authRequired, async (req, res, next) => {
+  try {
+    const { id, username, password, email } = req.body;
+    const _user = await User.getUserByUsername(username);
+    const _userEmail = await User.getUserByEmail(email);
+    const updateUser = { id: id };
+    if (username) {
+      if (_user) {
+        throw {
+          name: "UserExistsError",
+          message: "Username is taken, try again",
+        };
+      } else {
+        updateUser.username = username;
+      }
+    }
+    if (password) {
+      if (password.length < 8) {
+        throw {
+          name: "PasswordLengthError",
+          message: "Password is too short!",
+        };
+      } else {
+        updateUser.password = password;
+      }
+    }
+    if (email) {
+      if (!email.includes("@")) {
+        throw {
+          name: "ValidEmailError",
+          message: "Not a valid email",
+        };
+      } else if (_userEmail) {
+        throw {
+          name: "EmailExistsError",
+          message: "Email already in use",
+        };
+      } else {
+        updateUser.email = email;
+      }
+    }
+    const updatedUser = await User.updateUser(updateUser);
+    delete updatedUser.password;
+    res.send({ updatedUser, message: "Successfully updated user" });
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = usersRouter;

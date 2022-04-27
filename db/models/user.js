@@ -124,6 +124,10 @@ async function deleteUser(id) {
 async function updateUser(fields = {}) {
   const { id } = fields;
   delete fields.id;
+  if (fields.password) {
+    const hashedPassword = await bcrypt.hash(fields.password, SALT_ROUNDS);
+    fields.password = hashedPassword;
+  }
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 1}`)
     .join(", ");
