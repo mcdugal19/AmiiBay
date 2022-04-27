@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { updateUser } from "../../axios-services";
 import { toast } from "react-toastify";
+import { OrderHistoryTable } from "./index";
 const UserProfile = () => {
   const { user } = useAuth();
   const [username, setUsername] = useState("");
@@ -10,7 +11,7 @@ const UserProfile = () => {
   const [email, setEmail] = useState("");
   return (
     <div className="user-profile-page">
-      <h2>Welcome {user.username}!</h2>
+      <h1>Welcome {user.username}!</h1>
       <h3>Update Account Information</h3>
       <div className="form-container">
         <form
@@ -81,6 +82,8 @@ const UserProfile = () => {
           <button type="submit">Update Account</button>
         </form>
       </div>
+      <h2>Order History</h2>
+      <OrderHistoryTable />
     </div>
   );
 };

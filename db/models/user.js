@@ -154,9 +154,8 @@ async function updateUser(fields = {}) {
   }
 }
 
-function mapOverUserRows(rows) {
+async function mapOverUserRows(rows, id) {
   let user = {};
-
   for (let row of rows) {
     if (!user.id) {
       user = {
@@ -191,7 +190,24 @@ function mapOverUserRows(rows) {
       });
     }
   }
-
+  const orderRows = await getUserWithOrders(id);
+  user.orders = [];
+  for (let orderRow of orderRows) {
+    if (orderRow.productId) {
+      user.orders.push({
+        id: orderRow.productId,
+        name: orderRow.name,
+        variation: orderRow.variation,
+        game: orderRow.game,
+        image: orderRow.image,
+        description: orderRow.description,
+        price: orderRow.price,
+        quantity: orderRow.quantity,
+      });
+    } else {
+      user.orders = [];
+    }
+  }
   return user;
 }
 
@@ -220,7 +236,38 @@ async function getUserWithCart(id) {
     `,
       [id]
     );
-    return mapOverUserRows(rows);
+    return mapOverUserRows(rows, id);
+  } catch (error) {
+    console.error("Problem getting user with cart...", error);
+  }
+}
+
+async function getUserWithOrders(id) {
+  try {
+    const { rows } = await client.query(
+      `
+      SELECT users.id,
+        users.username,
+        users.email,
+        users."isAdmin",
+        products.id AS "productId",
+        products.name,
+        products.variation,
+        products.game,
+        products.image,
+        products.description,
+        products.price,
+        users_orders.quantity
+      FROM users
+      LEFT JOIN users_orders
+      ON users.id=users_orders."userId"
+      LEFT JOIN products
+      ON users_orders."productId"=products.id
+      WHERE users.id=$1;
+    `,
+      [id]
+    );
+    return rows;
   } catch (error) {
     console.error("Problem getting user with cart...", error);
   }
