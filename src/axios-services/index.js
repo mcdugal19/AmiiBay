@@ -239,3 +239,20 @@ export async function deleteUser(id) {
     throw error;
   }
 }
+
+export async function updateUser(updateUser) {
+  try {
+    const response = await fetch(`${API_URL}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateUser),
+    });
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
