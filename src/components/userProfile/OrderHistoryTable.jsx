@@ -56,7 +56,7 @@ const OrderHistoryTable = () => {
             <th>Quantity</th>
           </tr>
         </thead>
-        <tbody>{orders != undefined ? tableContents() : null}</tbody>
+        <tbody>{user.orders != undefined ? tableContents() : null}</tbody>
       </table>
     </div>
   );

@@ -31,10 +31,9 @@ const Checkout = () => {
             productId: product.id,
             quantity: product.quantity,
           });
-          let x = await response.cartItem;
-          return x;
+          return await response.cartItem;
         });
-        setOrders([...orders, newArr]);
+        setOrders([newArr]);
 
         const response = await clearAllItemsInCart();
         if (
