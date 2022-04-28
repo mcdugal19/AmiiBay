@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
+import { getMe } from "../../axios-services";
 
 const OrderHistoryTable = () => {
-  const { user, orders } = useAuth();
+  const { user, orders, setOrders, setUser } = useAuth();
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const me = await getMe();
+        if (me.id) {
+          setUser(me);
+        }
+      } catch (error) {
+        throw error;
+      }
+    }
+    getUser();
+  }, [setOrders]);
+
   function tableContents() {
-    return orders.map((product, idx) => {
+    return user.orders.map((product, idx) => {
       return (
         <tr className="product-table-content" key={idx}>
           <td>{product.name}</td>

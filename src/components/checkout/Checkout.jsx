@@ -9,11 +9,6 @@ const Checkout = () => {
   let navigate = useNavigate();
   const { cart, isLoggedIn, user, setCart, setOrders, orders } = useAuth();
   const [total, setTotal] = useState(0);
-  const [clicked, setClicked] = useState(false);
-
-  function handleClick() {
-    setClicked(!clicked);
-  }
 
   function getTotal() {
     const prices = cart.map((item) => {
@@ -28,37 +23,20 @@ const Checkout = () => {
     setTotal(Math.round((newTotal + Number.EPSILON) * 100) / 100);
   }
 
-  async function concatOrders(response) {
-    console.log(orders, "oldOI");
-    console.log(response[0], "response");
-
-    let newOrders = orders.concat(response);
-    console.log(newOrders.length, "newO");
-    setOrders(newOrders);
-  }
-  const responseArr = [];
-
   async function submitHandler() {
     if (isLoggedIn) {
       try {
-        cart.map(async (product) => {
+        let newArr = await cart.map(async (product) => {
           let response = await addItemToOrders({
             productId: product.id,
             quantity: product.quantity,
           });
-          console.log(responseArr, "test1");
-          responseArr.push(response.cartItem);
-          console.log(responseArr, "test2");
+          let x = await response.cartItem;
+          return x;
         });
-
-        // let newArr = orders.concat(responseArr);
-
-        // const newArr = orders.concat(test);
-        // console.log(newArr, "testing");
-        // setOrders(newArr);
+        setOrders([...orders, newArr]);
 
         const response = await clearAllItemsInCart();
-        // console.log(response);
         if (
           response.message === `Successfully cleared ${user.username}'s cart!`
         ) {
@@ -89,7 +67,6 @@ const Checkout = () => {
         onSubmit={async (e) => {
           e.preventDefault();
           await submitHandler();
-          await concatOrders(responseArr);
         }}
       >
         <br></br>
