@@ -8,6 +8,8 @@ const AuthProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [searchItems, setSearchItems] = useState([]);
+  const [orders, setOrders] = useState([]);
+
 
   useEffect(() => {
     async function getUser() {
@@ -50,6 +52,8 @@ const AuthProvider = ({ children }) => {
         setCart,
         searchItems,
         setSearchItems,
+        orders,
+        setOrders,
       }}
     >
       {children}

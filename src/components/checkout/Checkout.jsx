@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { CartItem } from "../cart";
 import useAuth from "../../hooks/useAuth";
+import { clearAllItemsInCart, addItemToOrders } from "../../axios-services";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
-  const { cart } = useAuth();
+  let navigate = useNavigate();
+  const { cart, isLoggedIn, user, setCart, setOrders, orders } = useAuth();
   const [total, setTotal] = useState(0);
-  const [clicked, setClicked] = useState(false);
-
-  function handleClick() {
-    setClicked(!clicked);
-  }
 
   function getTotal() {
     const prices = cart.map((item) => {
@@ -24,6 +23,38 @@ const Checkout = () => {
     setTotal(Math.round((newTotal + Number.EPSILON) * 100) / 100);
   }
 
+  async function submitHandler() {
+    if (isLoggedIn) {
+      try {
+        let newArr = await cart.map(async (product) => {
+          let response = await addItemToOrders({
+            productId: product.id,
+            quantity: product.quantity,
+          });
+          return await response.cartItem;
+        });
+        setOrders([newArr]);
+
+        const response = await clearAllItemsInCart();
+        if (
+          response.message === `Successfully cleared ${user.username}'s cart!`
+        ) {
+          setCart([]);
+          toast("Order has been placed!");
+          navigate("/");
+        } else {
+          console.error(response);
+          toast.error(response.message);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      setCart([]);
+      toast("Successfully cleared guest's cart!");
+    }
+  }
+
   useEffect(() => {
     getTotal();
   }, [cart]);
@@ -31,7 +62,12 @@ const Checkout = () => {
   return (
     <span className="container">
       <br></br>
-      <form>
+      <form
+        onSubmit={async (e) => {
+          e.preventDefault();
+          await submitHandler();
+        }}
+      >
         <br></br>
         <label className="shipping">Shipping Info</label>
 
@@ -47,10 +83,9 @@ const Checkout = () => {
         <input type="text" placeholder="Name On Card"></input>
         <input type="text" placeholder="Credit Card Number"></input>
         <br></br>
-        
-        
+
         <br></br>
-        <button className="order-button" type="submit" >
+        <button className="order-button" type="submit">
           Place Your Order
         </button>
         <br></br>
@@ -59,21 +94,21 @@ const Checkout = () => {
         <br></br>
       </form>
       <div className="cart-container">
-          <table>
-            <tbody>
-              <tr className="cart-headers">
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Update Quantity?</th>
-                <th>Remove?</th>
-              </tr>
-              {cart.map((item, idx) => {
-                return <CartItem key={`cart-item-${idx}`} item={item} />;
-              })}
-            </tbody>
-          </table>
-          <h4>Total Price: {`$${total}`}</h4>
-        </div>
+        <table>
+          <tbody>
+            <tr className="cart-headers">
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Update Quantity?</th>
+              <th>Remove?</th>
+            </tr>
+            {cart.map((item, idx) => {
+              return <CartItem key={`cart-item-${idx}`} item={item} />;
+            })}
+          </tbody>
+        </table>
+        <h4>Total Price: {`$${total}`}</h4>
+      </div>
     </span>
   );
 };

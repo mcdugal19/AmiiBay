@@ -4,7 +4,6 @@ const { getUserById } = require("../db/models/user");
 const authRequired = async (req, res, next) => {
   const token = req.signedCookies.token;
   try {
-
     const { id } = jwt.verify(token, process.env.JWT_SECRET);
 
     if (id) {
