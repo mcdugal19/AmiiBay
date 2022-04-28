@@ -7,7 +7,12 @@ const SingleProductCard = ({ product }) => {
     <span className="single-product">
       <span className="single-product-details">
         <span>
-          <Link to={`/product/${product.id}`}>
+          <Link
+            to={`/product/${product.id}`}
+            onClick={() => {
+              window.scrollTo(0, 0);
+            }}
+          >
             <img
               className="card--image"
               src={product.image}
@@ -25,7 +30,12 @@ const SingleProductCard = ({ product }) => {
         </h5>
       </span>
       <span className="single-product-buttons">
-        <Link to={`/product/${product.id}`}>
+        <Link
+          to={`/product/${product.id}`}
+          onClick={() => {
+            window.scrollTo(0, 0);
+          }}
+        >
           <button className="button--more-info">More Info</button>
         </Link>
         <AddToCart product={product} quantity={1} />
