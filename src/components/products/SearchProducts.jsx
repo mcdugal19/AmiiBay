@@ -8,7 +8,7 @@ const SearchProducts = () => {
   const [clickedSearch, setClickedSearch] = useState(false);
   const [clickedClear, setClickedClear] = useState(false);
   const [gameList, setGameList] = useState([]);
-  const [game, setGame] = useState("any");
+  const [game, setGame] = useState("all");
   const { products, searchItems, setSearchItems } = useAuth();
 
   useEffect(() => {
@@ -102,6 +102,8 @@ const SearchProducts = () => {
         onClick={async () => {
           await setSearchItems(products);
           setClickedClear(!clickedClear);
+          setSearchTerm('');
+          setGame("all")
         }}
       >
         CLEAR

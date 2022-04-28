@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SearchProducts from "./SearchProducts";
 import useAuth from "../../hooks/useAuth";
 import Pagination from "./Pagination";
 
+
 const AllProducts = () => {
-  const { searchItems } = useAuth();
+  const { products, searchItems, setSearchItems } = useAuth();
+  
+  useEffect(() => {
+    setSearchItems(products)
+  }, []);
 
   return (
     <>
