@@ -1,38 +1,59 @@
 import React, { useEffect, useState } from "react";
-import { fetchAllProducts } from "../../axios-services/index";
+import useAuth from "../../hooks/useAuth";
 
 // this component displays a search bar above the products section and filters the products based on keywords
 
-const SearchProducts = ({ products, setProducts }) => {
+const SearchProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clickedSearch, setClickedSearch] = useState(false);
   const [clickedClear, setClickedClear] = useState(false);
+  const [gameList, setGameList] = useState([]);
+  const [game, setGame] = useState("any");
+  const { products, searchItems, setSearchItems } = useAuth();
 
-  function productMatches(product, searchTerm) {
+  useEffect(() => {
+    async function getGames() {
+      const gamesArray = await products.map((product) => {
+        return product.game;
+      });
+      const games = [...new Set(gamesArray)];
+      setGameList(games);
+    }
+    getGames();
+  }, [products]);
+
+  function productMatches(product, searchTerm, game) {
     //update according to the API
     if (
-      product.name.includes(searchTerm) ||
-      product.description.includes(searchTerm)
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase())
     ) {
       return true;
     }
   }
 
+  function gameMatches(product, game) {
+    if (game === "all") {
+      return true;
+    }
+    if (product.game.includes(game)) {
+      return true;
+    }
+  }
   // The useEffects below display the filtered results and allows a clear button to return the state to all routines
   useEffect(() => {
-    const filteredProductsArray = products.filter((product) =>
+    const filteredProductsArray = searchItems.filter((product) =>
       productMatches(product, searchTerm)
     );
-    setProducts(filteredProductsArray);
+    setSearchItems(filteredProductsArray);
   }, [clickedSearch]);
 
   useEffect(() => {
-    const getProducts = async () => {
-      const productsArray = await fetchAllProducts();
-      setProducts(productsArray);
-    };
-    getProducts();
-  }, [clickedClear]);
+    const filteredProductsArray = products.filter((product) =>
+      gameMatches(product, game)
+    );
+    setSearchItems(filteredProductsArray);
+  }, [game]);
 
   return (
     <form
@@ -52,9 +73,34 @@ const SearchProducts = ({ products, setProducts }) => {
           setSearchTerm(e.target.value);
         }}
       />
-      <button className="button" type="submit">SEARCH</button>
-      <button className="button"
-        onClick={() => {
+      <label htmlFor="select-game">Game</label>
+      <span className="game-count">({gameList.length})</span>
+      <select
+        name="game"
+        id="select-game"
+        value={game}
+        onChange={(event) => {
+          // if(game !== "any"){
+          setGame(event.target.value);
+        }}
+      >
+        <option value="all">Any</option>
+        {/* map over the gameList, return an <option /> */}
+        {gameList.map((game, index) => {
+          return (
+            <option key={index} value={game}>
+              {game}
+            </option>
+          );
+        })}
+      </select>
+      <button className="button" type="submit">
+        SEARCH
+      </button>
+      <button
+        className="button"
+        onClick={async () => {
+          await setSearchItems(products);
           setClickedClear(!clickedClear);
         }}
       >

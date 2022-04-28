@@ -174,7 +174,7 @@ h2 {
     align-items: center;
   }
   
-  #search label {
+  #search label, select {
     color: #08469E;
     margin: 0.5rem;
     font-weight: bold;

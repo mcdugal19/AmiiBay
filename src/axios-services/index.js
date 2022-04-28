@@ -19,6 +19,30 @@ export async function fetchAllProducts() {
   }
 }
 
+export async function fetchAllProductsByGame(game) {
+  try {
+    const response = await fetch(`${API_URL}/products/${game}`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function fetchAllGames() {
+  try {
+    const response = await fetch(`${API_URL}/products`);
+    const products = await response.json();
+    const gamesArray = await products.map((product) => {
+      return product.game;
+    })
+    const games = [...new Set(gamesArray)]
+    return games;
+  } catch (error) {
+    throw error;
+  }
+}
+
 export async function addNewProduct(productObj) {
   try {
     const response = await fetch(`${API_URL}/products`, {

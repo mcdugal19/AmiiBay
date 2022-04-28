@@ -4,13 +4,13 @@ import useAuth from "../../hooks/useAuth";
 import Pagination from "./Pagination";
 
 const AllProducts = () => {
-  const { products, setProducts } = useAuth();
+  const { searchItems } = useAuth();
 
   return (
     <>
-      <SearchProducts products={products} setProducts={setProducts} />
+      <SearchProducts  />
       <div className="container">
-          {products.length > 0 ? ( <>
+          {searchItems.length > 0 ? ( <>
           <Pagination pageLimit={5} productLimit={20}/>
           </>): (<h1>No Amiibos to Display</h1>)}
       </div>

@@ -5,14 +5,14 @@ import SingleProductCard from "./SingleProductCard";
 
 function Pagination({ pageLimit, productLimit }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const { products, setProducts } = useAuth();
-  const [pages] = useState(Math.round(products.length / productLimit));
+  const { searchItems, setSearchItems } = useAuth();
+//   const [pages] = useState(Math.round(searchItems.length / productLimit));
 
   function goToNextPage() {
     setCurrentPage((page) => page + 1);
   }
   function goToLastPage() {
-    setCurrentPage((page) => Math.round(products.length / productLimit));
+    setCurrentPage((page) => Math.round(searchItems.length / productLimit));
   }
 
   function goToPreviousPage() {
@@ -31,7 +31,7 @@ function Pagination({ pageLimit, productLimit }) {
   const getPaginatedData = () => {
     const startIndex = currentPage * productLimit - productLimit;
     const endIndex = startIndex + productLimit;
-    return products.slice(startIndex, endIndex);
+    return searchItems.slice(startIndex, endIndex);
   };
 
   const getPaginatedGroup = () => {

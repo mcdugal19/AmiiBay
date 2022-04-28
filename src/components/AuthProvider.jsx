@@ -7,7 +7,9 @@ const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [searchItems, setSearchItems] = useState([]);
   const [orders, setOrders] = useState([]);
+
 
   useEffect(() => {
     async function getUser() {
@@ -29,7 +31,7 @@ const AuthProvider = ({ children }) => {
     async function getProducts() {
       try {
         const amiibos = await fetchAllProducts();
-        setProducts(amiibos);
+        setProducts(amiibos); setSearchItems(amiibos);
       } catch (error) {
         throw error;
       }
@@ -48,6 +50,8 @@ const AuthProvider = ({ children }) => {
         setProducts,
         cart,
         setCart,
+        searchItems,
+        setSearchItems,
         orders,
         setOrders,
       }}
