@@ -9,47 +9,51 @@ const SearchProducts = () => {
   const [clickedClear, setClickedClear] = useState(false);
   const [gameList, setGameList] = useState([]);
   const [game, setGame] = useState("any");
-  const {products, searchItems, setSearchItems} = useAuth();
-  const [isLoaded, setIsLoaded] = useState(false);
-  
+  const { products, searchItems, setSearchItems } = useAuth();
 
   useEffect(() => {
-    async function getGames(){
+    async function getGames() {
       const gamesArray = await products.map((product) => {
-          return product.game;
-        })
-        console.log(gamesArray, "gamesArray")
-        const games = [...new Set(gamesArray)];
-        setGameList(games)
-        console.log(games, "games")
+        return product.game;
+      });
+      const games = [...new Set(gamesArray)];
+      setGameList(games);
     }
     getGames();
-  
-}, [products]);
+  }, [products]);
 
   function productMatches(product, searchTerm, game) {
     //update according to the API
     if (
-      product.name.includes(searchTerm) ||
-      product.description.includes(searchTerm) ||
-      product.game.includes(game)
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase())
     ) {
-      return true;   
+      return true;
     }
   }
- 
+
+  function gameMatches(product, game) {
+    if (game === "all") {
+      return true;
+    }
+    if (product.game.includes(game)) {
+      return true;
+    }
+  }
   // The useEffects below display the filtered results and allows a clear button to return the state to all routines
   useEffect(() => {
-    const filteredProductsArray = products.filter((product) =>
-      productMatches(product, searchTerm, game)
+    const filteredProductsArray = searchItems.filter((product) =>
+      productMatches(product, searchTerm)
     );
-    setIsLoaded(true);
     setSearchItems(filteredProductsArray);
   }, [clickedSearch]);
 
   useEffect(() => {
-    
-  }, [searchItems])
+    const filteredProductsArray = products.filter((product) =>
+      gameMatches(product, game)
+    );
+    setSearchItems(filteredProductsArray);
+  }, [game]);
 
   return (
     <form
@@ -66,39 +70,37 @@ const SearchProducts = () => {
         placeholder="enter keyword..."
         value={searchTerm}
         onChange={(e) => {
-          setSearchTerm(e.target.value.toLowerCase());
+          setSearchTerm(e.target.value);
         }}
       />
-        <label htmlFor="select-game">
-          Game 
-        </label>
-        <span className="game-count">({gameList.length})</span>
-        <select
-          name="game"
-          id="select-game"
-          value={game}
-          onChange={(event) => {
-            // if(game !== "any"){
-            setGame(event.target.value); 
-          }}
-        >
-          <option value="any">Any</option>
-          {/* map over the gameList, return an <option /> */}
-          {gameList.map((game, index) => {
-            return (
-              <option key={index} value={game}>
-                {game}
-              </option>
-            );
-          })}
-        </select>
-      <button className="button" type="submit" >
+      <label htmlFor="select-game">Game</label>
+      <span className="game-count">({gameList.length})</span>
+      <select
+        name="game"
+        id="select-game"
+        value={game}
+        onChange={(event) => {
+          // if(game !== "any"){
+          setGame(event.target.value);
+        }}
+      >
+        <option value="all">Any</option>
+        {/* map over the gameList, return an <option /> */}
+        {gameList.map((game, index) => {
+          return (
+            <option key={index} value={game}>
+              {game}
+            </option>
+          );
+        })}
+      </select>
+      <button className="button" type="submit">
         SEARCH
       </button>
       <button
         className="button"
         onClick={async () => {
-        await setSearchItems(products);
+          await setSearchItems(products);
           setClickedClear(!clickedClear);
         }}
       >
