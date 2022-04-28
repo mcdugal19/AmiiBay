@@ -89,6 +89,10 @@ header {
   padding: 1rem;
 }
 
+.Title {
+  position: relative;
+}
+
 .is-logged-in {
   position: absolute;
   top: 10px;
@@ -101,6 +105,7 @@ header {
   height: 5rem;
   width: 5rem;
   border-radius: 25%;
+  padding-left: 1rem;
 }
 
 /* NAVBAR */
@@ -193,13 +198,16 @@ h2 {
     margin: 0.5rem;
     display: flex;
     flex-direction: column;
-    border:solid black 2px;
+    border:solid transparent 2px;
     width: 20rem;
     max-width: 100%;
     max-height: 70%;
     height: 28rem;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
   rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+  .single-product:hover {
+    border:solid black 2px;
   }
 
 
@@ -459,5 +467,31 @@ td {
   color: #999;
 }
 
+
+/* Banner Components */
+.top-block {
+  background-color: #007061;
+  position: static;
+  width: 100%;
+  top: 43vh;
+  left: 0;
+  z-index: 5;
+  animation: top-block-expand 3s ease-in-out 1 forwards;
+  border-radius: 0;
+}
+
+@keyframes top-block-expand {
+  from {
+    height: 0vh;
+  }
+  to {
+    height: 30vh;
+  }
+}
+
+.banner-text {
+  color: black;
+
+}
 
 

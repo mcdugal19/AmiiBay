@@ -42,6 +42,7 @@ function Pagination({ pageLimit, productLimit }) {
   return (
     <>
       <div className="all-products-page">
+      
         {getPaginatedData().map((product, idx) => {
           return <SingleProductCard key={idx} product={product} />;
         })}
