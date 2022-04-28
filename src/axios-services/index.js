@@ -36,7 +36,6 @@ export async function fetchAllGames() {
       return product.game;
     })
     const games = [...new Set(gamesArray)]
-    console.log(games, "games")
     return games;
   } catch (error) {
     throw error;

@@ -13,6 +13,8 @@ const useAuth = () => {
     setProducts,
     cart,
     setCart,
+    searchItems,
+    setSearchItems,
   } = useContext(AuthContext);
 
   return {
@@ -24,6 +26,8 @@ const useAuth = () => {
     setProducts,
     cart,
     setCart,
+    searchItems,
+    setSearchItems,
   };
 };
 

@@ -4,11 +4,11 @@ import useAuth from "../../hooks/useAuth";
 import { AddToCart } from "../cart";
 
 const SingleProduct = () => {
-  const { products } = useAuth();
+  const { searchItems } = useAuth();
   let { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
 
-  const [product] = products.filter((item) => {
+  const [product] = searchItems.filter((item) => {
     return item.id == productId;
   });
 
