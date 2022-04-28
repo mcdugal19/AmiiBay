@@ -7,6 +7,7 @@ const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
+  const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function getUser() {
@@ -47,6 +48,8 @@ const AuthProvider = ({ children }) => {
         setProducts,
         cart,
         setCart,
+        orders,
+        setOrders,
       }}
     >
       {children}

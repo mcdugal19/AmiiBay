@@ -6,6 +6,7 @@ const {
   Products,
   User,
   Cart,
+  Orders,
 } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
@@ -53,7 +54,8 @@ async function buildTables() {
     CREATE TABLE users_orders(
       id SERIAL PRIMARY KEY,
       "userId" INTEGER REFERENCES users(id),
-      "productId" INTEGER REFERENCES products(id)
+      "productId" INTEGER REFERENCES products(id),
+      quantity INTEGER
     );
 
     CREATE TABLE cart(
@@ -136,6 +138,24 @@ async function populateInitialData() {
       cartEntriesToCreate.map(Cart.addToCart)
     );
     console.log("Seeded cart entries!");
+
+    const orderHistoriesToCreate = [
+      { userId: 2, productId: 5, quantity: 1 },
+      { userId: 2, productId: 2, quantity: 1 },
+      { userId: 2, productId: 12, quantity: 1 },
+      { userId: 4, productId: 11, quantity: 10 },
+      { userId: 4, productId: 52, quantity: 3 },
+      { userId: 4, productId: 120, quantity: 9 },
+      { userId: 5, productId: 115, quantity: 1 },
+      { userId: 5, productId: 113, quantity: 1 },
+      { userId: 5, productId: 172, quantity: 1 },
+    ];
+
+    const orderEntries = await Promise.all(
+      orderHistoriesToCreate.map(Orders.addToOrders)
+    );
+
+    console.log("Seeded order entries!");
 
     console.log("Seeded database!");
     // create useful starting data by leveraging your
