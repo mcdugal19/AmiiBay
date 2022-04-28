@@ -12,37 +12,41 @@ const UpdateQuantity = ({ item }) => {
     if (item.quantity === updateQuantity) {
       return;
     }
-    if (isLoggedIn) {
-      try {
-        const response = await updateItemQuantity(item.id, updateQuantity);
-        if (response.message === "Successfully updated quantity!") {
-          const filteredCart = cart.map((product) => {
-            if (product.id === item.id) {
-              product.quantity = +updateQuantity;
-              return product;
-            } else {
-              return product;
-            }
-          });
-          setCart(filteredCart);
-          toast(response.message);
-        } else {
-          toast(response.message);
+    if (updateQuantity <= item.inventory) {
+      if (isLoggedIn) {
+        try {
+          const response = await updateItemQuantity(item.id, updateQuantity);
+          if (response.message === "Successfully updated quantity!") {
+            const filteredCart = cart.map((product) => {
+              if (product.id === item.id) {
+                product.quantity = +updateQuantity;
+                return product;
+              } else {
+                return product;
+              }
+            });
+            setCart(filteredCart);
+            toast(response.message);
+          } else {
+            toast(response.message);
+          }
+        } catch (error) {
+          throw error;
         }
-      } catch (error) {
-        throw error;
+      } else {
+        const filteredGuestCart = cart.map((product) => {
+          if (product.id === item.id) {
+            product.quantity = +updateQuantity;
+            return product;
+          } else {
+            return product;
+          }
+        });
+        setCart(filteredGuestCart);
+        toast("Successfully updated quantity!");
       }
     } else {
-      const filteredGuestCart = cart.map((product) => {
-        if (product.id === item.id) {
-          product.quantity = +updateQuantity;
-          return product;
-        } else {
-          return product;
-        }
-      });
-      setCart(filteredGuestCart);
-      toast("Successfully updated quantity!");
+      toast.error("Sorry, we can't sell you more than we have :/");
     }
   }
 

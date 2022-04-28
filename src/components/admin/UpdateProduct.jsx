@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { updateProduct } from "../../axios-services";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
 
 const UpdateProduct = ({
   productId,
@@ -17,10 +18,11 @@ const UpdateProduct = ({
   setUpdateProductPrice,
   updateProductDescription,
   setUpdateProductDescription,
+  updateProductInventory,
+  setUpdateProductInventory,
   setShowModal,
 }) => {
   const { products, setProducts } = useAuth();
-  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,20 +33,20 @@ const UpdateProduct = ({
     updateObj.game = updateProductGame;
     updateObj.image = updateProductImage;
     updateObj.description = updateProductDescription;
-    updateObj.price = updateProductPrice;
+    updateObj.price = +updateProductPrice;
+    updateObj.inventory = +updateProductInventory;
     try {
       const response = await updateProduct(productId, updateObj);
       if (response.message === "Successfully updated product!") {
-        setMessage(response.message);
+        toast(response.message);
         const filteredProducts = await products.filter((product) => {
           return product.id !== response.product.id;
         });
         const updatedList = [response.product, ...filteredProducts];
-        console.log(updatedList);
         setProducts(updatedList);
         setShowModal(false);
       } else {
-        setMessage(response.message);
+        toast.error(response.message);
       }
     } catch (error) {
       throw error;
@@ -112,9 +114,18 @@ const UpdateProduct = ({
             setUpdateProductPrice(e.target.value);
           }}
         />
+        <input
+          type="number"
+          min="0"
+          step="1"
+          placeholder={updateProductInventory}
+          value={updateProductInventory}
+          onChange={(e) => {
+            setUpdateProductInventory(e.target.value);
+          }}
+        />
         <button type="submit">Update Product</button>
       </form>
-      {message.length > 0 ? <small>{message}</small> : null}
     </div>
   );
 };

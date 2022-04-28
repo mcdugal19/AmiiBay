@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { addNewProduct } from "../../axios-services";
 import useAuth from "../../hooks/useAuth";
+import { toast } from "react-toastify";
+
 const AddProduct = () => {
   const { products, setProducts } = useAuth();
   const [name, setName] = useState("");
@@ -8,8 +10,8 @@ const AddProduct = () => {
   const [game, setGame] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(19.99);
-  const [message, setMessage] = useState("");
+  const [price, setPrice] = useState("");
+  const [inventory, setInventory] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,10 +22,11 @@ const AddProduct = () => {
         game,
         image,
         description,
-        price,
+        price: +price,
+        inventory: +inventory,
       });
       if (response.message === "Successfully added product!") {
-        setMessage(response.message);
+        toast(response.message);
         const updatedList = [response.product, ...products];
         setProducts(updatedList);
         setName("");
@@ -32,7 +35,7 @@ const AddProduct = () => {
         setImage("");
         setDescription("");
       } else {
-        setMessage(response.message);
+        toast.error(response.message);
       }
     } catch (error) {
       throw error;
@@ -92,9 +95,18 @@ const AddProduct = () => {
             setPrice(e.target.value);
           }}
         />
+        <input
+          type="number"
+          min="1"
+          step="1"
+          placeholder="Inventory"
+          value={inventory}
+          onChange={(e) => {
+            setInventory(e.target.value);
+          }}
+        />
         <button type="submit">Add Product</button>
       </form>
-      {message.length > 0 ? <small>{message}</small> : null}
     </div>
   );
 };

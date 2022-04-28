@@ -13,6 +13,7 @@ const ProductTable = () => {
   const [updateProductImage, setUpdateProductImage] = useState("");
   const [updateProductDescription, setUpdateProductDescription] = useState("");
   const [updateProductPrice, setUpdateProductPrice] = useState(0);
+  const [updateProductInventory, setUpdateProductInventory] = useState(0);
 
   function handleClose() {
     setShowModal(false);
@@ -33,6 +34,7 @@ const ProductTable = () => {
             <th>Image</th>
             <th>Description</th>
             <th>Price</th>
+            <th>Inventory</th>
             <th>Update Product</th>
             <th>Delete Product</th>
           </tr>
@@ -54,6 +56,7 @@ const ProductTable = () => {
                 </td>
                 <td>{product.description}</td>
                 <td>{product.price}</td>
+                <td>{product.inventory}</td>
                 <td>
                   <form
                     onSubmit={(event) => {
@@ -71,6 +74,7 @@ const ProductTable = () => {
                         setUpdateProductImage(product.image);
                         setUpdateProductPrice(+product.price.slice(1));
                         setUpdateProductVariation(product.variation);
+                        setUpdateProductInventory(+product.inventory);
                       }}
                     >
                       Update Product
@@ -103,6 +107,8 @@ const ProductTable = () => {
               setUpdateProductPrice={setUpdateProductPrice}
               updateProductVariation={updateProductVariation}
               setUpdateProductVariation={setUpdateProductVariation}
+              updateProductInventory={updateProductInventory}
+              setUpdateProductInventory={setUpdateProductInventory}
               setShowModal={setShowModal}
             />
             <Modal.Footer>
