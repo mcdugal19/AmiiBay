@@ -35,8 +35,8 @@ export async function fetchAllGames() {
     const products = await response.json();
     const gamesArray = await products.map((product) => {
       return product.game;
-    })
-    const games = [...new Set(gamesArray)]
+    });
+    const games = [...new Set(gamesArray)];
     return games;
   } catch (error) {
     throw error;
@@ -285,6 +285,32 @@ export async function addItemToOrders({ productId, quantity }) {
     });
     const data = await response.json();
     return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function createCheckOut() {
+  try {
+    const response = await fetch(`${API_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        items: [
+          { id: 1, quantity: 3 },
+          { id: 2, quantity: 1 },
+        ],
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return res.json().then((json) => Promise.reject(json));
+      })
+      .then(({ url }) => {
+        window.location = url;
+      });
   } catch (error) {
     throw error;
   }
