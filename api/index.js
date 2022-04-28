@@ -28,14 +28,17 @@ apiRouter.post("/create-checkout-session", async (req, res, next) => {
       payment_method_types: ["card"],
       mode: "payment",
       line_items: req.body.items.map((item) => {
-        const storeItem = storeItems.get(item.id);
+        // const storeItem = storeItems.get(item.id);
+        item.price =
+          Math.round((+item.price.slice(1) + Number.EPSILON) * 100) / 100;
+        console.log(item.price);
         return {
           price_data: {
             currency: "usd",
             product_data: {
-              name: storeItem.name,
+              name: item.name,
             },
-            unit_amount: storeItem.priceInCents,
+            unit_amount: 1999,
           },
           quantity: item.quantity,
         };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { CartItem, ClearCart } from "./";
+import { createCheckOut } from "../../axios-services";
 
 const Cart = () => {
   const { cart, user, isLoggedIn } = useAuth();
@@ -18,6 +19,11 @@ const Cart = () => {
 
     // Because JS is bad at decimals.
     setTotal((Math.round((newTotal + Number.EPSILON) * 100) / 100).toFixed(2));
+  }
+
+  function handleClick() {
+    createCheckOut(cart);
+    console.log(cart);
   }
 
   useEffect(() => {
@@ -39,9 +45,9 @@ const Cart = () => {
             <h3>Total Price: {`$${total}`}</h3>
           </div>
           <br />
-          <Link to={"/checkout"} className="checkout-button">
+          <button onClick={handleClick} className="checkout-button">
             Ready to Checkout?
-          </Link>
+          </button>
           <br></br>
           <br></br>
           <ClearCart />
@@ -62,9 +68,9 @@ const Cart = () => {
             <h4>Total Price: {`$${total}`}</h4>
           </div>
           <br />
-          <Link to={"/checkout"} className="checkout-button">
+          <button onClick={handleClick} className="checkout-button">
             Ready to Checkout?
-          </Link>
+          </button>
           <br></br>
           <br></br>
         </>

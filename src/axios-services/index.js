@@ -290,7 +290,7 @@ export async function addItemToOrders({ productId, quantity }) {
   }
 }
 
-export async function createCheckOut() {
+export async function createCheckOut(cart) {
   try {
     const response = await fetch(`${API_URL}/create-checkout-session`, {
       method: "POST",
@@ -298,10 +298,7 @@ export async function createCheckOut() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        items: [
-          { id: 1, quantity: 3 },
-          { id: 2, quantity: 1 },
-        ],
+        items: cart,
       }),
     })
       .then((res) => {
