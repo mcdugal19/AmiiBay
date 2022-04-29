@@ -4,14 +4,13 @@
 }
 
 * {
-  border: 0;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  border-radius: 1rem;
-  font-family: "MuseoModerno", cursive;
-  /* color:#007061; */
-}
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 1rem;
+    font-family: 'MuseoModerno', cursive;
+  }
 
 body {
   background-color: #f2f2f2;
@@ -88,6 +87,10 @@ header {
   padding: 1rem;
 }
 
+.Title {
+  position: relative;
+}
+
 .is-logged-in {
   position: absolute;
   top: 10px;
@@ -100,6 +103,7 @@ header {
   height: 5rem;
   width: 5rem;
   border-radius: 25%;
+  padding-left: 1rem;
 }
 
 /* NAVBAR */
@@ -173,36 +177,34 @@ h2 {
   align-items: center;
 }
 
-#search label,
-select {
-  color: #08469e;
-  margin: 0.5rem;
-  font-weight: bold;
-}
-
 #search input {
   padding: 0.5rem;
   width: 70%;
 }
 
-/* Single Product Card */
-.single-product {
-  background-color: #f2f2f2;
-  padding: 1rem;
-  margin: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  border: solid black 2px;
-  width: 20rem;
-  max-width: 100%;
-  max-height: 70%;
-  height: 28rem;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
-}
+  /* Single Product Card */
+  .single-product {
+    background-color: #f2f2f2;
+    padding: 1rem;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    border:solid transparent 2px;
+    width: 20rem;
+    max-width: 100%;
+    max-height: 70%;
+    height: 28rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
+  rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+
+  .single-product:hover {
+    border:solid black 2px;
+  }
 
 .photo {
   height: 100px;
-  width: 100px;
+/*   width: 100px; */
 }
 
 /* Checkout Page */
@@ -394,6 +396,7 @@ td {
 /* PAGINATION */
 
 .pagination {
+  color: #03258c;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -403,6 +406,7 @@ td {
 }
 
 .paginationItem {
+  color: #03258c;
   background: #fff;
   border: 2px solid #666;
   padding: 10px 15px;
@@ -514,6 +518,48 @@ td {
   flex-direction: column;
 }
 
+
 .delete-review-button {
   align-self: flex-end;
 }
+
+/* Banner Components */
+.top-block {
+  background-image: url("Lineup2.png");
+  background-size:100vw;
+  background-repeat: no-repeat;
+  position: static;
+  width: 100vw;
+  top: 40vh;
+  left: 0;
+  z-index: 5;
+  animation: top-block-expand 3s ease-in-out 1 forwards;
+  border-radius: 0;
+  color: #03258c;
+  font-size: 60px;
+  padding-left: 25%;
+}
+
+@keyframes top-block-expand {
+  from {
+    height: 0vh;
+  }
+  to {
+    height: 50vh;
+  }
+}
+
+.banner-text {
+  color: #03258c;
+  font-size: 60px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.banner {
+  width: 99.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+}
+
