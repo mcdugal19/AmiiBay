@@ -289,6 +289,7 @@ export async function addItemToOrders({ productId, quantity }) {
   }
 }
 
+// REVIEW FUNCTIONS
 export async function addReview({ productId, title, post, rating }) {
   try {
     const response = await fetch(`${API_URL}/reviews`, {
@@ -297,6 +298,18 @@ export async function addReview({ productId, title, post, rating }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId, title, post, rating }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function deleteReview(reviewId) {
+  try {
+    const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
+      method: "DELETE",
     });
     const data = await response.json();
     return data;

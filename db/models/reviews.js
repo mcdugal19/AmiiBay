@@ -42,7 +42,7 @@ async function editReview(fields = {}) {
         `,
       [id, ...Object.values(fields)]
     );
-    return product;
+    return review;
   } catch (error) {
     console.error("Problem editing review...", error);
   }
@@ -115,6 +115,23 @@ async function userReviewExists(userId, productId) {
   }
 }
 
+async function getReviewById(id) {
+  try {
+    const {
+      rows: [review],
+    } = await client.query(
+      `
+      SELECT * FROM reviews
+      WHERE id=$1;
+    `,
+      [id]
+    );
+    return review;
+  } catch (error) {
+    console.error("Problem getting review by ID...", error);
+  }
+}
+
 module.exports = {
   createReview,
   editReview,
@@ -122,4 +139,5 @@ module.exports = {
   getReviewsByUserId,
   deleteReviewsByUserId,
   userReviewExists,
+  getReviewById
 };

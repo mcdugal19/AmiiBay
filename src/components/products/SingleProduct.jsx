@@ -90,7 +90,14 @@ const SingleProduct = () => {
         )}
         {reviews.length > 0 ? (
           reviews.map((review, idx) => {
-            return <SingleReview key={`review-${idx}`} review={review} />;
+            return (
+              <SingleReview
+                key={`review-${idx}`}
+                review={review}
+                reviews={reviews}
+                setReviews={setReviews}
+              />
+            );
           })
         ) : (
           <h4>No Reviews Yet!</h4>

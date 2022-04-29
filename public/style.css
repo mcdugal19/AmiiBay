@@ -510,4 +510,10 @@ td {
 
 .review-card {
   margin: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.delete-review-button {
+  align-self: flex-end;
 }
