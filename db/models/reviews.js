@@ -18,36 +18,6 @@ async function createReview({ productId, userId, title, post, rating }) {
   }
 }
 
-async function editReview(fields = {}) {
-  const { id } = fields;
-  delete fields.id;
-
-  const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 2}`)
-    .join(", ");
-
-  if (setString.length === 0) {
-    return;
-  }
-
-  try {
-    const {
-      rows: [review],
-    } = await client.query(
-      `
-          UPDATE reviews
-          SET ${setString}
-          WHERE id=$1
-          RETURNING *;
-        `,
-      [id, ...Object.values(fields)]
-    );
-    return review;
-  } catch (error) {
-    console.error("Problem editing review...", error);
-  }
-}
-
 async function deleteReview(id) {
   try {
     const {
@@ -68,7 +38,7 @@ async function deleteReview(id) {
 
 async function getReviewsByUserId(userId) {
   try {
-    const { rows } = client.query(
+    const { rows } = await client.query(
       `
             SELECT * FROM reviews
             WHERE "userId"=$1;
@@ -83,7 +53,7 @@ async function getReviewsByUserId(userId) {
 
 async function deleteReviewsByUserId(userId) {
   try {
-    const { rows } = client.query(
+    const { rows } = await client.query(
       `
         DELETE FROM reviews
         WHERE "userId"=$1
@@ -108,7 +78,6 @@ async function userReviewExists(userId, productId) {
       [userId, productId]
     );
 
-    console.log("in check, length:", rows.length);
     return rows.length > 0;
   } catch (error) {
     console.error("Problem checking reviews by user on product...", error);
@@ -132,12 +101,32 @@ async function getReviewById(id) {
   }
 }
 
+async function deleteReviewsByProductId(productId) {
+  try {
+    const { rows } = await client.query(
+      `
+        DELETE FROM reviews
+        WHERE "productId"=$1
+        RETURNING *;
+      `,
+      [productId]
+    );
+    if (rows) {
+      return rows;
+    } else {
+      return [];
+    }
+  } catch (error) {
+    console.error("Problem deleting reviews for product...", error);
+  }
+}
+
 module.exports = {
   createReview,
-  editReview,
   deleteReview,
   getReviewsByUserId,
   deleteReviewsByUserId,
   userReviewExists,
-  getReviewById
+  getReviewById,
+  deleteReviewsByProductId,
 };

@@ -69,22 +69,4 @@ reviewsRouter.delete("/:reviewId", authRequired, async (req, res, next) => {
   }
 });
 
-reviewsRouter.delete(
-  "/admin/:userId",
-  adminRequired,
-  async (req, res, next) => {
-    const { userId } = req.params;
-    try {
-      const user = await User.getUserById(userId);
-      const reviews = await Reviews.deleteReviewsByUserId(userId);
-      res.send({
-        message: `Successfully deleted all reviews by ${user.username}.`,
-        reviews,
-      });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 module.exports = reviewsRouter;

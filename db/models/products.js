@@ -177,9 +177,16 @@ async function updateProduct(fields = {}) {
   }
 }
 
+const { deleteReviewsByProductId } = require("./reviews");
+const { clearProductFromAllCarts } = require("./cart");
+
 async function deleteProduct(id) {
   try {
-    await client.query(
+    const reviews = await deleteReviewsByProductId(id);
+    const cart = await clearProductFromAllCarts(id);
+    const {
+      rows: [product],
+    } = await client.query(
       `
       DELETE FROM products
       WHERE id=$1
@@ -187,8 +194,10 @@ async function deleteProduct(id) {
     `,
       [id]
     );
+    product.reviews = reviews;
     const deleted = {
-      id: parseInt(id),
+      id: product.id,
+      product,
       message: "Successfully deleted product!",
     };
     return deleted;
