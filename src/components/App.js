@@ -30,8 +30,9 @@ const App = () => {
             <img className="user-icon" src={catMario} alt="user icon" />
           </div>
         ) : null}
+       
       </header>
-
+      
       <NavBar />
 
       <Routes>
