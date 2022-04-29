@@ -2,6 +2,7 @@
 const client = require("../client");
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
+
 async function getAllUsers() {
   try {
     const { rows } = await client.query(`
@@ -107,15 +108,26 @@ async function getUser({ username, password }) {
   }
 }
 
+const { deleteReviewsByUserId } = require("./reviews");
+const { clearUserCart } = require("./cart");
+
 async function deleteUser(id) {
   try {
-    await client.query(
+    const reviews = await deleteReviewsByUserId(id);
+    const cart = await clearUserCart(id);
+    const {
+      rows: [user],
+    } = await client.query(
       `
     DELETE FROM users
     WHERE id = $1
+    RETURNING *;
     `,
       [id]
     );
+
+    user.reviews = reviews;
+    return user;
   } catch (error) {
     console.error("Problem deleting user", error);
   }
