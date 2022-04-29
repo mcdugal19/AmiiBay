@@ -97,10 +97,29 @@ async function deleteReviewsByUserId(userId) {
   }
 }
 
+async function userReviewExists(userId, productId) {
+  try {
+    const { rows } = await client.query(
+      `
+        SELECT * FROM reviews
+        WHERE "userId"=$1
+        AND "productId"=$2;
+    `,
+      [userId, productId]
+    );
+
+    console.log("in check, length:", rows.length);
+    return rows.length > 0;
+  } catch (error) {
+    console.error("Problem checking reviews by user on product...", error);
+  }
+}
+
 module.exports = {
   createReview,
   editReview,
   deleteReview,
   getReviewsByUserId,
   deleteReviewsByUserId,
+  userReviewExists,
 };

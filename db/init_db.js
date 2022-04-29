@@ -1,4 +1,3 @@
-const { TestScheduler } = require("jest");
 const {
   client,
   // declare your model imports here

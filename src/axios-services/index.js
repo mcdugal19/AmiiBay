@@ -1,4 +1,3 @@
-import axios from "axios";
 import { config } from "./Constants";
 const API_URL = config.url;
 // this file holds your frontend network request adapters
@@ -35,8 +34,8 @@ export async function fetchAllGames() {
     const products = await response.json();
     const gamesArray = await products.map((product) => {
       return product.game;
-    })
-    const games = [...new Set(gamesArray)]
+    });
+    const games = [...new Set(gamesArray)];
     return games;
   } catch (error) {
     throw error;
@@ -282,6 +281,22 @@ export async function addItemToOrders({ productId, quantity }) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ productId, quantity }),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function addReview({ productId, title, post, rating }) {
+  try {
+    const response = await fetch(`${API_URL}/reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, title, post, rating }),
     });
     const data = await response.json();
     return data;

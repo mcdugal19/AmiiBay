@@ -1,8 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AddToCart } from "../cart";
+import { Rating } from "@mui/material";
+import useAuth from "../../hooks/useAuth";
 
 const SingleProductCard = ({ product }) => {
+  const [value, setValue] = useState(0);
+  const { searchItems } = useAuth();
+
+  useEffect(() => {
+    function getValue() {
+      setValue(product.overallRating);
+    }
+    getValue();
+  }, [searchItems]);
+
   return (
     <span className="single-product">
       <span className="single-product-details">
@@ -23,7 +35,13 @@ const SingleProductCard = ({ product }) => {
       </span>
       <span className="product-card-labels">
         <h3>{product.name}</h3>
-        {product.variation ? <h4>{product.variation}</h4> : <h4>-----</h4>}
+        {value ? (
+          <Rating name="read-only" value={value} precision={0.5} readOnly />
+        ) : product.variation ? (
+          <h4>{product.variation}</h4>
+        ) : (
+          <h4>-----</h4>
+        )}
         <p>{product.game}</p>
         <h5>
           {product.inventory > 0 ? product.price : "Temporarily out of stock"}
