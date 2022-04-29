@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import SearchProducts from "./SearchProducts";
 import useAuth from "../../hooks/useAuth";
 import Pagination from "./Pagination";
-
+import lineup from "../../images/lineup.avif";
 
 const AllProducts = () => {
   const { products, searchItems, setSearchItems } = useAuth();
@@ -13,11 +13,14 @@ const AllProducts = () => {
 
   return (
     <>
-    <>
-      <div className="top-block">
-      <div className="banner-text">BANNER TEXT</div>
+     <div className="banner-text">GET YOUR AMIIBOS TODAY!</div>
+      <div className="banner">
+      <div className="top-block" img={lineup} alt={'Uh Oh!'}>
+        {/* <div className="left-button">{`<`}</div>
+        <div className="right-button">{`>`}</div> */}
+     
       </div>
-      </>
+      </div>
       <SearchProducts  />
       <div className="container">
           {searchItems.length > 0 ? ( <>
