@@ -111,15 +111,13 @@ const ProductTable = () => {
               setUpdateProductInventory={setUpdateProductInventory}
               setShowModal={setShowModal}
             />
-            <Modal.Footer>
-              <Button
-                className="modal-close-button"
-                variant="secondary"
-                onClick={handleClose}
-              >
-                Close
-              </Button>
-            </Modal.Footer>
+            <Button
+              className="modal-close-button"
+              variant="secondary"
+              onClick={handleClose}
+            >
+              Close
+            </Button>
           </Modal>
         </tbody>
       </table>

@@ -289,6 +289,27 @@ export async function addItemToOrders({ productId, quantity }) {
   }
 }
 
+
+ export async function createCheckOut(cart) {
+  try {
+    const response = await fetch(`${API_URL}/create-checkout-session`, {                         
+      body: JSON.stringify({
+        items: cart,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return res.json().then((json) => Promise.reject(json));
+      })
+      .then(({ url }) => {
+        window.location = url;
+      });
+  } catch (error) {
+    throw error;
+  }
+}
+
+
 // REVIEW FUNCTIONS
 export async function addReview({ productId, title, post, rating }) {
   try {
@@ -306,6 +327,8 @@ export async function addReview({ productId, title, post, rating }) {
   }
 }
 
+
+
 export async function deleteReview(reviewId) {
   try {
     const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
@@ -314,6 +337,6 @@ export async function deleteReview(reviewId) {
     const data = await response.json();
     return data;
   } catch (error) {
-    throw error;
+    throw error; 
   }
 }

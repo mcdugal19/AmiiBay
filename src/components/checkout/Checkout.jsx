@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { CartItem } from "../cart";
 import useAuth from "../../hooks/useAuth";
-import { clearAllItemsInCart, addItemToOrders } from "../../axios-services";
+import {
+  clearAllItemsInCart,
+  addItemToOrders,
+  createCheckOut,
+} from "../../axios-services";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +30,8 @@ const Checkout = () => {
   async function submitHandler() {
     if (isLoggedIn) {
       try {
+        let m = await createCheckOut();
+        console.log(m);
         let newArr = await cart.map(async (product) => {
           let response = await addItemToOrders({
             productId: product.id,
