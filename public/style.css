@@ -4,7 +4,6 @@
 }
 
 * {
-    border: 0;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,7 +13,7 @@
   }
 
 body {
-  background-color: #f2f2f2;
+  background-color: white;
 }
 
 .container {
@@ -386,10 +385,13 @@ td {
   position: absolute;
   left:30rem;
   bottom: 14rem;
-  background-color: grey;
+  background-color: lightgray;
   width: 60rem;
-  height: 16rem;
+  height: 20rem;
   max-width: 100%;
+  padding-left: 15px;
+  padding-top: 15px;
+  border: solid black 2px;
 }
 
 .modal-title{

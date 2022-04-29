@@ -21,9 +21,8 @@ const Cart = () => {
     setTotal((Math.round((newTotal + Number.EPSILON) * 100) / 100).toFixed(2));
   }
 
-  function handleClick() {
-    createCheckOut(cart);
-    console.log(cart);
+  async function handleClick() {
+    await createCheckOut(cart);
   }
 
   useEffect(() => {

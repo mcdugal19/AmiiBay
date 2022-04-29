@@ -312,3 +312,13 @@ export async function createCheckOut(cart) {
     throw error;
   }
 }
+
+export async function confirmCheckOutId() {
+  try {
+    const response = await fetch(`${API_URL}/order/success`);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}

@@ -4,3 +4,4 @@ export { default as RemoveItem } from "./RemoveItem";
 export { default as AddToCart } from "./AddToCart";
 export { default as CartItem } from "./CartItem";
 export { default as ClearCart } from "./ClearCart";
+export { default as SuccessPage } from "./SuccessPage";

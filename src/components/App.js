@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "../style/App.css";
 import useAuth from "../hooks/useAuth";
 import { AllProducts, SingleProduct } from "./products";
-import { Cart } from "./cart";
+import { Cart, SuccessPage } from "./cart";
 import { Admin } from "./admin";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
@@ -23,7 +23,7 @@ const App = () => {
     <div className="app-container">
       <ToastContainer />
       <header>
-        <h1 className="Title">Amiibos</h1>
+        <h1 className="Title">AmiiBay</h1>
         {isLoggedIn ? (
           <div className="is-logged-in">
             <Link to={"/me"}>{user.username}</Link>
@@ -43,6 +43,7 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/me" element={<UserProfile />} />
+        <Route path="/success" element={<SuccessPage />} />
       </Routes>
     </div>
   );

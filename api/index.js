@@ -16,43 +16,6 @@ apiRouter.use("/users", usersRouter);
 //   });
 // });
 
-const storeItems = new Map([
-  [1, { priceInCents: 10000, name: "test1" }],
-  [2, { priceInCents: 20000, name: "test2" }],
-]);
-
-apiRouter.post("/create-checkout-session", async (req, res, next) => {
-  try {
-    console.log(req.body.items);
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: req.body.items.map((item) => {
-        // const storeItem = storeItems.get(item.id);
-        item.price =
-          Math.round((+item.price.slice(1) + Number.EPSILON) * 100) / 100;
-        console.log(item.price);
-        return {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: item.name,
-            },
-            unit_amount: 1999,
-          },
-          quantity: item.quantity,
-        };
-      }),
-      success_url: `${process.env.SERVER_URL}/`,
-      cancel_url: `${process.env.SERVER_URL}/`,
-    });
-    console.log("getting here");
-    res.send({ url: session.url });
-  } catch (error) {
-    next(error);
-  }
-});
-
 // place your routers here
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
@@ -62,5 +25,32 @@ const cartRouter = require("./cart");
 apiRouter.use("/cart", cartRouter);
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter);
+
+apiRouter.post("/create-checkout-session", async (req, res, next) => {
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: req.body.items.map((item) => {
+        item.price = Math.round((+item.price.slice(1) + Number.EPSILON) * 100);
+        return {
+          price_data: {
+            currency: "usd",
+            product_data: {
+              name: item.name,
+            },
+            unit_amount: item.price,
+          },
+          quantity: item.quantity,
+        };
+      }),
+      success_url: `${process.env.SERVER_URL}/success`,
+      cancel_url: `${process.env.SERVER_URL}/cart`,
+    });
+    res.send({ url: session.url });
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = apiRouter;
