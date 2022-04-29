@@ -1,30 +1,25 @@
 const apiRouter = require("express").Router();
+
 const usersRouter = require("./users");
 // enable stripe
 const stripe = require("stripe")(process.env.SECRET_KEY);
 apiRouter.use("/users", usersRouter);
-// apiRouter.get("/", (req, res, next) => {
-//   res.send({
-//     message: "API is under construction!",
-//   });
-//   next();
-// });
 
-// apiRouter.get("/health", (req, res, next) => {
-//   res.send({
-//     healthy: true,
-//   });
-// });
-
-// place your routers here
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
+
 const checkoutRouter = require("./checkout");
 apiRouter.use("/checkout", checkoutRouter);
+
 const cartRouter = require("./cart");
 apiRouter.use("/cart", cartRouter);
+
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter);
+
+
+const reviewsRouter = require("./reviews");
+apiRouter.use("/reviews", reviewsRouter);
 
 apiRouter.post("/create-checkout-session", async (req, res, next) => {
   try {
@@ -52,5 +47,7 @@ apiRouter.post("/create-checkout-session", async (req, res, next) => {
     next(error);
   }
 });
+
+
 
 module.exports = apiRouter;

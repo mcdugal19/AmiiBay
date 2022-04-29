@@ -101,7 +101,7 @@ usersRouter.get("/admin/:userId", adminRequired, async (req, res, next) => {
     const userId = req.params.userId;
     const newAdmin = await User.updateUser({ id: userId, isAdmin: true });
     delete newAdmin.password;
-    res.send({ newAdmin, message: "Successfully added new admin" });
+    res.send({ newAdmin, message: "Successfully added new admin!" });
   } catch (error) {
     next(error);
   }
@@ -130,8 +130,8 @@ usersRouter.delete(
   async (req, res, next) => {
     try {
       const { userId } = req.params;
-      await User.deleteUser(userId);
-      res.send({ message: "Successfully deleted user" });
+      const user = await User.deleteUser(userId);
+      res.send({ message: "Successfully deleted user!", user });
     } catch (error) {
       next(error);
     }

@@ -89,10 +89,28 @@ async function clearUserCart(userId) {
   }
 }
 
+async function clearProductFromAllCarts(productId) {
+  try {
+    const { rows } = await client.query(
+      `
+            DELETE FROM cart
+            WHERE "productId"=$1
+            RETURNING *;
+        `,
+      [productId]
+    );
+
+    return rows && rows.length > 0 ? true : false;
+  } catch (error) {
+    console.error("Problem clearing carts containing product...", error);
+  }
+}
+
 module.exports = {
   addToCart,
   removeFromCart,
   changeProductQuantity,
   getCartByUserId,
   clearUserCart,
+  clearProductFromAllCarts,
 };

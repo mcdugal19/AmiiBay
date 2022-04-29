@@ -1,4 +1,3 @@
-import axios from "axios";
 import { config } from "./Constants";
 const API_URL = config.url;
 // this file holds your frontend network request adapters
@@ -290,13 +289,10 @@ export async function addItemToOrders({ productId, quantity }) {
   }
 }
 
-export async function createCheckOut(cart) {
+
+ export async function createCheckOut(cart) {
   try {
-    const response = await fetch(`${API_URL}/create-checkout-session`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const response = await fetch(`${API_URL}/create-checkout-session`, {                         
       body: JSON.stringify({
         items: cart,
       }),
@@ -313,12 +309,34 @@ export async function createCheckOut(cart) {
   }
 }
 
-export async function confirmCheckOutId() {
+
+// REVIEW FUNCTIONS
+export async function addReview({ productId, title, post, rating }) {
   try {
-    const response = await fetch(`${API_URL}/order/success`);
+    const response = await fetch(`${API_URL}/reviews`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ productId, title, post, rating }),
+    });
     const data = await response.json();
     return data;
   } catch (error) {
     throw error;
+  }
+}
+
+
+
+export async function deleteReview(reviewId) {
+  try {
+    const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
+      method: "DELETE",
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error; 
   }
 }

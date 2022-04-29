@@ -1,4 +1,3 @@
-const { TestScheduler } = require("jest");
 const {
   client,
   // declare your model imports here
@@ -7,6 +6,7 @@ const {
   User,
   Cart,
   Orders,
+  Reviews,
 } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
@@ -157,6 +157,48 @@ async function populateInitialData() {
     );
 
     console.log("Seeded order entries!");
+
+    const reviewsToCreate = [
+      {
+        productId: 1,
+        userId: 5,
+        title: "The OG Amiibo!",
+        post: "This was the first amiibo I ever bought, and it will always be my favorite! I use it all the time in Smash Bros, and I keep it prominently displayed on my fireplace mantle, as it deserves a place of high honor.",
+        rating: 5,
+      },
+      {
+        productId: 1,
+        userId: 4,
+        title: "A True Classic",
+        post: "I'm not the biggest Mario fan, but how can you not love a classic?",
+        rating: 4,
+      },
+      {
+        productId: 2,
+        userId: 10,
+        title: "Not As Good As Fireball",
+        post: "This amiibo doesn't live up to the hype of the OG Fireball Mario, IMO :/",
+        rating: 3,
+      },
+      {
+        productId: 4,
+        userId: 6,
+        title: "Why Silver?",
+        post: "This amiibo pales in comparison to the truly magnificent Gold Mario! Nintendo shouldn't sell this one anymore.",
+        rating: 1,
+      },
+      {
+        productId: 4,
+        userId: 10,
+        title: "Silver is superior to Gold",
+        post: "Silver's my favorite color, and this amiibo made me love Mario even more. I even named my first child Mario Silver because of this amiibo!",
+        rating: 5,
+      },
+    ];
+
+    const reviewEntries = await Promise.all(
+      reviewsToCreate.map(Reviews.createReview)
+    );
 
     console.log("Seeded database!");
     // create useful starting data by leveraging your
