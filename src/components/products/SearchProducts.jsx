@@ -42,7 +42,7 @@ const SearchProducts = () => {
   }
   // The useEffects below display the filtered results and allows a clear button to return the state to all routines
   useEffect(() => {
-    const filteredProductsArray = searchItems.filter((product) =>
+    const filteredProductsArray = products.filter((product) =>
       productMatches(product, searchTerm)
     );
     setSearchItems(filteredProductsArray);
@@ -102,8 +102,8 @@ const SearchProducts = () => {
         onClick={async () => {
           await setSearchItems(products);
           setClickedClear(!clickedClear);
-          setSearchTerm('');
-          setGame("all")
+          setSearchTerm("");
+          setGame("all");
         }}
       >
         CLEAR

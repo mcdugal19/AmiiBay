@@ -10,7 +10,6 @@ const AuthProvider = ({ children }) => {
   const [searchItems, setSearchItems] = useState([]);
   const [orders, setOrders] = useState([]);
 
-
   useEffect(() => {
     async function getUser() {
       try {
@@ -31,7 +30,8 @@ const AuthProvider = ({ children }) => {
     async function getProducts() {
       try {
         const amiibos = await fetchAllProducts();
-        setProducts(amiibos); setSearchItems(amiibos);
+        setProducts(amiibos);
+        setSearchItems(amiibos);
       } catch (error) {
         throw error;
       }
