@@ -107,7 +107,6 @@ export async function loginUser(username, password) {
       }),
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     throw error;
@@ -266,7 +265,6 @@ export async function updateUser(updateUser) {
       body: JSON.stringify(updateUser),
     });
     const data = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     throw error;

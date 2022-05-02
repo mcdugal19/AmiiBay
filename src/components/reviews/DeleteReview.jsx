@@ -1,8 +1,11 @@
 import React from "react";
 import { toast } from "react-toastify";
 import { deleteReview } from "../../axios-services";
+import useAuth from "../../hooks/useAuth";
 
-const DeleteReview = ({ reviewId, reviews, setReviews }) => {
+const DeleteReview = ({ reviewId, reviews, setReviews, product }) => {
+  const { products, setProducts } = useAuth();
+
   async function handleClick() {
     try {
       const deletedResponse = await deleteReview(reviewId);
@@ -11,6 +14,15 @@ const DeleteReview = ({ reviewId, reviews, setReviews }) => {
           return review.id !== reviewId;
         });
         setReviews(filteredReviews);
+        const modifiedProducts = products.map((item) => {
+          if (item.id === product.id) {
+            item.reviews = filteredReviews;
+            return item;
+          } else {
+            return item;
+          }
+        });
+        setProducts(modifiedProducts);
         toast(deletedResponse.message);
       } else {
         toast.error(deletedResponse.message);

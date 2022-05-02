@@ -102,6 +102,7 @@ const SingleProduct = () => {
                     review={review}
                     reviews={reviews}
                     setReviews={setReviews}
+                    product={product}
                   />
                 );
               })

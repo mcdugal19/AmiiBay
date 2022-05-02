@@ -3,7 +3,7 @@ import { Rating } from "@mui/material";
 import { DeleteReview } from "./";
 import useAuth from "../../hooks/useAuth";
 
-const SingleReview = ({ review, reviews, setReviews }) => {
+const SingleReview = ({ review, reviews, setReviews, product }) => {
   const [value, setValue] = useState(0);
   const { isLoggedIn, user } = useAuth();
 
@@ -27,6 +27,7 @@ const SingleReview = ({ review, reviews, setReviews }) => {
             reviewId={review.id}
             reviews={reviews}
             setReviews={setReviews}
+            product={product}
           />
         ) : null
       ) : null}
