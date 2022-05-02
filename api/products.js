@@ -1,8 +1,9 @@
 const express = require("express");
 const productsRouter = express.Router();
 const { Products } = require("../db");
-const { authRequired, adminRequired } = require("./utils");
+const { adminRequired } = require("./utils");
 
+// Route that sends back product information from every product.
 productsRouter.get("/", async (req, res, next) => {
   try {
     const products = await Products.getAllProducts();
@@ -12,6 +13,7 @@ productsRouter.get("/", async (req, res, next) => {
   }
 });
 
+// Admin only route that will add a new product to the database. Sends back success message / product info.
 productsRouter.post("/", adminRequired, async (req, res, next) => {
   const { productObj } = req.body;
   const { name, variation, game, image, description, price, inventory } =
@@ -41,23 +43,7 @@ productsRouter.post("/", adminRequired, async (req, res, next) => {
   }
 });
 
-productsRouter.get("/:game", async (req, res, next) => {
-  const { game } = req.params;
-  try {
-    const products = await Products.getProductsByGame(game);
-    if (products.length > 0) {
-      res.send(products);
-    } else {
-      next({
-        name: "ProductsNotAvailable",
-        message: "There are no available amiibos for that game.",
-      });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
+// Admin only route to update a specific product's information.
 productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
   const { name, variation, game, image, description, price, inventory } =
@@ -82,6 +68,7 @@ productsRouter.patch("/:productId", adminRequired, async (req, res, next) => {
   }
 });
 
+// Admin only route to delete a specific product from the database.
 productsRouter.delete("/:productId", adminRequired, async (req, res, next) => {
   const { productId } = req.params;
   try {

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { getUserById } = require("../db/models/user");
 
+// Middleware that uses jwt to verify a valid token from the cookie.
 const authRequired = async (req, res, next) => {
   const token = req.signedCookies.token;
   try {
@@ -19,6 +20,7 @@ const authRequired = async (req, res, next) => {
   }
 };
 
+// Middleware that uses jwt to verify a valid token as well as checking if the user is a admin.
 const adminRequired = async (req, res, next) => {
   const token = req.signedCookies.token;
   try {

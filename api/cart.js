@@ -1,22 +1,20 @@
 const express = require("express");
 const cartRouter = express.Router();
 const { Cart, Products } = require("../db");
-const { authRequired, adminRequired } = require("./utils");
+const { authRequired } = require("./utils");
 
+// Post route to add a product to cart database and sends back the product info.
 cartRouter.post("/", authRequired, async (req, res, next) => {
   const { productId, quantity } = req.body;
-
   try {
     const cartEntry = await Cart.addToCart({
       userId: req.user.id,
       productId,
       quantity,
     });
-
     if (cartEntry.id) {
       const product = await Products.getProductById(cartEntry.productId);
       product.quantity = cartEntry.quantity;
-
       res.send({
         message: "Successfully added item to cart!",
         cartItem: product,
@@ -29,6 +27,7 @@ cartRouter.post("/", authRequired, async (req, res, next) => {
   }
 });
 
+// Route to update a item that is in the cart.
 cartRouter.patch("/:productId", authRequired, async (req, res, next) => {
   const { productId } = req.params;
   const { quantity } = req.body;
@@ -59,6 +58,7 @@ cartRouter.patch("/:productId", authRequired, async (req, res, next) => {
   }
 });
 
+// Route to remove a specific item from the cart.
 cartRouter.delete("/:productId", authRequired, async (req, res, next) => {
   const { productId } = req.params;
 
@@ -84,6 +84,7 @@ cartRouter.delete("/:productId", authRequired, async (req, res, next) => {
   }
 });
 
+// Route to remove every item from the cart.
 cartRouter.delete("/", authRequired, async (req, res, next) => {
   try {
     const clearedCart = await Cart.clearUserCart(req.user.id);
@@ -96,26 +97,6 @@ cartRouter.delete("/", authRequired, async (req, res, next) => {
       next({
         name: "CartClearingError",
         message: `Error clearing ${req.user.username}'s cart!`,
-      });
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
-cartRouter.delete("/admin/:userId", adminRequired, async (req, res, next) => {
-  const { userId } = req.params;
-
-  try {
-    const clearedCart = await Cart.clearUserCart(userId);
-    if (clearedCart) {
-      res.send({
-        message: "Successfully cleared user's cart!",
-      });
-    } else {
-      next({
-        name: "CartClearingError",
-        message: "Error clearing user's cart!",
       });
     }
   } catch (error) {

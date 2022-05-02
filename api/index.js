@@ -1,25 +1,29 @@
 const apiRouter = require("express").Router();
 
-const usersRouter = require("./users");
-// enable stripe
+// Enables stripe
 const stripe = require("stripe")(process.env.SECRET_KEY);
+
+// Routes /api/users to the specific user route.
+const usersRouter = require("./users");
 apiRouter.use("/users", usersRouter);
 
+// Routes /api/products to the specific product route.
 const productsRouter = require("./products");
 apiRouter.use("/products", productsRouter);
 
-const checkoutRouter = require("./checkout");
-apiRouter.use("/checkout", checkoutRouter);
-
+// Routes /api/cart to the specific cart route.
 const cartRouter = require("./cart");
 apiRouter.use("/cart", cartRouter);
 
+// Routes /api/orders to the specific order route.
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter);
 
+// Routes /api/reviews to the specific review route.
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
 
+// Route that will generate a unique stripe checkout session. Also will handle moving the user after successful/unsuccessful checkout.
 apiRouter.post("/create-checkout-session", async (req, res, next) => {
   try {
     const session = await stripe.checkout.sessions.create({

@@ -3,6 +3,7 @@ const ordersRouter = express.Router();
 const { Orders, Products } = require("../db");
 const { authRequired } = require("./utils");
 
+// Route to add an item to the order history table after purchase, returns product info.
 ordersRouter.post("/", authRequired, async (req, res, next) => {
   const { productId, quantity } = req.body;
   try {
