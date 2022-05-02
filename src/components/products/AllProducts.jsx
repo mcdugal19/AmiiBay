@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SearchProducts from "./SearchProducts";
 import useAuth from "../../hooks/useAuth";
 import Pagination from "./Pagination";
-// import lineup from "../../images/lineup.png";
+
+
 
 const AllProducts = () => {
   const { products, searchItems, setSearchItems } = useAuth();
+  const [currentPage, setCurrentPage] = useState(1);
+  
 
   useEffect(() => {
     setSearchItems(products)
@@ -20,10 +23,10 @@ const AllProducts = () => {
      
       </div>
       </div>
-      <SearchProducts  />
+      <SearchProducts currentPage={currentPage} setCurrentPage={setCurrentPage} />
       <div className="container">
           {searchItems.length > 0 ? ( <>
-          <Pagination pageLimit={5} productLimit={20}/>
+          <Pagination pageLimit={5} productLimit={20} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
           </>): (<h1>No Amiibos to Display</h1>)}
       </div>
      

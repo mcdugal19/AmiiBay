@@ -3,8 +3,8 @@ import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import SingleProductCard from "./SingleProductCard";
 
-function Pagination({ pageLimit, productLimit }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
+
   const { searchItems, setSearchItems } = useAuth();
 //   const [pages] = useState(Math.round(searchItems.length / productLimit));
 
@@ -38,6 +38,7 @@ function Pagination({ pageLimit, productLimit }) {
     let start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
     return new Array(pageLimit).fill().map((_, idx) => start + idx + 1);
   };
+  console.log(Math.round(searchItems.length / productLimit))
 
   return (
     <>
@@ -67,20 +68,20 @@ function Pagination({ pageLimit, productLimit }) {
             onClick={changePage}
             className={`paginationItem ${
               currentPage === item ? "active" : null
-            }`}
+            } ${currentPage > (Math.round(searchItems.length / productLimit) + 1) ? "active" : ""}`}
           >
             <span>{item}</span>
           </button>
         ))}
         <button
           onClick={goToNextPage}
-          className={`next ${currentPage >= 42 ? "disabled" : ""}`}
+          className={`next ${currentPage >= Math.round(searchItems.length / productLimit) ? "disabled" : ""}`}
         >
           next
         </button>
         <button
           onClick={goToLastPage}
-          className={`last ${currentPage >= 42 ? "disabled" : ""}`}
+          className={`last ${currentPage >= Math.round(searchItems.length / productLimit) ? "disabled" : ""}`}
         >
           Last
         </button>

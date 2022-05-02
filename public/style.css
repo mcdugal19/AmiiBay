@@ -201,6 +201,13 @@ h2 {
     border:solid black 2px;
   }
 
+  .button--more-info:hover {
+    border:solid white 2px;
+  }
+  .button--add-to-cart:hover {
+    border:solid white 2px;
+  }
+
 .photo {
   height: 100px;
 /*   width: 100px; */

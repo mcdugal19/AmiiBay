@@ -3,13 +3,15 @@ import useAuth from "../../hooks/useAuth";
 
 // this component displays a search bar above the products section and filters the products based on keywords
 
-const SearchProducts = () => {
+const SearchProducts = ({ setCurrentPage}) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clickedSearch, setClickedSearch] = useState(false);
   const [clickedClear, setClickedClear] = useState(false);
   const [gameList, setGameList] = useState([]);
   const [game, setGame] = useState("all");
   const { products, searchItems, setSearchItems } = useAuth();
+  
+
 
   useEffect(() => {
     async function getGames() {
@@ -32,6 +34,10 @@ const SearchProducts = () => {
     }
   }
 
+  function goToFirstPage() {
+    setCurrentPage(1);
+  }
+  
   function gameMatches(product, game) {
     if (game === "all") {
       return true;
@@ -46,6 +52,7 @@ const SearchProducts = () => {
       productMatches(product, searchTerm)
     );
     setSearchItems(filteredProductsArray);
+    setCurrentPage(1);
   }, [clickedSearch]);
 
   useEffect(() => {

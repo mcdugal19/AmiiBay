@@ -52,11 +52,11 @@ const SingleProductCard = ({ product }) => {
           to={`/product/${product.id}`}
           onClick={() => {
             window.scrollTo(0, 0);
-          }}
+          }} 
         >
           <button className="button--more-info">More Info</button>
         </Link>
-        <AddToCart product={product} quantity={1} />
+        <AddToCart className="button--add-to-cart" product={product} quantity={1} />
       </span>
     </span>
   );
