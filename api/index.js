@@ -17,7 +17,6 @@ apiRouter.use("/cart", cartRouter);
 const ordersRouter = require("./orders");
 apiRouter.use("/orders", ordersRouter);
 
-
 const reviewsRouter = require("./reviews");
 apiRouter.use("/reviews", reviewsRouter);
 
@@ -47,7 +46,5 @@ apiRouter.post("/create-checkout-session", async (req, res, next) => {
     next(error);
   }
 });
-
-
 
 module.exports = apiRouter;

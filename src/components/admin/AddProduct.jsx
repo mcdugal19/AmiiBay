@@ -34,6 +34,8 @@ const AddProduct = () => {
         setGame("");
         setImage("");
         setDescription("");
+        setPrice("");
+        setInventory("");
       } else {
         toast.error(response.message);
       }

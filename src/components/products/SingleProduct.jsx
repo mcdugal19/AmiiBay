@@ -18,92 +18,100 @@ const SingleProduct = () => {
 
   useEffect(() => {
     function getValue() {
-      setValue(product.overallRating);
+      if (product !== undefined) {
+        setValue(product.overallRating);
+      }
     }
     getValue();
   }, []);
 
   useEffect(() => {
     function getReviews() {
-      setReviews(product.reviews);
+      if (product !== undefined) {
+        setReviews(product.reviews);
+      }
     }
     getReviews();
   }, [setReviews]);
 
   return (
-    <div className="single-product-page">
-      <div className="single-product-container">
-        <span className="single-product-info">
-          <h2 className="single-product-name">{product.name}</h2>
-          {product.variation ? <h3>{product.variation}</h3> : null}
-          {value ? (
-            <Rating
-              name="read-only"
-              value={value}
-              precision={0.5}
-              size="large"
-              readOnly
+    <>
+      {product !== undefined ? (
+        <div className="single-product-page">
+          <div className="single-product-container">
+            <span className="single-product-info">
+              <h2 className="single-product-name">{product.name}</h2>
+              {product.variation ? <h3>{product.variation}</h3> : null}
+              {value ? (
+                <Rating
+                  name="read-only"
+                  value={value}
+                  precision={0.5}
+                  size="large"
+                  readOnly
+                />
+              ) : null}
+              <br />
+              <h4>{product.game}</h4>
+              <p>{product.description}</p>
+              <h6>
+                {product.inventory > 0
+                  ? `${product.inventory} currently in stock!`
+                  : "Temporarily out of stock!"}
+              </h6>
+              <h5 className="single-product-price">{product.price}</h5>
+              <span className="single-product-add-button">
+                <input
+                  type="number"
+                  min={"1"}
+                  step={"1"}
+                  value={quantity}
+                  onChange={(e) => {
+                    setQuantity(e.target.value);
+                  }}
+                />
+                <AddToCart product={product} quantity={quantity} />
+              </span>
+            </span>
+            <img
+              className="single-product-page-image"
+              src={product.image}
+              alt={`${product.name} amiibo image`}
             />
-          ) : null}
-          <br />
-          <h4>{product.game}</h4>
-          <p>{product.description}</p>
-          <h6>
-            {product.inventory > 0
-              ? `${product.inventory} currently in stock!`
-              : "Temporarily out of stock!"}
-          </h6>
-          <h5 className="single-product-price">{product.price}</h5>
-          <span className="single-product-add-button">
-            <input
-              type="number"
-              min={"1"}
-              step={"1"}
-              value={quantity}
-              onChange={(e) => {
-                setQuantity(e.target.value);
-              }}
-            />
-            <AddToCart product={product} quantity={quantity} />
-          </span>
-        </span>
-        <img
-          className="single-product-page-image"
-          src={product.image}
-          alt={`${product.name} amiibo image`}
-        />
-      </div>
-      <div className="reviews-container">
-        {isLoggedIn ? (
-          <span className="review-form-container">
-            <h4>
-              We'd love to hear your thoughts on this {product.name} amiibo!
-            </h4>
-            <ReviewForm
-              productId={product.id}
-              reviews={reviews}
-              setReviews={setReviews}
-            />
-          </span>
-        ) : (
-          <h4>Log in to leave a review!</h4>
-        )}
-        {reviews.length > 0 ? (
-          reviews.map((review, idx) => {
-            return (
-              <SingleReview
-                key={`review-${idx}`}
-                review={review}
-                reviews={reviews}
-                setReviews={setReviews}
-              />
-            );
-          })
-        ) : (
-          <h4>No Reviews Yet!</h4>
-        )}
-      </div>
-    </div>
+          </div>
+          <div className="reviews-container">
+            {isLoggedIn ? (
+              <span className="review-form-container">
+                <h4>
+                  We'd love to hear your thoughts on this {product.name} amiibo!
+                </h4>
+                <ReviewForm
+                  productId={product.id}
+                  reviews={reviews}
+                  setReviews={setReviews}
+                />
+              </span>
+            ) : (
+              <h4>Log in to leave a review!</h4>
+            )}
+            {reviews.length > 0 ? (
+              reviews.map((review, idx) => {
+                return (
+                  <SingleReview
+                    key={`review-${idx}`}
+                    review={review}
+                    reviews={reviews}
+                    setReviews={setReviews}
+                  />
+                );
+              })
+            ) : (
+              <h4>No Reviews Yet!</h4>
+            )}
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 

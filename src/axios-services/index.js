@@ -106,8 +106,8 @@ export async function loginUser(username, password) {
         password,
       }),
     });
-
     const data = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
     throw error;
@@ -289,10 +289,13 @@ export async function addItemToOrders({ productId, quantity }) {
   }
 }
 
-
- export async function createCheckOut(cart) {
+export async function createCheckOut(cart) {
   try {
-    const response = await fetch(`${API_URL}/create-checkout-session`, {                         
+    const response = await fetch(`${API_URL}/create-checkout-session`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({
         items: cart,
       }),
@@ -308,7 +311,6 @@ export async function addItemToOrders({ productId, quantity }) {
     throw error;
   }
 }
-
 
 // REVIEW FUNCTIONS
 export async function addReview({ productId, title, post, rating }) {
@@ -327,8 +329,6 @@ export async function addReview({ productId, title, post, rating }) {
   }
 }
 
-
-
 export async function deleteReview(reviewId) {
   try {
     const response = await fetch(`${API_URL}/reviews/${reviewId}`, {
@@ -337,6 +337,6 @@ export async function deleteReview(reviewId) {
     const data = await response.json();
     return data;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 }
