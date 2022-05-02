@@ -3,7 +3,7 @@ import SearchProducts from "./SearchProducts";
 import useAuth from "../../hooks/useAuth";
 import Pagination from "./Pagination";
 
-// import lineup from "../../images/lineup.png";
+
 
 const AllProducts = () => {
   const { products, searchItems, setSearchItems } = useAuth();
