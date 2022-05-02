@@ -1,5 +1,6 @@
 const client = require("../client");
 
+// SQL query to add a user order to users_orders table for order history
 async function addToOrders({ userId, productId, quantity }) {
   try {
     const {

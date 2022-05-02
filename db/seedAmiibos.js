@@ -1,11 +1,16 @@
 const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
+/**
+ * Fetch request from Amiibo API to seed our products table 
+ */
+
 async function fetchAmiibos() {
   try {
     const response = await fetch("https://amiiboapi.com/api/amiibo/");
     const { amiibo } = await response.json();
 
+    // modify each returned object to better fit our database table structure
     const optimizedArray = await Promise.all(
       amiibo.map((amiiboObj) => {
         const newObj = {
@@ -19,6 +24,7 @@ async function fetchAmiibos() {
         newObj.game = amiiboObj.gameSeries;
         newObj.image = amiiboObj.image;
 
+        // Builds value of description property based on various criteria from original returned objects
         amiiboObj.release.na
           ? (newObj.description = `Released in North America ${new Date(
               amiiboObj.release.na
