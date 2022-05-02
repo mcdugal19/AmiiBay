@@ -1,7 +1,9 @@
+// This component is rendered on the Single-Product more information page and is responsible for allowing a user to add a review to a single product. All fields MUST be completed.
+
 import React, { useState } from "react";
-import { Rating } from "@mui/material";
-import { toast } from "react-toastify";
-import { addReview } from "../../AJAXFunctions";
+import  Rating  from "@mui/material";
+import  toast  from "react-toastify";
+import  addReview  from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 
 const ReviewForm = ({ productId, reviews, setReviews }) => {

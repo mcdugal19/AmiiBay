@@ -26,7 +26,6 @@ const UpdateProduct = ({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //build update object
     const updateObj = {};
     updateObj.name = updateProductName;
     updateObj.variation = updateProductVariation;

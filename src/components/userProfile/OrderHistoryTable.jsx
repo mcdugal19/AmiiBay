@@ -1,9 +1,11 @@
+// This component contains all of the order information for the logged in user.
+
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { getMe } from "../../AJAXFunctions";
 
 const OrderHistoryTable = () => {
-  const { user, orders, setOrders, setUser } = useAuth();
+  const { user, setOrders, setUser } = useAuth();
 
   useEffect(() => {
     async function getUser() {

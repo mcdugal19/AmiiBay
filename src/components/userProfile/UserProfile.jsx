@@ -1,3 +1,5 @@
+// This component displays the individual User Profile section to the user.
+
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { updateUser } from "../../AJAXFunctions";

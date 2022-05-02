@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CartItem } from "../cart";
+import CartItem from "../cart";
 import useAuth from "../../hooks/useAuth";
 import {
   clearAllItemsInCart,
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 const Checkout = () => {
   let navigate = useNavigate();
-  const { cart, isLoggedIn, user, setCart, setOrders, orders } = useAuth();
+  const { cart, isLoggedIn, user, setCart, setOrders} = useAuth();
   const [total, setTotal] = useState(0);
 
   function getTotal() {
@@ -23,7 +23,6 @@ const Checkout = () => {
       0
     );
 
-    // Because JS is bad at decimals.
     setTotal(Math.round((newTotal + Number.EPSILON) * 100) / 100);
   }
 

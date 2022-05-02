@@ -1,3 +1,5 @@
+// This component is for the Login Page
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -5,7 +7,7 @@ import { loginUser } from "../AJAXFunctions";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {
-  const { setUser, setIsLoggedIn, isLoggedIn, setCart } = useAuth();
+  const { setUser, setIsLoggedIn, setCart } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   let navigate = useNavigate();

@@ -1,13 +1,15 @@
 import { config } from "./Constants";
 const API_URL = config.url;
-// this file holds your frontend network request adapters
-// think about each function as a service that provides data
-// to your React UI through AJAX calls
 
-// for example, if we need to display a list of users
-// we'd probably want to define a getUsers service like this:
+// These functions help us communicate between the frontend and backend.
+// The order of functions is broken down in groups of components.
+// 1. Products
+// 2. Users
+// 3. Cart & Orders
+// 4. Reviews
 
-// PRODUCTS
+// ******** PRODUCTS *************/
+
 export async function fetchAllProducts() {
   try {
     const response = await fetch(`${API_URL}/products`);
@@ -28,19 +30,7 @@ export async function fetchAllProductsByGame(game) {
   }
 }
 
-export async function fetchAllGames() {
-  try {
-    const response = await fetch(`${API_URL}/products`);
-    const products = await response.json();
-    const gamesArray = await products.map((product) => {
-      return product.game;
-    });
-    const games = [...new Set(gamesArray)];
-    return games;
-  } catch (error) {
-    throw error;
-  }
-}
+
 
 export async function addNewProduct(productObj) {
   try {
@@ -57,6 +47,8 @@ export async function addNewProduct(productObj) {
     throw error;
   }
 }
+
+
 
 export async function deleteProduct(productId) {
   try {
@@ -85,6 +77,22 @@ export async function updateProduct(productId, updateObj) {
     throw error;
   }
 }
+
+export async function fetchAllGames() {
+  try {
+    const response = await fetch(`${API_URL}/products`);
+    const products = await response.json();
+    const gamesArray = await products.map((product) => {
+      return product.game;
+    });
+    const games = [...new Set(gamesArray)];
+    return games;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//****** USER focused request functions *****/
 
 export async function getMe() {
   try {
@@ -142,14 +150,6 @@ export async function logoutUser() {
   }
 }
 
-// export async function processPayment() {
-//   try {
-//     await fetch(`${api_url}`)
-//   } catch (error) {
-//     throw error;
-//   }
-// }
-
 export async function getAllUsers() {
   try {
     const response = await fetch(`${API_URL}/users`);
@@ -170,7 +170,38 @@ export async function giveAdminToUserId(id) {
   }
 }
 
-// Cart fetches
+export async function deleteUser(id) {
+  try {
+    const response = await fetch(`${API_URL}/users/admin/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function updateUser(updateUser) {
+  try {
+    const response = await fetch(`${API_URL}/users/me`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updateUser),
+    });
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+}
+
+//******* Cart fetches *******/
 
 export async function addItemToCart({ productId, quantity }) {
   try {
@@ -228,48 +259,6 @@ export async function clearAllItemsInCart() {
   }
 }
 
-export async function adminClearUserCart(userId) {
-  try {
-    const response = await fetch(`${API_URL}/cart/admin/${userId}`, {
-      method: "DELETE",
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function deleteUser(id) {
-  try {
-    const response = await fetch(`${API_URL}/users/admin/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-export async function updateUser(updateUser) {
-  try {
-    const response = await fetch(`${API_URL}/users/me`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateUser),
-    });
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
-  }
-}
 
 export async function addItemToOrders({ productId, quantity }) {
   try {
@@ -310,7 +299,7 @@ export async function createCheckOut(cart) {
   }
 }
 
-// REVIEW FUNCTIONS
+//****** REVIEW FUNCTIONS *****/ 
 export async function addReview({ productId, title, post, rating }) {
   try {
     const response = await fetch(`${API_URL}/reviews`, {

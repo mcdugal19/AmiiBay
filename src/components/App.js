@@ -1,20 +1,19 @@
+// This component controls the display of all sub-components and contains the routing.
+
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import  ToastContainer  from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// getAPIHealth is defined in our axios-services directory index.js
-// you can think of that directory as a collection of api adapters
-// where each adapter fetches specific info from our express server's /api route
 import "../style/App.css";
 import useAuth from "../hooks/useAuth";
 import { AllProducts, SingleProduct } from "./products";
 import { Cart, SuccessPage } from "./cart";
-import { Admin } from "./admin";
+import  Admin  from "./admin";
 import { Login, Register } from "./";
-import { NavBar } from "./navbar";
-import { Checkout } from "./checkout";
+import  NavBar  from "./navbar";
+import  Checkout  from "./checkout";
 import catMario from "./images/Cat Mario Icon.png";
-import { UserProfile } from "./userProfile";
+import  UserProfile  from "./userProfile";
 
 const App = () => {
   const { user, isLoggedIn } = useAuth();

@@ -1,6 +1,8 @@
+// This component displays the review-card on the Single-Product information page.
+
 import React, { useState, useEffect } from "react";
-import { Rating } from "@mui/material";
-import { DeleteReview } from "./";
+import  Rating  from "@mui/material";
+import  DeleteReview  from "./";
 import useAuth from "../../hooks/useAuth";
 
 const SingleReview = ({ review, reviews, setReviews, product }) => {
