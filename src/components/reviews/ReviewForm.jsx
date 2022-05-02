@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Rating } from "@mui/material";
 import { toast } from "react-toastify";
 import { addReview } from "../../axios-services";
+import useAuth from "../../hooks/useAuth";
 
 const ReviewForm = ({ productId, reviews, setReviews }) => {
   const [title, setTitle] = useState("");
   const [post, setPost] = useState("");
   const [rating, setRating] = useState(0);
+  const { products, setProducts } = useAuth();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,6 +22,15 @@ const ReviewForm = ({ productId, reviews, setReviews }) => {
       if (reviewResponse.message === "Successfully posted review!") {
         toast(reviewResponse.message);
         setReviews([reviewResponse.review, ...reviews]);
+        const modifiedProducts = products.map((item) => {
+          if (item.id === productId) {
+            item.reviews.push(reviewResponse.review);
+            return item;
+          } else {
+            return item;
+          }
+        });
+        setProducts(modifiedProducts);
         setTitle("");
         setPost("");
         setRating(0);

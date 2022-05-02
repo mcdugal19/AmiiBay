@@ -38,7 +38,6 @@ function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
     let start = Math.floor((currentPage - 1) / pageLimit) * pageLimit;
     return new Array(pageLimit).fill().map((_, idx) => start + idx + 1);
   };
-  console.log(Math.round(searchItems.length / productLimit))
 
   return (
     <>

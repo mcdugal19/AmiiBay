@@ -31,7 +31,6 @@ const Checkout = () => {
     if (isLoggedIn) {
       try {
         let m = await createCheckOut();
-        console.log(m);
         let newArr = await cart.map(async (product) => {
           let response = await addItemToOrders({
             productId: product.id,
