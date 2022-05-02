@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { deleteReview } from "../../axios-services";
+import { deleteReview } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 
 const DeleteReview = ({ reviewId, reviews, setReviews, product }) => {

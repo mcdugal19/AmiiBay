@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addNewProduct } from "../../axios-services";
+import { addNewProduct } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 

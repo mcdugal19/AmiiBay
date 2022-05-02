@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
-import { removeItemFromCart } from "../../axios-services";
+import { removeItemFromCart } from "../../AJAXFunctions";
 
 const RemoveItem = ({ item }) => {
   const { isLoggedIn, cart, setCart } = useAuth();

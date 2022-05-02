@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
-import { addItemToCart, updateItemQuantity } from "../../axios-services";
+import { addItemToCart, updateItemQuantity } from "../../AJAXFunctions";
 import cartIcon from "../../images/cartIcon.png";
 
 const AddToCart = ({ product, quantity }) => {

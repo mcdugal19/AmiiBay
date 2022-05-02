@@ -1,5 +1,5 @@
 import React from "react";
-import { updateProduct } from "../../axios-services";
+import { updateProduct } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 import { toast } from "react-toastify";
 

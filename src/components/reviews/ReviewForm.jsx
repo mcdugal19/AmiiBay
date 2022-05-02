@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Rating } from "@mui/material";
 import { toast } from "react-toastify";
-import { addReview } from "../../axios-services";
+import { addReview } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 
 const ReviewForm = ({ productId, reviews, setReviews }) => {

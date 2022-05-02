@@ -1,7 +1,7 @@
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
-import { clearAllItemsInCart } from "../../axios-services";
+import { clearAllItemsInCart } from "../../AJAXFunctions";
 
 const ClearCart = () => {
   const { isLoggedIn, setCart, user } = useAuth();

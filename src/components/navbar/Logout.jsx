@@ -1,5 +1,5 @@
 import React from "react";
-import { logoutUser } from "../../axios-services";
+import { logoutUser } from "../../AJAXFunctions";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";

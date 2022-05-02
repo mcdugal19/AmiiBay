@@ -1,6 +1,6 @@
 import React from "react";
 import { toast } from "react-toastify";
-import { deleteProduct } from "../../axios-services";
+import { deleteProduct } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 const DeleteProduct = ({ productId }) => {
   const { products, setProducts } = useAuth();

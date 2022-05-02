@@ -4,7 +4,7 @@ import {
   getAllUsers,
   giveAdminToUserId,
   deleteUser,
-} from "../../axios-services";
+} from "../../AJAXFunctions";
 
 const AdminTable = () => {
   const [userList, setUserList] = useState([]);

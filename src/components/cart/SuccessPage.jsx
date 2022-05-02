@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { clearAllItemsInCart, addItemToOrders } from "../../axios-services";
+import { clearAllItemsInCart, addItemToOrders } from "../../AJAXFunctions";
 import { useNavigate } from "react-router-dom";
 
 const SuccessPage = () => {

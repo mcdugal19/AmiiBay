@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginUser } from "../axios-services";
+import { loginUser } from "../AJAXFunctions";
 import useAuth from "../hooks/useAuth";
 
 const Login = () => {

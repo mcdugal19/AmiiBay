@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
-import { updateUser } from "../../axios-services";
+import { updateUser } from "../../AJAXFunctions";
 import { toast } from "react-toastify";
 import { OrderHistoryTable } from "./index";
 const UserProfile = () => {

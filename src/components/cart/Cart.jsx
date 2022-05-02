@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { CartItem, ClearCart } from "./";
-import { createCheckOut } from "../../axios-services";
+import { createCheckOut } from "../../AJAXFunctions";
 
 const Cart = () => {
   const { cart, user, isLoggedIn } = useAuth();

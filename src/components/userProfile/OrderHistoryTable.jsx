@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { getMe } from "../../axios-services";
+import { getMe } from "../../AJAXFunctions";
 
 const OrderHistoryTable = () => {
   const { user, orders, setOrders, setUser } = useAuth();

@@ -73,7 +73,7 @@ $ git init
 
 `/public` and `/src` are the two puzzle pieces for your React front-end. `/public` contains any static files necessary for your front-end. This can include images, a favicon, and most importantly the `index.html` that is the root of your React application.
 
-`src/axios-services` contains your axios network request adapters. `src/components` contains your React component files.
+`src/AJAXFunctions` contains your axios network request adapters. `src/components` contains your React component files.
 
 Inside `/api` you have `index.js` which is responsible for building the `apiRouter` that you'll attach in the express server, and `apiRouter.test.js` which will give you direction on test-driven development for your api. Your React application and Express server use any routes you build in the `/api` directory to send/receive data via JSON, for example, a `usersRouter.js` that will be required and mounted in the `apiRouter.js`.
 

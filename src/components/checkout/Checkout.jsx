@@ -5,7 +5,7 @@ import {
   clearAllItemsInCart,
   addItemToOrders,
   createCheckOut,
-} from "../../axios-services";
+} from "../../AJAXFunctions";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

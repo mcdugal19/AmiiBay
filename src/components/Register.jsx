@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { registerUser } from "../axios-services";
+import { registerUser } from "../AJAXFunctions";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import useAuth from "../hooks/useAuth";
