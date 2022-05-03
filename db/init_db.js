@@ -1,11 +1,4 @@
-const {
-  client,
-  Products,
-  User,
-  Cart,
-  Orders,
-  Reviews,
-} = require("./");
+const { client, Products, User, Cart, Orders, Reviews } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
 async function buildTables() {
@@ -115,7 +108,7 @@ async function populateInitialData() {
     });
     console.log("Updated users to admin: ", admin, admin2, admin3);
 
-    console.log("Seeding carts for test users...")
+    console.log("Seeding carts for test users...");
     const cartEntriesToCreate = [
       { userId: 2, productId: 1, quantity: 1 },
       { userId: 2, productId: 2, quantity: 1 },
@@ -133,7 +126,7 @@ async function populateInitialData() {
     );
     console.log("Seeded cart entries!");
 
-    console.log("Seeding order histories for test users...")
+    console.log("Seeding order histories for test users...");
     const orderHistoriesToCreate = [
       { userId: 2, productId: 5, quantity: 1 },
       { userId: 2, productId: 2, quantity: 1 },
@@ -189,12 +182,12 @@ async function populateInitialData() {
       },
     ];
 
-    console.log("Seeding reviews from test users...")
+    console.log("Seeding reviews from test users...");
     const reviewEntries = await Promise.all(
       reviewsToCreate.map(Reviews.createReview)
     );
 
-    console.log("Seeded reviews!")
+    console.log("Seeded reviews!");
     console.log("Finished seeding database!");
   } catch (error) {
     console.error("Problem seeding database...", error);

@@ -1,7 +1,7 @@
 {
-  "name": "starting_code",
+  "name": "amiibay",
   "version": "1.0.0",
-  "description": "",
+  "description": "a full stack e-commerce project selling the fun, interactive video game figures, amiibos.",
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run client:build",

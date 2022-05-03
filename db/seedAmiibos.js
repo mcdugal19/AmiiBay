@@ -2,7 +2,7 @@ const fetch = (...args) =>
   import("node-fetch").then(({ default: fetch }) => fetch(...args));
 
 /**
- * Fetch request from Amiibo API to seed our products table 
+ * Fetch request from Amiibo API to seed our products table
  */
 
 async function fetchAmiibos() {
