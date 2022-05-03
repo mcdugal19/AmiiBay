@@ -2,18 +2,18 @@
 
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import  ToastContainer  from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "../style/App.css";
 import useAuth from "../hooks/useAuth";
 import { AllProducts, SingleProduct } from "./products";
 import { Cart, SuccessPage } from "./cart";
-import  Admin  from "./admin";
+import { Admin } from "./admin";
 import { Login, Register } from "./";
-import  NavBar  from "./navbar";
-import  Checkout  from "./checkout";
+import  { NavBar } from "./navbar";
+import { Checkout } from "./checkout";
 import catMario from "./images/Cat Mario Icon.png";
-import  UserProfile  from "./userProfile";
+import { UserProfile } from "./userProfile";
 
 const App = () => {
   const { user, isLoggedIn } = useAuth();

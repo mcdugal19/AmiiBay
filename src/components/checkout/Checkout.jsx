@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import CartItem from "../cart";
+import { CartItem } from "../cart";
 import useAuth from "../../hooks/useAuth";
 import {
   clearAllItemsInCart,

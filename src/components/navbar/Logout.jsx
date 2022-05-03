@@ -1,7 +1,7 @@
 import React from "react";
-import logoutUser from "../../AJAXFunctions";
+import { logoutUser } from "../../AJAXFunctions";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-toastify";
+import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
 const Logout = () => {
