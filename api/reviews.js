@@ -1,8 +1,9 @@
 const express = require("express");
 const reviewsRouter = express.Router();
-const { Reviews, User } = require("../db");
-const { authRequired, adminRequired } = require("./utils");
+const { Reviews } = require("../db");
+const { authRequired } = require("./utils");
 
+// Route that allows a user to add a review to the review database.
 reviewsRouter.post("/", authRequired, async (req, res, next) => {
   const { productId, title, post, rating } = req.body;
   if (!title || !post) {
@@ -43,6 +44,7 @@ reviewsRouter.post("/", authRequired, async (req, res, next) => {
   }
 });
 
+// Route that allows a user to delete their own review.
 reviewsRouter.delete("/:reviewId", authRequired, async (req, res, next) => {
   const { reviewId } = req.params;
   try {
