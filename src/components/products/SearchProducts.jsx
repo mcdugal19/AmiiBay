@@ -74,26 +74,28 @@ const SearchProducts = ({ setCurrentPage }) => {
           setSearchTerm(e.target.value);
         }}
       />
-      <label htmlFor="select-game">Game</label>
-      <span className="game-count">({gameList.length})</span>
-      <select
-        name="game"
-        id="select-game"
-        value={game}
-        onChange={(event) => {
-          setGame(event.target.value);
-        }}
-      >
-        <option value="all">Any</option>
-        {/* map over the gameList, return an <option /> */}
-        {gameList.map((game, index) => {
-          return (
-            <option key={index} value={game}>
-              {game}
-            </option>
-          );
-        })}
-      </select>
+      <div>
+        <label htmlFor="select-game">Game </label>
+        <select
+          name="game"
+          id="select-game"
+          value={game}
+          onChange={(event) => {
+            setGame(event.target.value);
+          }}
+        >
+          <option value="all">Any</option>
+          {/* map over the gameList, return an <option /> */}
+          {gameList.map((game, index) => {
+            return (
+              <option key={index} value={game}>
+                {game}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div>
       <button className="button" type="submit">
         SEARCH
       </button>
@@ -108,6 +110,7 @@ const SearchProducts = ({ setCurrentPage }) => {
       >
         CLEAR
       </button>
+      </div>
     </form>
   );
 };

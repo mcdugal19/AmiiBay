@@ -45,12 +45,12 @@ const Cart = () => {
             <h3>Total Price: {`$${total}`}</h3>
           </div>
           <br />
+          <div className="checkout-clear">
           <button onClick={handleClick} className="checkout-button">
             Ready to Checkout?
           </button>
-          <br></br>
-          <br></br>
           <ClearCart />
+          </div>
           <div className="cart-container">
             <table>
               <tbody>

@@ -12,6 +12,8 @@ const Admin = () => {
     <div className="tables">
       <AddProduct />
       <ProductTable />
+      <br></br>
+      <br></br>
       <AdminTable />
     </div>
     </>

@@ -12,7 +12,7 @@ const Pagination = ({ pageLimit, productLimit, currentPage, setCurrentPage }) =>
     setCurrentPage((page) => page + 1);
   }
   function goToLastPage() {
-    setCurrentPage((page) => Math.round(searchItems.length / productLimit));
+    setCurrentPage( Math.round(searchItems.length / productLimit) + 1);
   }
 
   function goToPreviousPage() {
