@@ -70,8 +70,8 @@ usersRouter.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.getUser({ username, password });
-    delete user.orders;
     if (user) {
+      delete user.orders;
       const token = jwt.sign(user, process.env.JWT_SECRET, { expiresIn: "1w" });
       res.cookie("token", token, {
         sameSite: "strict",
