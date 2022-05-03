@@ -1,3 +1,5 @@
+// This component is responsible for the detailed description view of each Amiibo product in the listing.
+
 import React, { useState, useEffect } from "react";
 import useParams from "react-router-dom";
 import useAuth from "../../hooks/useAuth";

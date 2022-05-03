@@ -40,7 +40,7 @@ const SearchProducts = ({ setCurrentPage }) => {
     }
   }
   // The useEffects below display the filtered results and allows a clear button to return the state to all routines
-  
+
   useEffect(() => {
     const filteredProductsArray = products.filter((product) =>
       productMatches(product, searchTerm)
@@ -81,7 +81,6 @@ const SearchProducts = ({ setCurrentPage }) => {
         id="select-game"
         value={game}
         onChange={(event) => {
-          // if(game !== "any"){
           setGame(event.target.value);
         }}
       >
