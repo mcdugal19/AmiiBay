@@ -1,3 +1,5 @@
+// This component is the product table to be displayed on Admin.jsx. It also houses the delete product button and the update product modal.
+
 import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { DeleteProduct } from "./index";

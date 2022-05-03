@@ -1,3 +1,5 @@
+// This component is the pop-up modal that displays from the products table on Admin.jsx. It is a form to update product information that updates the database and the frontend products state.
+
 import React from "react";
 import { updateProduct } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
