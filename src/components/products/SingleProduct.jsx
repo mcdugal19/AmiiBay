@@ -1,9 +1,11 @@
+// This component is responsible for the detailed description view of each Amiibo product in the listing.
+
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import useParams from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { AddToCart } from "../cart";
+import AddToCart from "../cart";
 import { SingleReview, ReviewForm } from "../reviews";
-import { Rating } from "@mui/material";
+import Rating from "@mui/material";
 
 const SingleProduct = () => {
   const { products, isLoggedIn } = useAuth();

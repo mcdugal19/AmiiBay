@@ -3,8 +3,9 @@ import useAuth from "../../hooks/useAuth";
 import { DeleteProduct } from "./index";
 import { Modal, Button } from "react-bootstrap";
 import { UpdateProduct } from "./index";
+
 const ProductTable = () => {
-  const { products, setProducts } = useAuth();
+  const { products } = useAuth();
   const [showModal, setShowModal] = useState(false);
   const [productId, setProductId] = useState(0);
   const [updateProductName, setUpdateProductName] = useState("");

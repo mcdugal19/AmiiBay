@@ -1,3 +1,5 @@
+// This component is for the Registration page
+
 import React, { useState } from "react";
 import { registerUser } from "../AJAXFunctions";
 import { useNavigate } from "react-router-dom";

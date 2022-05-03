@@ -1,7 +1,10 @@
+// This component is the display item for each Amiibo item in the all products / home section.
+
+
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { AddToCart } from "../cart";
-import { Rating } from "@mui/material";
+import  Link  from "react-router-dom";
+import  AddToCart  from "../cart";
+import  Rating  from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 
 const SingleProductCard = ({ product }) => {

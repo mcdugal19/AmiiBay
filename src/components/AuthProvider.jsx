@@ -1,3 +1,5 @@
+//*** AuthProvider provides the connection from the main App in the index.js  ****/
+
 import AuthContext from "../AuthContext";
 import { useState, useEffect } from "react";
 import { getMe, fetchAllProducts } from "../AJAXFunctions";

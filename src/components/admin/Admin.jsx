@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   AdminTable,
   AddProduct,
-  DeleteProduct,
-  UpdateProduct,
   ProductTable,
 } from "./index";
 const Admin = () => {
@@ -12,8 +10,6 @@ const Admin = () => {
     <div className="tables">
       <AddProduct />
       <ProductTable />
-      {/* <DeleteProduct /> */}
-      {/* <UpdateProduct productId={productId} setProductId={setProductId} /> */}
       <AdminTable />
     </div>
     </>

@@ -1,7 +1,7 @@
 import React from "react";
-import { logoutUser } from "../../AJAXFunctions";
+import logoutUser from "../../AJAXFunctions";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-toastify";
 import useAuth from "../../hooks/useAuth";
 
 const Logout = () => {
@@ -23,15 +23,6 @@ const Logout = () => {
     <Link onClick={clickHandler} to={"/"}>
       Logout
     </Link>
-    // <form
-    //   onSubmit={async (e) => {
-    //     e.preventDefault();
-    //     await logoutUser();
-    //     setIsLoggedIn(false);
-    //   }}
-    // >
-    //   <button type="submit">Logout</button>;
-    // </form>
   );
 };
 

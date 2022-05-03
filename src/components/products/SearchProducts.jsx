@@ -1,17 +1,15 @@
+// This component displays a search bar above the products section and filters the products based on keywords
+
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
-// this component displays a search bar above the products section and filters the products based on keywords
-
-const SearchProducts = ({ setCurrentPage}) => {
+const SearchProducts = ({ setCurrentPage }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [clickedSearch, setClickedSearch] = useState(false);
   const [clickedClear, setClickedClear] = useState(false);
   const [gameList, setGameList] = useState([]);
   const [game, setGame] = useState("all");
-  const { products, searchItems, setSearchItems } = useAuth();
-  
-
+  const { products, setSearchItems } = useAuth();
 
   useEffect(() => {
     async function getGames() {
@@ -24,8 +22,7 @@ const SearchProducts = ({ setCurrentPage}) => {
     getGames();
   }, [products]);
 
-  function productMatches(product, searchTerm, game) {
-    //update according to the API
+  function productMatches(product, searchTerm) {
     if (
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
@@ -34,10 +31,6 @@ const SearchProducts = ({ setCurrentPage}) => {
     }
   }
 
-  function goToFirstPage() {
-    setCurrentPage(1);
-  }
-  
   function gameMatches(product, game) {
     if (game === "all") {
       return true;
@@ -47,6 +40,7 @@ const SearchProducts = ({ setCurrentPage}) => {
     }
   }
   // The useEffects below display the filtered results and allows a clear button to return the state to all routines
+
   useEffect(() => {
     const filteredProductsArray = products.filter((product) =>
       productMatches(product, searchTerm)
@@ -87,7 +81,6 @@ const SearchProducts = ({ setCurrentPage}) => {
         id="select-game"
         value={game}
         onChange={(event) => {
-          // if(game !== "any"){
           setGame(event.target.value);
         }}
       >

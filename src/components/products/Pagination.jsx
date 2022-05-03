@@ -1,12 +1,12 @@
+//This component allows for the display and mapping of each of the bottom rows of pagination buttons.
+// There are several ternary lines written into the return portion of this component to turn off the button displays when the page count exceeds the product count.
+
 import React from "react";
-import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import SingleProductCard from "./SingleProductCard";
 
 function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
-
   const { searchItems, setSearchItems } = useAuth();
-//   const [pages] = useState(Math.round(searchItems.length / productLimit));
 
   function goToNextPage() {
     setCurrentPage((page) => page + 1);
@@ -42,7 +42,6 @@ function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
   return (
     <>
       <div className="all-products-page">
-      
         {getPaginatedData().map((product, idx) => {
           return <SingleProductCard key={idx} product={product} />;
         })}
@@ -67,20 +66,32 @@ function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
             onClick={changePage}
             className={`paginationItem ${
               currentPage === item ? "active" : null
-            } ${currentPage > (Math.round(searchItems.length / productLimit) + 1) ? "active" : ""}`}
+            } ${
+              currentPage > Math.round(searchItems.length / productLimit) + 1
+                ? "active"
+                : ""
+            }`}
           >
             <span>{item}</span>
           </button>
         ))}
         <button
           onClick={goToNextPage}
-          className={`next ${currentPage >= Math.round(searchItems.length / productLimit) ? "disabled" : ""}`}
+          className={`next ${
+            currentPage >= Math.round(searchItems.length / productLimit)
+              ? "disabled"
+              : ""
+          }`}
         >
           next
         </button>
         <button
           onClick={goToLastPage}
-          className={`last ${currentPage >= Math.round(searchItems.length / productLimit) ? "disabled" : ""}`}
+          className={`last ${
+            currentPage >= Math.round(searchItems.length / productLimit)
+              ? "disabled"
+              : ""
+          }`}
         >
           Last
         </button>
