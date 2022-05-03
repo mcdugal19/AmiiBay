@@ -42,6 +42,10 @@ const App = () => {
         <Route path="/me" element={<UserProfile />} />
         <Route path="/success" element={<SuccessPage />} />
       </Routes>
+      <footer>
+        <h2>Disclaimer: This is for Learning Purposes Only!</h2>
+        <p> No content is actually for sale. Please do not attempt to purchase any items from this site!</p>
+      </footer>
     </div>
   );
 };
