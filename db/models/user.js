@@ -74,26 +74,30 @@ async function getUser({ username, password }) {
   try {
     // get user by username with hashed password, using bcrypt to compare provided password with hashed password
     const user = await getUserByUsername(username);
-    const hashedPassword = user.password;
-    const passwordsMatch = await bcrypt.compare(password, hashedPassword);
-    // on match, get user using username and hashed password
-    if (passwordsMatch) {
-      const {
-        rows: [user],
-      } = await client.query(
-        `
+    if (user) {
+      const hashedPassword = user.password;
+      const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+      // on match, get user using username and hashed password
+      if (passwordsMatch) {
+        const {
+          rows: [user],
+        } = await client.query(
+          `
                 SELECT *
                 FROM users
                 WHERE username = $1
                 AND password = $2;
             `,
-        [username, hashedPassword]
-      );
+          [username, hashedPassword]
+        );
 
-      // return optimized user object with attached cart, using the user ID from above SQL query
-      return await getUserWithCart(user.id);
+        // return optimized user object with attached cart, using the user ID from above SQL query
+        return await getUserWithCart(user.id);
+      } else {
+        throw new Error("Passwords did not match...");
+      }
     } else {
-      throw new Error("Passwords did not match...");
+      throw new Error("User does not exist...");
     }
   } catch (error) {
     console.error("Problem getting user...", error);
