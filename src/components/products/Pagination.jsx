@@ -3,16 +3,21 @@
 
 import React from "react";
 import useAuth from "../../hooks/useAuth";
-import  SingleProductCard  from "./SingleProductCard";
+import SingleProductCard from "./SingleProductCard";
 
-const Pagination = ({ pageLimit, productLimit, currentPage, setCurrentPage }) => {
+const Pagination = ({
+  pageLimit,
+  productLimit,
+  currentPage,
+  setCurrentPage,
+}) => {
   const { searchItems, setSearchItems } = useAuth();
 
   function goToNextPage() {
     setCurrentPage((page) => page + 1);
   }
   function goToLastPage() {
-    setCurrentPage( Math.round(searchItems.length / productLimit) + 1);
+    setCurrentPage(Math.round(searchItems.length / productLimit) + 1);
   }
 
   function goToPreviousPage() {
@@ -43,7 +48,13 @@ const Pagination = ({ pageLimit, productLimit, currentPage, setCurrentPage }) =>
     <>
       <div className="all-products-page">
         {getPaginatedData().map((product, idx) => {
-          return <SingleProductCard key={idx} product={product} />;
+          return (
+            <SingleProductCard
+              key={idx}
+              product={product}
+              currentPage={currentPage}
+            />
+          );
         })}
       </div>
       <div className="pagination">
@@ -98,6 +109,6 @@ const Pagination = ({ pageLimit, productLimit, currentPage, setCurrentPage }) =>
       </div>
     </>
   );
-}
+};
 
 export default Pagination;
