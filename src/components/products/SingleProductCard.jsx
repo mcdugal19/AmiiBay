@@ -1,13 +1,12 @@
 // This component is the display item for each Amiibo item in the all products / home section.
 
-
 import React, { useState, useEffect } from "react";
-import { Link }  from "react-router-dom";
-import  { AddToCart } from "../cart";
-import { Rating }  from "@mui/material";
+import { Link } from "react-router-dom";
+import { AddToCart } from "../cart";
+import { Rating } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 
-const SingleProductCard = ({ product }) => {
+const SingleProductCard = ({ product, currentPage }) => {
   const [value, setValue] = useState(0);
   const { searchItems } = useAuth();
 
@@ -16,7 +15,7 @@ const SingleProductCard = ({ product }) => {
       setValue(product.overallRating);
     }
     getValue();
-  }, [searchItems]);
+  }, [searchItems, currentPage]);
 
   return (
     <span className="single-product">
@@ -55,11 +54,15 @@ const SingleProductCard = ({ product }) => {
           to={`/product/${product.id}`}
           onClick={() => {
             window.scrollTo(0, 0);
-          }} 
+          }}
         >
           <button className="button--more-info">More Info</button>
         </Link>
-        <AddToCart className="button--add-to-cart" product={product} quantity={1} />
+        <AddToCart
+          className="button--add-to-cart"
+          product={product}
+          quantity={1}
+        />
       </span>
     </span>
   );
