@@ -1,3 +1,5 @@
+// This component houses all of the routing for the Cart page and its form.
+
 import React, { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { CartItem, ClearCart } from "./";

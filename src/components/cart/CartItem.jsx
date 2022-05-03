@@ -1,3 +1,5 @@
+// This component is responsible for rending the item and it's description on the cart page.
+
 import React from "react";
 import { UpdateQuantity, RemoveItem } from "./";
 

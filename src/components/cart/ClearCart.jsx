@@ -1,3 +1,5 @@
+// This component is responsible for clearing a User's cart.
+
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
