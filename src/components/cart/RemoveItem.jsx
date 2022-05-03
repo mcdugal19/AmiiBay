@@ -1,3 +1,5 @@
+// This component is responsible for removing an item from the User's cart.
+
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";

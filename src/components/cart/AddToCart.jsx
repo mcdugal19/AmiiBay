@@ -1,3 +1,6 @@
+// This component is found on the Single Product Card and Single Product page that will add a product to the cart.
+
+
 import React from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";

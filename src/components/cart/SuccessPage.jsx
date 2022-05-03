@@ -1,3 +1,5 @@
+// This is the redirect page after the Stripe checkout is complete.
+
 import React, { useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import { clearAllItemsInCart, addItemToOrders } from "../../AJAXFunctions";

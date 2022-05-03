@@ -1,3 +1,6 @@
+// This component controls the function button to update Quantity found on the Cart page.
+
+
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import useAuth from "../../hooks/useAuth";
