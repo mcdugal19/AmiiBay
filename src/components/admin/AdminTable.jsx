@@ -1,3 +1,5 @@
+// This component is the user table on Admin.jsx that displays all users with buttons to delete a user or a button to make a user an admin.
+
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import {

@@ -1,3 +1,5 @@
+// This component is form to add a new product to the products table in the database to be displayed on Admin.jsx for an admin to use.
+
 import React, { useState } from "react";
 import { addNewProduct } from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
