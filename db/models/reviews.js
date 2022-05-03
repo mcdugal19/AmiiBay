@@ -1,5 +1,6 @@
 const client = require("../client");
 
+// SQL query to add entry to reviews table
 async function createReview({ productId, userId, title, post, rating }) {
   try {
     const {
@@ -18,6 +19,7 @@ async function createReview({ productId, userId, title, post, rating }) {
   }
 }
 
+// SQL query to remove review from object
 async function deleteReview(id) {
   try {
     const {
@@ -36,21 +38,7 @@ async function deleteReview(id) {
   }
 }
 
-async function getReviewsByUserId(userId) {
-  try {
-    const { rows } = await client.query(
-      `
-            SELECT * FROM reviews
-            WHERE "userId"=$1;
-        `,
-      [userId]
-    );
-    return rows;
-  } catch (error) {
-    console.error("Problem getting reviews by user ID...", error);
-  }
-}
-
+// SQL query to delete a user's reviews, used when deleting a user from the database
 async function deleteReviewsByUserId(userId) {
   try {
     const { rows } = await client.query(
@@ -67,6 +55,7 @@ async function deleteReviewsByUserId(userId) {
   }
 }
 
+// SQL query to check if a user has already left a review on specific product, reviews are limited to one review on a product per user
 async function userReviewExists(userId, productId) {
   try {
     const { rows } = await client.query(
@@ -84,6 +73,7 @@ async function userReviewExists(userId, productId) {
   }
 }
 
+// SQL query to get review object to check against provided information for API requests
 async function getReviewById(id) {
   try {
     const {
@@ -101,6 +91,7 @@ async function getReviewById(id) {
   }
 }
 
+// SQL query to delete reviews for a product, used when deleting a product from database
 async function deleteReviewsByProductId(productId) {
   try {
     const { rows } = await client.query(
@@ -124,7 +115,6 @@ async function deleteReviewsByProductId(productId) {
 module.exports = {
   createReview,
   deleteReview,
-  getReviewsByUserId,
   deleteReviewsByUserId,
   userReviewExists,
   getReviewById,

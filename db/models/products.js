@@ -1,5 +1,6 @@
 const client = require("../client");
 
+// SQL query to add a product to products table
 async function createProduct({
   name,
   variation,
@@ -20,6 +21,7 @@ async function createProduct({
         `,
       [name, variation, game, image, description, price, inventory]
     );
+    // add default properties for easy of use on frontend
     product.overallRating = null;
     product.reviews = [];
     return product;
@@ -28,6 +30,7 @@ async function createProduct({
   }
 }
 
+// This function maps over the rows of the next function to produce optimized product objects with associated reviews attached to the product
 function mapOverProducts(rows) {
   let products = {};
 
@@ -75,6 +78,7 @@ function mapOverProducts(rows) {
   return Object.values(products);
 }
 
+// SQL query to return all products with attached overallRating and array of review objects with relevent information
 async function getAllProductsWithReviews() {
   try {
     const { rows } = await client.query(`
@@ -96,24 +100,23 @@ async function getAllProductsWithReviews() {
       ORDER BY products.id
     `);
 
+    // refine the returned SQL query results with previous mapping function to produce optimized product objects
     return mapOverProducts(rows);
   } catch (error) {
     console.error("Problem getting products with reviews...", error);
   }
 }
 
+// original getAllProducts function that was already in use. Became a shell for holding getAllProductsWithReviews to return optimized product objects
 async function getAllProducts() {
   try {
-    // const { rows } = await client.query(`
-    //   SELECT * FROM products
-    //   ORDER BY id;
-    // `);
     return await getAllProductsWithReviews();
   } catch (error) {
     console.error("Problem getting products...", error);
   }
 }
 
+// SQL query to get a specific row from products table
 async function getProductById(id) {
   try {
     const {
@@ -131,26 +134,12 @@ async function getProductById(id) {
   }
 }
 
-async function getProductsByGame(game) {
-  try {
-    const { rows } = await client.query(
-      `
-      SELECT * FROM products
-      WHERE game=$1;
-    `,
-      [game]
-    );
-
-    return rows;
-  } catch (error) {
-    console.error("Problem getting product by game...", error);
-  }
-}
-
+// SQL update request to be used by an admin to update product information
 async function updateProduct(fields = {}) {
   const { id } = fields;
   delete fields.id;
 
+  // build update string for SQL query
   const setString = Object.keys(fields)
     .map((key, index) => `"${key}"=$${index + 2}`)
     .join(", ");
@@ -177,9 +166,11 @@ async function updateProduct(fields = {}) {
   }
 }
 
+// require delete functions for dependent tables before deleting product in below function
 const { deleteReviewsByProductId } = require("./reviews");
 const { clearProductFromAllCarts } = require("./cart");
 
+// SQL queries to delete dependent table entries before deleting product
 async function deleteProduct(id) {
   try {
     const reviews = await deleteReviewsByProductId(id);
@@ -194,6 +185,7 @@ async function deleteProduct(id) {
     `,
       [id]
     );
+    // returns an object with pertinent information to be used on the frontend
     product.reviews = reviews;
     const deleted = {
       id: product.id,
@@ -210,7 +202,6 @@ module.exports = {
   createProduct,
   getAllProducts,
   getProductById,
-  getProductsByGame,
   updateProduct,
   deleteProduct,
   getAllProductsWithReviews,

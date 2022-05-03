@@ -1,13 +1,4 @@
-const {
-  client,
-  // declare your model imports here
-  // for example, User
-  Products,
-  User,
-  Cart,
-  Orders,
-  Reviews,
-} = require("./");
+const { client, Products, User, Cart, Orders, Reviews } = require("./");
 const fetchAmiibos = require("./seedAmiibos");
 
 async function buildTables() {
@@ -15,14 +6,11 @@ async function buildTables() {
     client.connect();
 
     await client.query(`
-    DROP TABLE IF EXISTS guest_orders;
-    DROP TABLE IF EXISTS products_categories;
     DROP TABLE IF EXISTS users_orders;
     DROP TABLE IF EXISTS reviews;
     DROP TABLE IF EXISTS cart;
     DROP TABLE IF EXISTS users;
     DROP TABLE IF EXISTS products;
-    DROP TABLE IF EXISTS categories;
     
     CREATE TABLE users(
       id SERIAL PRIMARY KEY,
@@ -66,9 +54,6 @@ async function buildTables() {
       quantity INTEGER
     );
     `);
-    // drop tables in correct order
-
-    // build tables in correct order
   } catch (error) {
     throw error;
   }
@@ -123,6 +108,7 @@ async function populateInitialData() {
     });
     console.log("Updated users to admin: ", admin, admin2, admin3);
 
+    console.log("Seeding carts for test users...");
     const cartEntriesToCreate = [
       { userId: 2, productId: 1, quantity: 1 },
       { userId: 2, productId: 2, quantity: 1 },
@@ -140,6 +126,7 @@ async function populateInitialData() {
     );
     console.log("Seeded cart entries!");
 
+    console.log("Seeding order histories for test users...");
     const orderHistoriesToCreate = [
       { userId: 2, productId: 5, quantity: 1 },
       { userId: 2, productId: 2, quantity: 1 },
@@ -155,7 +142,6 @@ async function populateInitialData() {
     const orderEntries = await Promise.all(
       orderHistoriesToCreate.map(Orders.addToOrders)
     );
-
     console.log("Seeded order entries!");
 
     const reviewsToCreate = [
@@ -196,14 +182,13 @@ async function populateInitialData() {
       },
     ];
 
+    console.log("Seeding reviews from test users...");
     const reviewEntries = await Promise.all(
       reviewsToCreate.map(Reviews.createReview)
     );
 
-    console.log("Seeded database!");
-    // create useful starting data by leveraging your
-    // Model.method() adapters to seed your db, for example:
-    // const user1 = await User.createUser({ ...user info goes here... })
+    console.log("Seeded reviews!");
+    console.log("Finished seeding database!");
   } catch (error) {
     console.error("Problem seeding database...", error);
   }

@@ -1,5 +1,6 @@
 const client = require("../client");
 
+// SQL query to add item to cart
 async function addToCart({ userId, productId, quantity }) {
   try {
     const {
@@ -18,6 +19,7 @@ async function addToCart({ userId, productId, quantity }) {
   }
 }
 
+// SQL query to delete item from user's cart
 async function removeFromCart(userId, productId) {
   try {
     const {
@@ -37,6 +39,7 @@ async function removeFromCart(userId, productId) {
   }
 }
 
+// SQL query to update the quantity of a product in the user's cart
 async function changeProductQuantity({ userId, productId, quantity }) {
   try {
     const {
@@ -57,21 +60,7 @@ async function changeProductQuantity({ userId, productId, quantity }) {
   }
 }
 
-async function getCartByUserId(userId) {
-  try {
-    const { rows } = await client.query(
-      `
-            SELECT * FROM cart
-            WHERE "userId"=$1;
-        `,
-      [userId]
-    );
-    return rows;
-  } catch (error) {
-    console.error("Problem getting cart by userId...", error);
-  }
-}
-
+// SQL query to remove all items from cart table for specific user
 async function clearUserCart(userId) {
   try {
     const { rows } = await client.query(
@@ -89,6 +78,7 @@ async function clearUserCart(userId) {
   }
 }
 
+// SQL query to clear product from all carts, used when deleting a product from database
 async function clearProductFromAllCarts(productId) {
   try {
     const { rows } = await client.query(
@@ -110,7 +100,6 @@ module.exports = {
   addToCart,
   removeFromCart,
   changeProductQuantity,
-  getCartByUserId,
   clearUserCart,
   clearProductFromAllCarts,
 };

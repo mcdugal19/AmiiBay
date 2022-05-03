@@ -1,8 +1,10 @@
-// grab our db client connection to use with our adapters
 const client = require("../client");
+
+// require bcrypt for hashing passwords and checking hashed passwords
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
+// SQL query for use by site administrators
 async function getAllUsers() {
   try {
     const { rows } = await client.query(`
@@ -14,8 +16,10 @@ async function getAllUsers() {
   }
 }
 
+// SQL query to create a new user entry in users table
 async function createUser({ username, password, email }) {
   try {
+    // hash password before storing in database
     const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const {
       rows: [user],
@@ -28,6 +32,8 @@ async function createUser({ username, password, email }) {
     `,
       [username, hashedPassword, email]
     );
+
+    // remove password before returning user object to API, add empty cart to facilitate frontend functionality
     delete user.password;
     user.cart = [];
     return user;
@@ -36,31 +42,16 @@ async function createUser({ username, password, email }) {
   }
 }
 
+// original SQL query for getting req.user in API, now used as a shell for getUserWithCart to ensure a user's cart is available on login
 async function getUserById(id) {
   try {
     return await getUserWithCart(id);
-    // const {
-    //   rows: [user],
-    // } = await client.query(
-    //   `
-    // SELECT * FROM users
-    // WHERE id = $1
-    // `,
-    //   [id]
-    // );
-
-    // if (!user) {
-    //   return null;
-    // }
-
-    // delete user.password;
-    // user.cart = [];
-    // return user;
   } catch (error) {
     console.error("Problem getting user by id", error);
   }
 }
 
+// SQL query used to check if username is taken or when comparing login information
 async function getUserByUsername(username) {
   try {
     const {
@@ -78,11 +69,14 @@ async function getUserByUsername(username) {
   }
 }
 
+// function use for user login
 async function getUser({ username, password }) {
   try {
+    // get user by username with hashed password, using bcrypt to compare provided password with hashed password
     const user = await getUserByUsername(username);
     const hashedPassword = user.password;
     const passwordsMatch = await bcrypt.compare(password, hashedPassword);
+    // on match, get user using username and hashed password
     if (passwordsMatch) {
       const {
         rows: [user],
@@ -96,10 +90,8 @@ async function getUser({ username, password }) {
         [username, hashedPassword]
       );
 
+      // return optimized user object with attached cart, using the user ID from above SQL query
       return await getUserWithCart(user.id);
-      // delete user.password;
-      // user.cart = [];
-      // return user;
     } else {
       throw new Error("Passwords did not match...");
     }
@@ -108,9 +100,11 @@ async function getUser({ username, password }) {
   }
 }
 
+// require delete functions for dependent tables before deleting user in below function
 const { deleteReviewsByUserId } = require("./reviews");
 const { clearUserCart } = require("./cart");
 
+// SQL queries to delete dependent table entries before deleting user
 async function deleteUser(id) {
   try {
     const reviews = await deleteReviewsByUserId(id);
@@ -126,6 +120,7 @@ async function deleteUser(id) {
       [id]
     );
 
+    // attach user's reviews to returned object in case information needs to be accessible on frontend
     user.reviews = reviews;
     return user;
   } catch (error) {
@@ -133,15 +128,20 @@ async function deleteUser(id) {
   }
 }
 
+// SQL query to update user information
 async function updateUser(fields = {}) {
   const { id } = fields;
   delete fields.id;
+
+  // if password is changing, hash password before storage
   if (fields.password) {
     const hashedPassword = await bcrypt.hash(fields.password, SALT_ROUNDS);
     fields.password = hashedPassword;
   }
+
+  // build SQL update string based on provided fields
   const setString = Object.keys(fields)
-    .map((key, index) => `"${key}"=$${index + 1}`)
+    .map((key, index) => `"${key}"=$${index + 2}`)
     .join(", ");
   if (setString.length === 0) {
     return;
@@ -154,10 +154,10 @@ async function updateUser(fields = {}) {
         `
       UPDATE users
       SET ${setString}
-      WHERE id=${id}
-      RETURNING *
+      WHERE id=$1
+      RETURNING *;
       `,
-        Object.values(fields)
+        [id, ...Object.values(fields)]
       );
       return user;
     }
@@ -166,8 +166,10 @@ async function updateUser(fields = {}) {
   }
 }
 
+// maps over rows from next function to add cart and order information to user object
 async function mapOverUserRows(rows, id) {
   let user = {};
+  // adding cart property to user object
   for (let row of rows) {
     if (!user.id) {
       user = {
@@ -202,8 +204,11 @@ async function mapOverUserRows(rows, id) {
       });
     }
   }
+
+  // get user's order information
   const orderRows = await getUserWithOrders(id);
   user.orders = [];
+  // add order information to orders property
   for (let orderRow of orderRows) {
     if (orderRow.productId) {
       user.orders.push({
@@ -223,6 +228,7 @@ async function mapOverUserRows(rows, id) {
   return user;
 }
 
+// SQL query to get optimized user object with cart items attached for frontend functionality
 async function getUserWithCart(id) {
   try {
     const { rows } = await client.query(
@@ -248,12 +254,15 @@ async function getUserWithCart(id) {
     `,
       [id]
     );
-    return mapOverUserRows(rows, id);
+
+    // map over returned rows to add cart to user, and pull in order information
+    return await mapOverUserRows(rows, id);
   } catch (error) {
     console.error("Problem getting user with cart...", error);
   }
 }
 
+// SQL query used in the above mapping function used to add orders information to user object
 async function getUserWithOrders(id) {
   try {
     const { rows } = await client.query(
@@ -285,6 +294,7 @@ async function getUserWithOrders(id) {
   }
 }
 
+// SQL query used to check if a user with a specified email already exists when creating a new user
 async function getUserByEmail(email) {
   try {
     const {
@@ -303,14 +313,12 @@ async function getUserByEmail(email) {
 }
 
 module.exports = {
-  // add your database adapter fns here
   getAllUsers,
   createUser,
   getUserById,
   getUserByUsername,
   updateUser,
   getUser,
-  getUserWithCart,
   deleteUser,
   getUserByEmail,
 };
