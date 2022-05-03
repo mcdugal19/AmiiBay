@@ -1,3 +1,4 @@
+// Component that renders a logout button on the navbar
 import React from "react";
 import { logoutUser } from "../../AJAXFunctions";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +9,9 @@ const Logout = () => {
   const { setIsLoggedIn, setUser, setCart } = useAuth();
   let navigate = useNavigate();
 
+  /* On click, it hits the logout route and the response gives a boolean. When false, we change the the logged 
+  in state and send a toastify message. We then also send them back to the home page
+  */
   async function clickHandler(e) {
     e.preventDefault();
     const response = await logoutUser();
