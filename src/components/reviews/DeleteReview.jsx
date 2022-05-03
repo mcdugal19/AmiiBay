@@ -1,8 +1,8 @@
 // This component is found on the Single Product description page and will only display if the logged in User is the author or an Admin.
 
 import React from "react";
-import  toast  from "react-toastify";
-import  deleteReview  from "../../AJAXFunctions";
+import { toast }  from "react-toastify";
+import { deleteReview }  from "../../AJAXFunctions";
 import useAuth from "../../hooks/useAuth";
 
 const DeleteReview = ({ reviewId, reviews, setReviews, product }) => {

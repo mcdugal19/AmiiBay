@@ -3,9 +3,9 @@
 
 import React from "react";
 import useAuth from "../../hooks/useAuth";
-import SingleProductCard from "./SingleProductCard";
+import  SingleProductCard  from "./SingleProductCard";
 
-function Pagination({ pageLimit, productLimit, currentPage, setCurrentPage }) {
+const Pagination = ({ pageLimit, productLimit, currentPage, setCurrentPage }) => {
   const { searchItems, setSearchItems } = useAuth();
 
   function goToNextPage() {
