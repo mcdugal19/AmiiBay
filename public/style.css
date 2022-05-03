@@ -1,6 +1,10 @@
 :root {
   --primary: #009beb;
   --secondary: #ea6153;
+  --tertiary: #e62d8c;
+  --fourth: #a5c80f;
+  --fifth: #F5AA00;
+  --sixth: #007061;
 }
 
 * {
@@ -22,6 +26,7 @@ body {
   align-items: center;
 }
 
+/* Navbar Buttons*/
 .button-container {
   background-color: transparent;
   padding: 0.5rem;
@@ -33,6 +38,137 @@ body {
   cursor: pointer;
   background-color: var(--primary);
   animation: bounce 1s infinite;
+}
+.button-container-home {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-home:hover {
+  cursor: pointer;
+  background-color: var(--fifth);
+  animation: bounce 1s infinite;
+}
+.button-home {
+  background-color: var(--fifth);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
+}
+
+.button-container-admin {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-admin:hover {
+  cursor: pointer;
+  background-color: var(--sixth);
+  animation: bounce 1s infinite;
+}
+.button-admin {
+  background-color: var(--sixth);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
+}
+
+.button-container-login {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-login:hover {
+  cursor: pointer;
+  background-color: var(--primary);
+  animation: bounce 1s infinite;
+}
+.button-login {
+  background-color: var(--primary);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
+}
+
+.button-container-register {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-register:hover {
+  cursor: pointer;
+  background-color: var(--sixth);
+  animation: bounce 1s infinite;
+}
+.button-register {
+  background-color: var(--sixth);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
+}
+
+.button-container-logout {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-logout:hover {
+  cursor: pointer;
+  background-color: var(--primary);
+  animation: bounce 1s infinite;
+}
+.button-logout {
+  background-color: var(--primary);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
+}
+
+.button-container-cart {
+  background-color: transparent;
+  padding: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+}
+
+.button-container-cart:hover {
+  cursor: pointer;
+  background-color: var(--fourth);
+  animation: bounce 1s infinite;
+}
+.button-cart {
+  background-color: var(--fourth);
+  color: #f2f2f2;
+  border: 2px black;
+  padding: 0.7rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.2rem;
+  margin: 0.5rem;
 }
 
 @keyframes bounce {
