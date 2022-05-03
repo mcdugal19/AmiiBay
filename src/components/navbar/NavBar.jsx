@@ -8,6 +8,7 @@ const NavBar = () => {
   const { user, isLoggedIn, cart } = useAuth();
   const [cartQuantity, setCartQuantity] = useState(0);
 
+  // Function to track the total amount of items in the cart
   function getCartTotal() {
     const itemNums = cart.map((item) => {
       return item.quantity;
@@ -21,6 +22,7 @@ const NavBar = () => {
     setCartQuantity(cartTotal);
   }
 
+  // Everytime cart is updated, it will recalculate the cart total.
   useEffect(() => {
     getCartTotal();
   }, [cart]);

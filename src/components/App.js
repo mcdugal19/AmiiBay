@@ -10,8 +10,7 @@ import { AllProducts, SingleProduct } from "./products";
 import { Cart, SuccessPage } from "./cart";
 import { Admin } from "./admin";
 import { Login, Register } from "./";
-import  { NavBar } from "./navbar";
-import { Checkout } from "./checkout";
+import { NavBar } from "./navbar";
 import catMario from "./images/Cat Mario Icon.png";
 import { UserProfile } from "./userProfile";
 
@@ -29,15 +28,13 @@ const App = () => {
             <img className="user-icon" src={catMario} alt="user icon" />
           </div>
         ) : null}
-       
       </header>
-      
+
       <NavBar />
 
       <Routes>
         <Route path="/" element={<AllProducts />} />
         <Route path="/product/:productId" element={<SingleProduct />} />
-        <Route path="/checkout" element={<Checkout />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/cart" element={<Cart />} />
