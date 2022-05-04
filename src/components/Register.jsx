@@ -16,7 +16,7 @@ const Register = () => {
 
   return (
     <div className="register-page">
-      <h2>Welcome to Amiibos!</h2>
+      <h2>Welcome to Amiibay!</h2>
       {/* The form below is the form that verifies login credentials */}
       <div className="form-container">
         <form
