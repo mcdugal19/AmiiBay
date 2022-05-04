@@ -10,23 +10,18 @@ const SuccessPage = () => {
   let navigate = useNavigate();
 
   async function clearCart() {
-    if (isLoggedIn) {
-      try {
-        const response = await clearAllItemsInCart();
-        if (
-          response.message === `Successfully cleared ${user.username}'s cart!`
-        ) {
-          setCart([]);
-          setTimeout(() => navigate("/"), 2000);
-        } else {
-          console.error(response);
-        }
-      } catch (error) {
-        console.error(error);
+    try {
+      const response = await clearAllItemsInCart();
+      if (
+        response.message === `Successfully cleared ${user.username}'s cart!`
+      ) {
+        setCart([]);
+        setTimeout(() => navigate("/"), 2000);
+      } else {
+        console.error(response);
       }
-    } else {
-      setCart([]);
-      setTimeout(() => navigate("/"), 2000);
+    } catch (error) {
+      console.error(error);
     }
   }
   async function addOrder() {
@@ -47,13 +42,15 @@ const SuccessPage = () => {
         console.error(error);
       }
     } else {
-      await clearCart();
+      setCart([]);
+      setTimeout(() => navigate("/"), 2000);
     }
   }
 
   useEffect(() => {
+    console.log(isLoggedIn);
     addOrder();
-  }, [cart]);
+  }, [isLoggedIn]);
 
   return (
     <>
