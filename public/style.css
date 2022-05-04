@@ -791,4 +791,7 @@ footer h2 {
   .paginationItem {
     display: none;
   }
+  .navbar{
+    justify-content: center;
+  }
 }
