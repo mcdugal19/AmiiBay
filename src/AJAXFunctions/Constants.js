@@ -5,7 +5,7 @@
 
 
 const production = {
-  url: "https://amiibo-mcdugal19.herokuapp.com/",
+  url: "https://amiibo-mcdugal19.herokuapp.com/api",
 };
 
 const development = {
