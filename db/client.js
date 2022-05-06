@@ -1,7 +1,7 @@
 // Connect to DB
 const { Client } = require("pg");
 
-const DB_NAME = "grace-shopper";
+const DB_NAME = "Amiibay";
 
 // variable DB_URL based on node environment
 const DB_URL =
