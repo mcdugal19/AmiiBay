@@ -37,7 +37,7 @@ const { client } = require("./db");
 // const { default: useAuth } = require("./src/hooks/useAuth");
 
 // connect to the server
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5433;
 
 server.use((error, req, res, next) => {
   if (res.statusCode < 400) res.status(500);
