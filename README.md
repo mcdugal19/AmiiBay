@@ -138,6 +138,138 @@ $ heroku run npm run db:build
 
 As you project grows you'll probably want to re-seed and refresh your database from time to time. Rerun this command whenever you want to re-seed.
 
+# AmiiBay Project Repository Structure
+
+**AmiiBay** is a full-stack e-commerce application for selling Amiibo figures (Nintendo collectible gaming figurines). It's built with React, Express, PostgreSQL, and Stripe payment integration.
+
+## Architecture Overview
+
+The project follows a classic **three-tier architecture**:
+- **Frontend**: React application (SPA)
+- **Backend**: Express.js REST API
+- **Database**: PostgreSQL
+
+## Directory Structure Breakdown
+
+### Root Level Files
+- **index.js** - Main Express server entry point that:
+  - Configures middleware (CORS, Morgan logging, cookie-parser)
+  - Serves static React build files
+  - Mounts the API router at `/api`
+  - Connects to PostgreSQL database
+  - Integrates Stripe for payments
+
+- **package.json** - Project dependencies and scripts:
+  - Uses React, Express, PostgreSQL (pg), Stripe, JWT authentication, bcrypt
+  - Scripts for development (`start:dev`), building (`client:build`), and database setup (`db:build`)
+
+### `/db` - Database Layer
+Database configuration and models:
+- **client.js** - PostgreSQL client configuration
+- **index.js** - Exports database client and all models
+- **init_db.js** - Database initialization and table creation script
+- **seedAmiibos.js** - Seeds product data (Amiibo figures)
+
+**`/db/models`** - Database adapter functions:
+- **user.js** - User authentication and management
+- **products.js** - Product CRUD operations
+- **cart.js** - Shopping cart functionality
+- **orders.js** - Order processing and history
+- **reviews.js** - Product review system
+
+### `/api` - Backend REST API
+Express routers handling HTTP requests:
+- **index.js** - Main API router that:
+  - Mounts sub-routers (`/users`, `/products`, `/cart`, `/orders`, `/reviews`)
+  - Handles Stripe checkout session creation
+- **users.js** - User registration, login, authentication endpoints
+- **products.js** - Product listing, search, and management endpoints
+- **cart.js** - Cart CRUD operations
+- **orders.js** - Order creation and retrieval
+- **reviews.js** - Review CRUD operations
+- **utils.js** - Shared utility functions (likely JWT verification)
+
+### `/src` - React Frontend
+
+**`/src/components`** - React component hierarchy:
+
+**Main Components:**
+- **App.js** - Root component with React Router routes:
+  - `/` - All products listing
+  - `/product/:productId` - Single product details
+  - `/login` & `/register` - Authentication
+  - `/cart` - Shopping cart
+  - `/admin` - Admin dashboard
+  - `/me` - User profile
+  - `/success` - Post-checkout success page
+
+**Feature Modules:**
+- **`/admin`** - Admin panel for product management:
+  - Admin.jsx, AdminTable.jsx
+  - AddProduct.jsx, UpdateProduct.jsx, DeleteProduct.jsx, ProductTable.jsx
+
+- **`/cart`** - Shopping cart functionality:
+  - Cart.jsx - Main cart display
+  - CartItem.jsx - Individual cart items
+  - AddToCart.jsx, RemoveItem.jsx, UpdateQuantity.jsx
+  - ClearCart.jsx, SuccessPage.jsx
+
+- **`/products`** - Product browsing:
+  - AllProducts.jsx - Product grid/list
+  - SingleProduct.jsx - Product detail page
+  - SingleProductCard.jsx - Product card component
+  - SearchProducts.jsx - Search functionality
+  - Pagination.jsx - Paginated product display
+
+- **`/reviews`** - Review system:
+  - ReviewForm.jsx, SingleReview.jsx, DeleteReview.jsx
+
+- **`/navbar`** - Navigation:
+  - NavBar.jsx, Logout.jsx
+
+- **`/userProfile`** - User account:
+  - UserProfile.jsx, OrderHistoryTable.jsx
+
+- **Authentication:**
+  - Login.jsx, Register.jsx, AuthProvider.jsx
+
+**`/src/AJAXFunctions`** - API communication layer:
+- **index.js** - Axios/fetch functions for API calls
+- **Constants.js** - API endpoint URLs and constants
+
+**`/src/hooks`** - Custom React hooks:
+- **useAuth.js** - Authentication state management hook
+
+**`/src/style`** - CSS styling:
+- App.css, index.css
+
+**`/src/images`** - Image assets (cart icons, banners)
+
+### `/public` - Static Assets
+- **index.html** - Root HTML file for React SPA
+- **style.css** - Global styles
+- **favicon.ico** - Site icon
+- Image assets (Lineup.png, Lineup2.png)
+
+## Key Features
+
+1. **User Authentication** - JWT-based auth with bcrypt password hashing
+2. **Product Catalog** - Browse, search, and view Amiibo products with pagination
+3. **Shopping Cart** - Add/remove items, update quantities
+4. **Checkout** - Stripe payment integration
+5. **Reviews** - Users can review products
+6. **Admin Panel** - Product management (CRUD operations)
+7. **User Profiles** - Order history and account management
+8. **Responsive Design** - Material-UI and Bootstrap styling
+
+## Development Workflow
+
+- **Local Development**: `npm run start:dev` runs React dev server + Express concurrently
+- **Database Setup**: `npm run db:build` initializes and seeds the database
+- **Deployment**: CI/CD via GitHub Actions to Heroku with PostgreSQL addon
+
+The application uses a proxy configuration to route API requests from React (port 3000) to Express (port 4000) during development.
+
 # Wrapup
 
 You'll be able to view your fullstack application by running `heroku open`. Bask in the glory of your live site, and happy coding!

@@ -1,6 +1,5 @@
 // This component controls the display of all sub-components and contains the routing.
 
-import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +13,7 @@ import { NavBar } from "./navbar";
 import catMario from "./images/Cat Mario Icon.png";
 import { UserProfile } from "./userProfile";
 
-const App = () => {
+const App: React.FC = () => {
   const { user, isLoggedIn } = useAuth();
 
   return (

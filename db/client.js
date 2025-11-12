@@ -5,7 +5,7 @@ const DB_NAME = "Amiibay";
 
 // variable DB_URL based on node environment
 const DB_URL =
-  process.env.DATABASE_URL || `postgres://localhost:5433/${DB_NAME}`;
+  process.env.DATABASE_URL || `postgres://localhost:5432/${DB_NAME}`;
 
 let client;
 

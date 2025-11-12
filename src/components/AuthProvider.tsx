@@ -1,16 +1,21 @@
-//*** AuthProvider provides the connection from the main App in the index.js  ****/
+// AuthProvider provides the connection from the main App in the index.js
 
+import { ReactNode, useState, useEffect } from "react";
 import AuthContext from "../AuthContext";
-import { useState, useEffect } from "react";
 import { getMe, fetchAllProducts } from "../AJAXFunctions";
+import { User, Product, CartItem, Order } from "../types";
 
-const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState({});
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [searchItems, setSearchItems] = useState([]);
-  const [orders, setOrders] = useState([]);
+interface AuthProviderProps {
+  children: ReactNode;
+}
+
+const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User>({} as User);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [searchItems, setSearchItems] = useState<Product[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
 
   useEffect(() => {
     async function getUser() {
@@ -19,10 +24,10 @@ const AuthProvider = ({ children }) => {
         if (response.id) {
           setUser(response);
           setIsLoggedIn(true);
-          setCart(response.cart);
+          setCart(response.cart || []);
         }
       } catch (error) {
-        throw error;
+        console.error('Error fetching user:', error);
       }
     }
     getUser();
@@ -35,11 +40,11 @@ const AuthProvider = ({ children }) => {
         setProducts(amiibos);
         setSearchItems(amiibos);
       } catch (error) {
-        throw error;
+        console.error('Error fetching products:', error);
       }
     }
     getProducts();
-  }, [setProducts]);
+  }, []);
 
   return (
     <AuthContext.Provider

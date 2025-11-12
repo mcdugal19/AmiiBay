@@ -9,8 +9,10 @@ const production = {
 };
 
 const development = {
-  url: "http://localhost:3000/api",
+  url: "http://localhost:4000/api",
 };
 
-export const config =
-  process.env.NODE_ENV === "development" ? development : production;
+// For local development/testing, always use localhost
+// Change this to use production URL when deploying
+export const config = development;
+// export const config = process.env.NODE_ENV === "development" ? development : production;
