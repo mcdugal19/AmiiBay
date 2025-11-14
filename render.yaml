@@ -1,0 +1,30 @@
+services:
+  # Web service (serves both React frontend and Express API)
+  - type: web
+    name: amiibay
+    env: node
+    plan: free
+    buildCommand: npm install && npm run client:build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: amiibay-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
+      - key: SECRET_KEY
+        sync: false  # You'll add your Stripe key manually in Render dashboard
+    healthCheckPath: /api
+
+databases:
+  - name: amiibay-db
+    plan: free
+    databaseName: amiibay
+    user: amiibay

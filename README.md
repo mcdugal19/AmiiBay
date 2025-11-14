@@ -1,16 +1,127 @@
-# Let's Build a Full Stack Application
+# AmiiBay - Full-Stack E-Commerce Platform
 
-This full stack app boilerplate consists of:
+> A production-ready e-commerce application for Amiibo collectibles, featuring secure payments, user authentication, and comprehensive admin management.
 
-- an Express web server,
-- a PostgreSQL database instance,
-- and a React front-end
+## 🚀 Live Demo
 
-You'll also find a bunch of convenient commands and workflows that will allow you to develop your app locally and deploy it to heroku. Let's dive in!
+**[View Live Site](https://your-deployed-url-here.onrender.com)** *(Update after deployment)*
 
-# Local Development
+## 📸 Screenshots
 
-## Getting Started
+![AmiiBay Homepage](docs/screenshots/homepage.png) *(Add screenshot after deployment)*
+
+## ✨ Key Features
+
+- 🔐 **Secure Authentication** - JWT-based user authentication with bcrypt password hashing
+- 🛒 **Complete Shopping Experience** - Full shopping cart with Stripe payment integration
+- 👤 **User Profiles** - Personal accounts with order history tracking
+- ⭐ **Review System** - Product reviews and ratings
+- 🛡️ **Admin Dashboard** - Comprehensive product management interface
+- 📱 **Responsive Design** - Mobile-friendly interface with Material-UI and Bootstrap
+- 🎯 **Search & Pagination** - Easy product discovery and navigation
+- 💳 **Secure Payments** - Stripe integration for safe transactions
+
+## 🛠️ Tech Stack
+
+### Frontend
+- **React 19** with TypeScript
+- **Material-UI** & Bootstrap for UI components
+- **React Router** for navigation
+- **React Toastify** for notifications
+
+### Backend
+- **Express.js** - RESTful API server
+- **PostgreSQL** - Relational database
+- **JWT** - Secure authentication tokens
+- **bcrypt** - Password hashing
+- **Stripe API** - Payment processing
+
+### Development
+- **TypeScript** - Type-safe code
+- **Webpack** via react-scripts
+- **Nodemon** - Hot reloading
+- **Concurrently** - Parallel dev processes
+
+## 💡 Technical Highlights
+
+### Architecture
+- **Three-tier architecture**: Frontend, Backend, Database
+- **RESTful API** with Express.js
+- **Normalized database schema** with proper relationships
+- **JWT authentication** with HTTP-only cookies
+- **Context API** for global state management
+
+### Security Features
+- Password hashing with bcrypt (10 rounds)
+- JWT token-based authentication
+- Secure HTTP-only cookies
+- Environment variable protection
+- SQL injection prevention via parameterized queries
+
+### Code Quality
+- TypeScript for type safety (migration in progress)
+- Strict type checking enabled
+- Modern React patterns (hooks, functional components)
+- Comprehensive error handling
+- Clean code architecture
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 16+ and npm
+- PostgreSQL installed locally
+- Stripe test account (for payment testing)
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/your-username/AmiiBay.git
+   cd AmiiBay
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   
+   Create a `.env` file in the root directory:
+   ```env
+   # Stripe API Keys (get from https://dashboard.stripe.com/test/apikeys)
+   SECRET_KEY=sk_test_your_stripe_secret_key
+
+   # Server Configuration
+   PORT=4000
+
+   # Security Secrets (generate random strings for production)
+   COOKIE_SECRET=your_cookie_secret_here
+   JWT_SECRET=your_jwt_secret_here
+
+   # Database (optional, uses default if not set)
+   # DATABASE_URL=postgresql://username:password@localhost:5432/amiibay
+   ```
+
+4. **Create and seed the database**
+   ```bash
+   createdb Amiibay
+   npm run db:build
+   ```
+
+5. **Start development server**
+   ```bash
+   npm run start:dev
+   ```
+
+   The app will be available at:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:4000
+
+## 📁 Project Structure
+
+### Local Development
 
 1. Fork and clone this repo to your local machine, then run the following commands to reinitialize your git history from scratch:
 
@@ -79,13 +190,48 @@ Inside `/api` you have `index.js` which is responsible for building the `apiRout
 
 Rounding things out, we've got the top level `index.js` that creates your Express Server. This should be responsible for setting up your API, starting your server, and connecting to your database. We've also got our `.gitignore`, `package-lock.json`, and `package.json` where you'll find the scripts necessary to get your app off the ground, as well as this `README.md`.
 
-## Command Line Tools
+## 📜 Available Scripts
 
-In addition to `start:dev`, `client:build`, `client:dev` and `server:dev`, you have access to `db:build` which rebuilds the database, all the tables, and ensures that there is meaningful data present.
+### Development
+```bash
+npm run start:dev    # Run both React dev server and Express API concurrently
+npm run client:dev   # Run React dev server only (port 3000)
+npm run server:dev   # Run Express server only (port 4000)
+```
 
-# Deployment
+### Database
+```bash
+npm run db:build     # Initialize/rebuild database with seed data
+```
 
-## Setting up Heroku
+### Production
+```bash
+npm run client:build # Build React app for production
+npm start           # Start production server
+```
+
+## 🚀 Deployment
+
+### Deploy to Render (Recommended - FREE)
+
+Complete deployment guide available in [DEPLOYMENT.md](DEPLOYMENT.md)
+
+**Quick steps:**
+1. Push your code to GitHub
+2. Sign up at [Render.com](https://render.com) (free, no credit card)
+3. Create new Blueprint and connect your repository
+4. Render auto-detects `render.yaml` and deploys everything
+5. Add your Stripe test key in environment variables
+6. Run `npm run db:build` in Render shell to seed database
+7. Your site is live! 🎉
+
+**Features:**
+- ✅ Free PostgreSQL database (100MB)
+- ✅ Auto-deploy on git push
+- ✅ SSL certificate included
+- ✅ Zero configuration needed
+
+### Alternative: Heroku Setup
 
 Setup your heroku project by choosing a site name and provisioning a postgres database. These commands create a heroku project backed by a postgres db instance which will live at https://project-name-goes-here.herokuapp.com. You'll want to replace `project-name-goes-here` with your selected project name.
 
