@@ -42,8 +42,14 @@ const App: React.FC = () => {
         <Route path="/success" element={<SuccessPage />} />
       </Routes>
       <footer>
-        <h2>Disclaimer: This is for Learning Purposes Only!</h2>
-        <p> No content is actually for sale. Please do not attempt to purchase any items from this site!</p>
+        <h2>⚠️ DEMO SITE - This is for Learning Purposes Only!</h2>
+        <p>
+          This is a portfolio demonstration project. <strong>No real transactions are processed.</strong>
+          <br />
+          This site uses Stripe TEST mode - real credit cards will not work and no charges will ever be made.
+          <br />
+          Test card for demo: 4242 4242 4242 4242 | Any future date | Any CVC
+        </p>
       </footer>
     </div>
   );
