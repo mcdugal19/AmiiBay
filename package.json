@@ -9,8 +9,7 @@
     "dev:server": "nodemon index.js",
     "dev:client": "cd client && npm start",
     "build": "cd client && npm run build",
-    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\"",
-    "start": "node index.js"
+    "start:dev": "concurrently \"npm run client:build\" \"npm run client:dev\" \"npm run server:dev\""
   },
   "keywords": [],
   "author": "",
@@ -34,7 +33,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.9.5",
-    "react-scripts": "^5.0.1",
+    "react-scripts": "^0.0.0",
     "react-toastify": "^11.0.5",
     "stripe": "^19.3.0"
   },
