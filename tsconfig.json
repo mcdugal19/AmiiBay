@@ -1,44 +1,15 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": false,
-    "outDir": "./dist",
-    "rootDir": "./",
-    "removeComments": true,
-    "noEmit": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
+    "target": "es2016",
+    "module": "commonjs",
+    "outDir": "./dist", // Keep the output directory as 'dist'
+    "rootDir": "./server", // The root of our server source code is now 'server'
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
+    "esModuleInterop": true,
     "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": "./src",
-    "paths": {
-      "@components/*": ["components/*"],
-      "@hooks/*": ["hooks/*"],
-      "@api/*": ["../api/*"],
-      "@db/*": ["../db/*"]
-    }
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*",
-    "api/**/*",
-    "db/**/*",
-    "index.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "build",
-    "dist",
-    "**/*.spec.ts"
-  ]
+  "include": ["server/**/*"], // Only include files from the 'server' directory for compilation
+  "exclude": ["node_modules", "build", "src"] // Explicitly exclude the React 'src' folder
 }
