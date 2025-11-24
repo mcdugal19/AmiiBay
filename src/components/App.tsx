@@ -10,6 +10,7 @@ import { Cart, SuccessPage } from "./cart";
 import { Admin } from "./admin";
 import { Login, Register } from "./";
 import { NavBar } from "./navbar";
+// @ts-ignore - image module types are not declared; add a custom .d.ts to avoid this in future
 import catMario from "./images/Cat Mario Icon.png";
 import { UserProfile } from "./userProfile";
 
